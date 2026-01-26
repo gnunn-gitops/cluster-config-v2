@@ -9,4 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: openshift-gitops-installer
-  namespace: openshift-gitops-installer
+  namespace: openshift-gitops-operator
