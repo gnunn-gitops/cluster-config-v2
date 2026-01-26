@@ -1,0 +1,57 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+- set-env-cmp-plugin-cm.yaml
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/repo/sidecarContainers/-
+        value:
+          name: setenv-cmp-plugin
+          command: [/var/run/argocd/argocd-cmp-server]
+          env:
+            - name: KUSTOMIZE_PLUGIN_HOME
+              value: /etc/kustomize/plugin
+            - name: INFRASTRUCTURE_ID
+              value: '{{ (lookup "config.openshift.io/v1" "Infrastructure" "" "cluster").status.infrastructureName }}'
+            - name: CLUSTER_ID
+              value: '{{ (lookup "config.openshift.io/v1" "ClusterVersion" "" "version").spec.clusterID }}'
+            - name: CLUSTER_GITOPS_NAME
+              value: '{{ fromClusterClaim "gitops" }}'
+            - name: CLUSTER_NAME
+              value: '{{ fromClusterClaim "name" }}'
+            - name: SUB_DOMAIN
+              value: '{{ (lookup "config.openshift.io/v1" "Ingress" "openshift-ingress" "cluster").spec.domain }}'
+            - name: BASE_DOMAIN
+              value: '{{ (lookup "config.openshift.io/v1" "DNS" "" "cluster").spec.baseDomain }}'
+            - name: COLOR
+              value: '{{ default "0066CC" (fromClusterClaim "color") }}'
+    target:
+      kind: ArgoCD
+  - patch: |-
+      - op: add
+        path: /spec/repo/sidecarContainers/volumes/-
+        value:
+          configMap:
+            name: setenv-cmp-plugin
+          name: setenv-cmp-plugin
+    target:
+      kind: ArgoCD
+  - patch: |-
+      - op: add
+        path: /spec/repo/sidecarContainers/volumeMounts
+        value:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: plugin.yaml
+            name: setenv-cmp-plugin
+
+
+

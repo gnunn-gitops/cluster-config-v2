@@ -1,0 +1,38 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: argocd-health-alerts
+  annotations:
+    policy.open-cluster-management.io/disable-templates: "true"
+spec:
+  groups:
+  - name: ArgoCD
+    rules:
+    - alert: ArgoCDHealthAlert
+      annotations:
+        message: ArgoCD application {{ $labels.name }} is not healthy
+      expr: argocd_app_info{namespace="openshift-gitops", health_status!~"Healthy|Suspended|Progressing|Degraded"} > 0
+      for: 5m
+      labels:
+        severity: warning
+    - alert: ArgoCDDegradedAlert
+      annotations:
+        message: ArgoCD application {{ $labels.name }} is degraded
+      expr: argocd_app_info{namespace="openshift-gitops", health_status="Degraded"} > 0
+      for: 5m
+      labels:
+        severity: critical
+    - alert: ArgoCDStuckAlert
+      annotations:
+        message: ArgoCD application {{ $labels.name }} is stuck in progressing for more than 10m
+      expr: argocd_app_info{namespace="openshift-gitops", health_status="Progressing"} > 0
+      for: 10m
+      labels:
+        severity: warning
+    - alert: ArgoCDSyncUnknown
+      annotations:
+        message: ArgoCD application {{ $labels.name }} is sync status is Unknown
+      expr: argocd_app_info{namespace="openshift-gitops", sync_status="Unknown"}
+      for: 5m
+      labels:
+        severity: critical

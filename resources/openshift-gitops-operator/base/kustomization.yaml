@@ -1,0 +1,8 @@
+namespace: openshift-gitops-installer
+
+resources:
+- namespace.yaml
+- serviceaccount.yaml
+- clusterrole.yaml
+- clusterrolebinding.yaml
+- clusterextension.yaml

@@ -1,0 +1,199 @@
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  name: openshift-gitops
+spec:
+  resourceHealthChecks: []
+  extraConfig:
+    exec.enabled: "true"
+    resource.respectRBAC: "normal"
+    resource.ignoreResourceUpdatesEnabled: 'true'
+  server:
+    autoscale:
+      enabled: false
+    extraCommandArgs: []
+    grpc:
+      ingress:
+        enabled: false
+    initContainers: []
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    enableRolloutsUI: true
+    route:
+      annotations: {}
+      enabled: true
+    service:
+      type: ''
+    volumes: []
+    volumeMounts: []
+  grafana:
+    enabled: false
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+    route:
+      enabled: false
+  monitoring:
+    enabled: false
+  notifications:
+    enabled: false
+  prometheus:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  sso:
+    dex:
+      openShiftOAuth: true
+      resources:
+        limits:
+          cpu: 500m
+          memory: 256Mi
+        requests:
+          cpu: 250m
+          memory: 128Mi
+    provider: dex
+  applicationSet:
+    resources:
+      limits:
+        cpu: '2'
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+    webhookServer:
+      ingress:
+        enabled: false
+      route:
+        enabled: false
+  rbac:
+    defaultPolicy: 'role:none'
+    # Assistant included since it can be patched in via a component, only
+    # used if an assistant extension is actually defined
+    policy: |
+      p, role:none, *, *, */*, deny
+      g, system:cluster-admins, role:admin
+      g, cluster-admins, role:admin
+      p, role:readonly, extensions, invoke, assistant, allow
+    scopes: '[groups]'
+  repo:
+    initContainers: []
+    sidecarContainers: []
+    resources:
+      limits:
+        cpu: '1'
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    volumes: []
+    volumeMounts: []
+  resourceExclusions: |
+    - apiGroups:
+      - tekton.dev
+      clusters:
+      - '*'
+      kinds:
+      - TaskRun
+      - PipelineRun
+    - apiGroups:
+      - operator.tekton.dev
+      clusters:
+      - '*'
+      kinds:
+      - TektonAddon
+      - TektonInstallerSet
+    - apiGroups:
+      - compliance.openshift.io
+      kinds:
+      - ComplianceCheckResult
+      - ComplianceRemediation
+    - apiGroups:
+      - policy.open-cluster-management.io
+      kinds:
+      - ConfigurationPolicy
+    - apiGroups:
+      - ""
+      - discovery.k8s.io
+      kinds:
+      - Endpoints
+      - EndpointSlice
+    - apiGroups:
+      - apiregistration.k8s.io
+      kinds:
+      - APIService
+    - apiGroups:
+      - coordination.k8s.io
+      kinds:
+      - Lease
+    - apiGroups:
+      - authentication.k8s.io
+      - authorization.k8s.io
+      kinds:
+      - SelfSubjectReview
+      - TokenReview
+      - LocalSubjectAccessReview
+      - SelfSubjectAccessReview
+      - SelfSubjectRulesReview
+      - SubjectAccessReview
+    - apiGroups:
+      - certificates.k8s.io
+      kinds:
+      - CertificateSigningRequest
+    - apiGroups:
+      - cert-manager.io
+      kinds:
+      - CertificateRequest
+    - apiGroups:
+      - kyverno.io
+      - reports.kyverno.io
+      - wgpolicyk8s.io
+      kinds:
+      - PolicyReport
+      - ClusterPolicyReport
+      - EphemeralReport
+      - ClusterEphemeralReport
+      - AdmissionReport
+      - ClusterAdmissionReport
+      - BackgroundScanReport
+      - ClusterBackgroundScanReport
+      - UpdateRequest
+  ha:
+    enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  redis:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  controller:
+    resources:
+      limits:
+        cpu: '2'
+        memory: 2Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi

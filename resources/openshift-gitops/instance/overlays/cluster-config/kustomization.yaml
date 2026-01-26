@@ -1,0 +1,16 @@
+components:
+- ../../components/alert-rules
+- ../../components/action-compliance
+- ../../components/extension-assistant-lightspeed
+- ../../components/health-application
+- ../../components/health-build
+- ../../components/health-imagestream
+- ../../components/health-pvc
+- ../../components/health-rolloutmanager
+- ../../components/health-stackrox
+- ../../components/health-subscription
+- ../../components/notifications
+- ../../components/oidc-keycloak-ocplab
+
+resources:
+- ../../base

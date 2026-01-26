@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/resourceHealthChecks/-
+        value:
+          group: argoproj.io
+          kind: RolloutManager
+          check: |
+            hs = {}
+            if obj.status ~= nil then
+              if obj.status.conditions ~= nil then
+                for _, condition in ipairs(obj.status.conditions) do
+                  hs.message = condition.message
+                  break
+                end
+              end
+              if obj.status.phase ~= nil then
+                if obj.status.phase == "Failure" then
+                  hs.status = "Degraded"
+                  return hs
+                elseif obj.status.phase == "Available" then
+                  hs.status = "Healthy"
+                  return hs
+                elseif obj.status.phase == "Pending" then
+                  hs.status = "Progressing"
+                  return hs
+                end
+              end
+              hs.status = "Progressing"
+              hs.message = "Waiting for operator to update status"
+              return hs
+            end
+    target:
+      kind: ArgoCD

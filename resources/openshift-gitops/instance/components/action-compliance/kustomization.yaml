@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/resourceActions/-
+        value:
+          group: compliance.openshift.io
+          kind: ComplianceScan
+          action: |
+            discovery.lua: |
+              local actions = {}
+              local enabled = false
+              if obj.status ~= nil and  obj.status.phase == "DONE" then
+                enabled = true
+              end
+              actions["rescan"] = {["disabled"] = not(enabled)}
+              return actions
+            definitions:
+            - name: rescan
+              action.lua: |
+                if obj.metadata.annotations == nil then
+                    obj.metadata.annotations = {}
+                end
+                obj.metadata.annotations["compliance.openshift.io/rescan"] = ""
+                return obj
+    target:
+      kind: Argo CD

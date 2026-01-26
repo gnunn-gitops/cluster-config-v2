@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/resourceHealthChecks/-
+        value:
+          group: argoproj.io
+          kind: Application
+          check: |
+            hs = {}
+            hs.status = "Progressing"
+            hs.message = ""
+            if obj.status ~= nil then
+              if obj.status.health ~= nil then
+                hs.status = obj.status.health.status
+                hs.message = obj.status.health.message
+              end
+            end
+            return hs
+    target:
+      kind: Argo CD

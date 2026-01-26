@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/resourceHealthChecks/-
+        value:
+          kind: PersistentVolumeClaim
+          check: |
+            hs = {}
+            if (obj.status ~= nil and obj.status.phase ~= nil) then
+                if obj.status.phase == "Pending" or obj.status.phase == "Bound" then
+                    hs.status = "Healthy"
+                    hs.message = obj.status.phase
+                    return hs
+                elseif obj.status.phase == "Lost" then
+                    hs.status = "Degraded"
+                    hs.message = obj.status.phase
+                    return hs
+                end
+            end
+            hs.status = "Unknown"
+            hs.message = "Waiting for PVC status"
+            return hs
+    target:
+      kind: ArgoCD
