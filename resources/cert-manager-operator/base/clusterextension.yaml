@@ -1,0 +1,15 @@
+apiVersion: olm.operatorframework.io/v1
+kind: ClusterExtension
+metadata:
+  name: cert-manager-operator
+spec:
+  namespace: cert-manager-operator
+  serviceAccount:
+    name: cert-manager-installer
+  source:
+    sourceType: Catalog
+    catalog:
+      packageName: openshift-cert-manager-operator
+      channels:
+        - cert-manager-operator.v1.18.0
+      upgradeConstraintPolicy: CatalogProvided
