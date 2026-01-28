@@ -1,8 +1,8 @@
-namespace: openshift-gitops-operator
-
 resources:
+- sub-namespace.yaml
+- sub-operatorgroup.yaml
+- subscription.yaml
 - namespace.yaml
-- serviceaccount.yaml
-- clusterrole.yaml
-- clusterrolebinding.yaml
-- clusterextension.yaml
+- gitops-controller-rbac.yaml
+- gitops-server-rbac.yaml
+- cluster-admin-rolebinding.yaml
