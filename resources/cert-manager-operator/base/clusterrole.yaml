@@ -3,6 +3,38 @@ kind: ClusterRole
 metadata:
   name: cert-manager-installer-clusterrole
 rules:
+# OLM v1 required permissions
+- apiGroups:
+  - olm.operatorframework.io
+  resources:
+  - clusterextensions/finalizers
+  verbs:
+  - update
+# cert-manager CRDs
+# Custom resource definitions of the extension
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - create
+  - list
+  - watch
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+  - update
+  - patch
+  - delete
+  resourceNames:
+  - certificaterequests.cert-manager.io
+  - certificates.cert-manager.io
+  - clusterissuers.cert-manager.io
+  - issuers.cert-manager.io
+# cert-manager required permissions from permissions
 - apiGroups:
     - ''
   resources:
@@ -286,3 +318,9 @@ rules:
     - subjectaccessreviews
   verbs:
     - create
+# Metrics, required but not provided in clusterserviceversion manifest
+- nonResourceURLs:
+  - "/metrics"
+  verbs:
+  - "get"
+

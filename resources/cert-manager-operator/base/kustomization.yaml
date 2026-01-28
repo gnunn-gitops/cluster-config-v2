@@ -1,6 +1,9 @@
+namespace: cert-manager-operator
+
 resources:
 - namespace.yaml
 - serviceaccount.yaml
+- rolebinding.yaml
 - clusterrole.yaml
 - clusterrolebinding.yaml
 - clusterextension.yaml

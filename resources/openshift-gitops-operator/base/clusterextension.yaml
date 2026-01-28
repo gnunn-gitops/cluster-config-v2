@@ -11,5 +11,5 @@ spec:
     catalog:
       packageName: openshift-gitops-operator
       channels:
-        - openshift-gitops-1.19
+        - gitops-1.19
       upgradeConstraintPolicy: CatalogProvided

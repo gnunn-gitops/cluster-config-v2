@@ -3,6 +3,14 @@ kind: ClusterRole
 metadata:
   name: openshift-gitops-installer-clusterrole
 rules:
+  # OLM v1 required permissions
+  - apiGroups:
+    - olm.operatorframework.io
+    resources:
+    - clusterextensions/finalizers
+    verbs:
+    - update
+# OpenShift GitOps Requirements
   - apiGroups:
       - ''
     resources:

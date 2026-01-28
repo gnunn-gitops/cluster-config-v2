@@ -11,5 +11,5 @@ spec:
     catalog:
       packageName: openshift-cert-manager-operator
       channels:
-        - cert-manager-operator.v1.18.0
+        - stable-v1.18
       upgradeConstraintPolicy: CatalogProvided

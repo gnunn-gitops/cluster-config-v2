@@ -1,4 +1,4 @@
-namespace: openshift-gitops-installer
+namespace: openshift-gitops-operator
 
 resources:
 - namespace.yaml
