@@ -1,0 +1,8 @@
+resources:
+- sub-namespace.yaml
+- sub-operatorgroup.yaml
+- subscription.yaml
+- namespace.yaml
+- gitops-controller-rbac.yaml
+- gitops-server-rbac.yaml
+- cluster-admin-rolebinding.yaml

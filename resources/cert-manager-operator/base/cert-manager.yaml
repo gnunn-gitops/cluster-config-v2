@@ -1,0 +1,15 @@
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: cluster
+spec:
+  logLevel: Normal
+  managementState: Managed
+  observedConfig: null
+  operatorLogLevel: Normal
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers=8.8.8.8:53,8.8.4.4:53'
+      - '--dns01-recursive-nameservers-only'
