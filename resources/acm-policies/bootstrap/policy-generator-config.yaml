@@ -1,0 +1,23 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: bootstrap-policy-generator
+policyDefaults:
+  namespace: acm-policies
+  remediationAction: enforce
+placementBindingDefaults:
+  name: "bootstrap"
+policies:
+  - name: eso-secret-store
+    configurationPolicyAnnotations:
+      apps.open-cluster-management.io/reconcile-option: replace
+    manifests:
+      - path: manifests/eso-secret-store/base/
+policySets:
+  - name: "bootstrap"
+    description: "Policy for bootstrapping clusters using OpenShift GitOps"
+    policies:
+      - eso-secret-store
+    generatePolicySetPlacement: false
+    placement:
+      name: bootstrap

@@ -1,0 +1,28 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: bootstrap
+  namespace: acm-policies
+spec:
+  clusterSets:
+  - global
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+        - key: bootstrap
+          operator: Exists
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: bootstrap
+  namespace: acm-policies
+placementRef:
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+  name: bootstrap
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: PolicySet
+  name: bootstrap
