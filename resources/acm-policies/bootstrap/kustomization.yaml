@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: acm-policies
 
 resources:
+- namespace.yaml
 - placement.yaml
 - managedclusterbindingset.yaml
 
