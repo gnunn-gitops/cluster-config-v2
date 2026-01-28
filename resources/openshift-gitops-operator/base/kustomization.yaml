@@ -1,8 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: openshift-gitops-operator
+
 resources:
-- sub-namespace.yaml
-- sub-operatorgroup.yaml
-- subscription.yaml
 - namespace.yaml
+- operatorgroup.yaml
+- subscription.yaml
 - gitops-controller-rbac.yaml
 - gitops-server-rbac.yaml
-- cluster-admin-rolebinding.yaml
