@@ -18,12 +18,18 @@ policies:
       apps.open-cluster-management.io/reconcile-option: replace
     manifests:
       - path: manifests/gitops-subscription/base/
+  - name: gitops-control-plane
+    configurationPolicyAnnotations:
+      apps.open-cluster-management.io/reconcile-option: replace
+    manifests:
+      - path: manifests/gitops-control-plane/base/
 policySets:
   - name: "bootstrap"
     description: "Policy for bootstrapping clusters using OpenShift GitOps"
     policies:
       - eso-secret-store
       - gitops-subscription
+      - gitops-control-plane
     generatePolicySetPlacement: false
     placement:
       name: bootstrap
