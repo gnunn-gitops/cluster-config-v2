@@ -8,14 +8,15 @@ patches:
         value:
           principal:
             allowedNamespaces:
-              - cluster-*
+              - "cluster-*"
             enabled: true
             image: 'quay.io/argoprojlabs/argocd-agent:v0.5.1'
             jwtAllowGenerate: true
             auth: mtls:CN=([^,]+)
       - op: add
         path: /spec/sourceNamespaces
-        value: cluster-*
+        value:
+          - cluster-*
       - op: add
         path: /spec/controller/enabled
         value: false
