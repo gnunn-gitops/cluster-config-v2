@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-agent-principal-tls
+spec:
+  secretName: argocd-agent-principal-tls
+  issuerRef:
+    name: argocd-agent-ca
+    kind: Issuer
+  commonName: principal
+  subject:
+    organizationalUnits:
+      - ocplab.com
+  dnsNames:
+  - openshift-gitops-agent-principal-argocd.apps.hub.ocplab.com

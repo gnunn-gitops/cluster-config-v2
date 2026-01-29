@@ -1,0 +1,9 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: argocd-agent-ca
+spec:
+  ca:
+    secretName: argocd-agent-issuer-ca
+  privateKey:
+    rotationPolicy: Never

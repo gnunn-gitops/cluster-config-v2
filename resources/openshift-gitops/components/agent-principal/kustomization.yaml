@@ -2,8 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 
 resources:
-- argocd-agent-ca-secret.yaml
+- argocd-issuer-ca-secret.yaml
+- argocd-ca-secret.yaml
 - argocd-agent-jwt-signing-secret.yaml
+- issuer.yaml
+- principal-cert.yaml
+- resource-proxy.yaml
 
 patches:
   - patch: |-

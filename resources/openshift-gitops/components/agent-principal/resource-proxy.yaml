@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-agent-resource-proxy-tls
+spec:
+  secretName: argocd-agent-resource-proxy-tls
+  issuerRef:
+    name: argocd-agent-ca
+    kind: Issuer
+  commonName: resource-proxy
+  subject:
+    organizationalUnits:
+      - ocplab.com
+  dnsNames:
+  - openshift-gitops-agent-principal-resource-proxy.argocd.svc.cluster.local
