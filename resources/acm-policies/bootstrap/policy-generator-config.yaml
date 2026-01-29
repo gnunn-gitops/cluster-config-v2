@@ -9,18 +9,14 @@ placementBindingDefaults:
   name: "bootstrap"
 policies:
   - name: eso-secret-store
-    configurationPolicyAnnotations:
-      apps.open-cluster-management.io/reconcile-option: replace
     manifests:
       - path: manifests/eso-secret-store/base/
   - name: gitops-subscription
-    configurationPolicyAnnotations:
-      apps.open-cluster-management.io/reconcile-option: replace
     manifests:
       - path: manifests/gitops-subscription/base/
   - name: gitops-control-plane
     configurationPolicyAnnotations:
-      apps.open-cluster-management.io/reconcile-option: replace
+      policy.open-cluster-management.io/disable-templates: "true"
     manifests:
       - path: manifests/gitops-control-plane/base/
 policySets:
