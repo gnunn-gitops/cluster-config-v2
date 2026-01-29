@@ -5,5 +5,3 @@ metadata:
 spec:
   ca:
     secretName: argocd-agent-issuer-ca
-  privateKey:
-    rotationPolicy: Never
