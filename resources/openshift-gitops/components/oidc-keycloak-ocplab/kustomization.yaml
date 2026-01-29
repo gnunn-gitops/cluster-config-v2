@@ -8,13 +8,12 @@ patches:
   - patch: |-
       - op: add
         path: /spec/oidcConfig
-        value:
-          oidcConfig: |
-            name: Keycloak
-            issuer: https://sso.ocplab.com/realms/ocplab
-            clientID: argocd
-            clientSecret: $oidc.keycloak.clientSecret
-            requestedScopes: ["openid", "profile", "email", "groups"]
+        value: |
+          name: Keycloak
+          issuer: https://sso.ocplab.com/realms/ocplab
+          clientID: argocd
+          clientSecret: $oidc.keycloak.clientSecret
+          requestedScopes: ["openid", "profile", "email", "groups"]
     target:
       kind: ArgoCD
   - patch: |-
