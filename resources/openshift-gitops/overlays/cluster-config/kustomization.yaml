@@ -18,6 +18,5 @@ components:
 - ../../components/oidc-keycloak-ocplab
 
 resources:
-- argocd-agent-ca-secret.yaml
 - ../../base
 
