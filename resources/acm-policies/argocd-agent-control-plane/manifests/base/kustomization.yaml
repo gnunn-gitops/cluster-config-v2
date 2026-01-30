@@ -6,26 +6,22 @@ namespace: argocd
 resources:
 - github.com/gnunn-gitops/cluster-config-v2/resources/openshift-gitops/overlays/control-plane
 
-# Use ACM templates to lookup host for route, unfortunately OU has to be hard coded since it depends on the cert
-# patches:
-#   - patch: |-
-#       - op: replace
-#         path: /spec/dnsNames
-#         value: '{{hub "(lookup "route.openshift.io/v1" "Route" argocd" "argocd-principal").spec.host hub }}'
-#       - op: replace
-#         path: /spec/organizationalUnit
-#         value: ocplab.com
-#     target:
-#       kind: Certificate
-#       name: argocd-agent-principal-tls
-#   - patch: |-
-#       - op: replace
-#         path: /spec/dnsNames
-#         value: '{{ hub "(lookup "route.openshift.io/v1" "Route" argocd" "argocd-resource-proxy").spec.host hub }}'
-#       - op: replace
-#         path: /spec/organizationalUnit
-#         value: ocplab.com
-#     target:
-#       kind: Certificate
-#       name: argocd-agent-resource-proxy-tls
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/dnsNames
+        value: openshift-gitops-agent-principal-argocd.apps.hub.ocplab.com
+      - op: replace
+        path: /spec/organizationalUnit
+        value: ocplab.com
+    target:
+      kind: Certificate
+      name: argocd-agent-principal-tls
+  - patch: |-
+      - op: replace
+        path: /spec/organizationalUnit
+        value: ocplab.com
+    target:
+      kind: Certificate
+      name: argocd-agent-resource-proxy-tls
 
