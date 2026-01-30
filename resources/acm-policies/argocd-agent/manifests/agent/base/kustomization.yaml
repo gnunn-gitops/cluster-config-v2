@@ -1,0 +1,13 @@
+resources:
+- namespace.yaml
+- agent-redis-networkpolicy.yaml
+
+helmCharts:
+- name: redhat-argocd-agent
+  version: 0.5.4
+  repo: https://charts.openshift.io
+  namespace: argocd-agent
+  releaseName: argocd-agent
+  valuesFile: values.yaml
+
+

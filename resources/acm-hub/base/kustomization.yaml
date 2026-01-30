@@ -5,3 +5,5 @@ namespace: open-cluster-management
 
 resources:
 - multiclusterhub.yaml
+- acm-policies-namespace.yaml
+- global-managedclusterbindingset.yaml

@@ -1,0 +1,49 @@
+# Note from default values.yaml in chart, I've removed stuff
+# I likely will not change.
+
+## @section Agent Parameters
+# -- Agent mode of operation.
+agentMode: "managed"
+# -- Authentication mode for connecting to the principal.
+auth: "mtls:any"
+# -- Log level for the agent.
+logLevel: "info"
+# -- Log format for the agent (text or json).
+logFormat: "text"
+# -- Principal server address (hostname or host:port).
+server: "openshift-gitops-agent-principal-argocd.apps.hub.ocplab.com"
+# -- Principal server port.
+serverPort: "443"
+# -- Metrics server port exposed by the agent.
+metricsPort: "8181"
+# -- Whether to skip TLS verification for client connections.
+tlsClientInSecure: "false"
+# -- Healthz server port exposed by the agent.
+healthzPort: "8002"
+# -- Redis address used by the agent.
+redisAddress: "argocd-redis:6379"
+# -- Redis username for authentication.
+redisUsername: ""
+# -- ArgoCD Redis password secret name.
+argoCdRedisSecretName: "argocd-redis"
+# -- ArgoCD Redis password key.
+argoCdRedisPasswordKey: "auth"
+# -- Whether to enable WebSocket connections.
+enableWebSocket: false
+# -- Whether to enable gRPC compression.
+enableCompression: false
+# -- Port for pprof server (0 disables pprof).
+pprofPort: "0"
+# -- Whether to enable resource proxy.
+enableResourceProxy: true
+# -- Cache refresh interval.
+cacheRefreshInterval: "10s"
+# -- Keep-alive interval for connections.
+keepAliveInterval: "50s"
+# -- Path to the TLS client key.
+tlsClientKeyPath: ""
+# -- Path to the TLS client certificate.
+tlsClientCertPath: ""
+# -- Path to the TLS root CA certificate.
+tlsRootCAPath: ""
+

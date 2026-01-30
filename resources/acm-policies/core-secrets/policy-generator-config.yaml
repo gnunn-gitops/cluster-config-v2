@@ -1,0 +1,14 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: core-secrets
+policyDefaults:
+  namespace: core-secrets
+  remediationAction: enforce
+placementBindingDefaults:
+  name: "core-secrets"
+policies:
+  - name: core-secrets
+    manifests:
+      - path: manifests/base/
+

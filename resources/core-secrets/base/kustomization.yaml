@@ -1,4 +1,4 @@
-namespace: acm-policies
+namespace: core-secrets
 
 resources:
 - namespace.yaml

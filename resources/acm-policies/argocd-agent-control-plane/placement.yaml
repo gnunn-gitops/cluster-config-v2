@@ -1,28 +1,27 @@
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: bootstrap
-  namespace: acm-policies
+  name: argocd-agent-control-plane
 spec:
   clusterSets:
   - global
+  numberOfClusters: 1
   predicates:
   - requiredClusterSelector:
       labelSelector:
         matchExpressions:
-        - key: bootstrap
+        - key: argocd-agent-control-plane
           operator: Exists
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: bootstrap
-  namespace: acm-policies
+  name: argocd-agent-control-plane
 placementRef:
   apiGroup: cluster.open-cluster-management.io
   kind: Placement
-  name: bootstrap
+  name: argocd-agent-control-plane
 subjects:
 - apiGroup: policy.open-cluster-management.io
   kind: PolicySet
-  name: bootstrap
+  name: argocd-agent-control-plane

@@ -1,0 +1,26 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: core-secrets
+spec:
+  clusterSets:
+  - global
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+        - key: coreSecret
+          operator: Exists
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: core-secrets
+placementRef:
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+  name: core-secrets
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: PolicySet
+  name: core-secrets
