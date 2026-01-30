@@ -9,17 +9,17 @@ resources:
 patches:
   - patch: |-
       - op: replace
-        path: /spec/dnsNames
+        path: /spec/dnsNames/0
         value: openshift-gitops-agent-principal-argocd.apps.hub.ocplab.com
       - op: replace
-        path: /spec/subject/organizationalUnit
+        path: /spec/subject/organizationalUnits/0
         value: ocplab.com
     target:
       kind: Certificate
       name: argocd-agent-principal-tls
   - patch: |-
       - op: replace
-        path: /spec/subject/organizationalUnit
+        path: /spec/subject/organizationalUnits/0
         value: ocplab.com
     target:
       kind: Certificate
