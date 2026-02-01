@@ -6,6 +6,7 @@ namespace: argocd
 resources:
 - github.com/gnunn-gitops/cluster-config-v2/resources/openshift-gitops/overlays/control-plane
 
+# Todo: Investigate using a seperate policy to set DNS based on route host
 patches:
   - patch: |-
       - op: replace

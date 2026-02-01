@@ -1,0 +1,53 @@
+---
+object-templates-raw: |
+  ## look through all of the managed clusters, and find the onces where argo-agent should be running
+  {{- range $mc := (lookup "cluster.open-cluster-management.io/v1" "ManagedCluster" "" "" "argocd-agent").items }}
+    {{- $mc_name := $mc.metadata.name }}
+    {{- $agent_name := $mc.metadata.labels.argocd-agent}}
+
+  - complianceType: musthave
+    objectDefinition:
+      kind: Namespace
+      apiVersion: v1
+      metadata:
+        name: argocd-agent-{{ $agent_name }}
+
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: cert-manager.io/v1
+      kind: Certificate
+      metadata:
+        name:
+        namespace: argocd
+      spec:
+        secretName: {{ $agent_name }}-agent
+        issuerRef:
+          name: argocd-agent-ca
+          kind: Issuer
+        commonName: {{ $agent_name }}
+        subject:
+          organizationalUnits:
+            - ocplab.com
+        dnsNames:
+        - {{ $agent_name }}.ocplab.com
+
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: AppProject
+      namespace: argocd
+      metadata:
+        name: {{ $agent_name }}
+        namespace: argocd
+      spec:
+        clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+        destinations:
+        - namespace: '*'
+          server: '*'
+        sourceRepos:
+        - '*'
+        sourceNamespaces:
+        - {{ $agent_name }}
+  {{- end }}

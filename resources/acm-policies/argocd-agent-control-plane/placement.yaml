@@ -12,16 +12,16 @@ spec:
         matchExpressions:
         - key: argocd-agent-control-plane
           operator: Exists
----
-apiVersion: policy.open-cluster-management.io/v1
-kind: PlacementBinding
-metadata:
-  name: argocd-agent-control-plane
-placementRef:
-  apiGroup: cluster.open-cluster-management.io
-  kind: Placement
-  name: argocd-agent-control-plane
-subjects:
-- apiGroup: policy.open-cluster-management.io
-  kind: PolicySet
-  name: argocd-agent-control-plane
+# ---
+# apiVersion: policy.open-cluster-management.io/v1
+# kind: PlacementBinding
+# metadata:
+#   name: argocd-agent-control-plane
+# placementRef:
+#   apiGroup: cluster.open-cluster-management.io
+#   kind: Placement
+#   name: argocd-agent-control-plane
+# subjects:
+# - apiGroup: policy.open-cluster-management.io
+#   kind: PolicySet
+#   name: argocd-agent-control-plane

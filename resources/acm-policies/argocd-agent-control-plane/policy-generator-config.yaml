@@ -2,14 +2,28 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PolicyGenerator
 metadata:
   name: argocd-agent-control-plane
+placementBindingDefaults:
+  name: argocd-agent-control-plane
 policyDefaults:
   namespace: acm-policies
   remediationAction: enforce
-placementBindingDefaults:
-  name: argocd-agent-control-plane
 policies:
   - name: argocd-agent-control-plane
     configurationPolicyAnnotations:
       policy.open-cluster-management.io/disable-templates: "true"
     manifests:
-      - path: manifests/base/
+      - path: manifests/argocd-control-plane/base/
+    # placement:
+    #   placementName: argocd-agent-control-plane
+  - name: argocd-agent-register
+    manifests:
+      - path: manifests/argocd-agent-register
+policySets:
+  - name: argocd-agent-control-plane
+    description: Argo CD Agent Control Plane
+    placement:
+      placementName: argocd-agent-control-plane
+    generatePolicySetPlacement: true
+    policies:
+      - argocd-agent-control-plane
+      - argocd-agent-register
