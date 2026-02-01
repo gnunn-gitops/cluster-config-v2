@@ -13,8 +13,6 @@ policies:
       policy.open-cluster-management.io/disable-templates: "true"
     manifests:
       - path: manifests/argocd-control-plane/base/
-    # placement:
-    #   placementName: argocd-agent-control-plane
   - name: argocd-agent-register
     manifests:
       - path: manifests/argocd-agent-register

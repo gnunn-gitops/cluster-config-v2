@@ -9,7 +9,7 @@ spec:
   - requiredClusterSelector:
       labelSelector:
         matchExpressions:
-        - key: coreSecret
+        - key: core-secret
           operator: Exists
 ---
 apiVersion: policy.open-cluster-management.io/v1
