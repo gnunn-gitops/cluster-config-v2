@@ -3,7 +3,7 @@ object-templates-raw: |
   ## look through all of the managed clusters, and find the onces where argo-agent should be running
   {{- range $mc := (lookup "cluster.open-cluster-management.io/v1" "ManagedCluster" "" "" "argocd-agent").items }}
     {{- $mc_name := $mc.metadata.name }}
-    {{- $agent_name := $mc.metadata.labels.argocd-agent}}
+    {{- $agent_name := (index $mc.metadata.labels "argocd-agent")}}
 
   - complianceType: musthave
     objectDefinition:
@@ -35,7 +35,6 @@ object-templates-raw: |
     objectDefinition:
       apiVersion: argoproj.io/v1alpha1
       kind: AppProject
-      namespace: argocd
       metadata:
         name: argocd-agent-{{ $agent_name }}
         namespace: argocd

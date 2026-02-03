@@ -1,6 +1,0 @@
-namespace: gitops-agent
-
-resources:
-- namespace.yaml
-- argocd.yaml
-

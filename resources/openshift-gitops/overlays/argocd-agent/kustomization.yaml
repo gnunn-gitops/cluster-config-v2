@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: argocd-agent
+
+components:
+- ../../components/action-compliance
+- ../../components/extension-assistant-lightspeed
+- ../../components/oidc-keycloak-ocplab
+
+helmCharts:
+- name: redhat-argocd-agent
+  version: 0.5.4
+  repo: https://charts.openshift.io
+  namespace: argocd-agent
+  releaseName: argocd-agent
+  valuesFile: values.yaml
+
+resources:
+- ../../base
+- agent-redis-networkpolicy.yaml
+- application-controller-cluster-admin-role.yaml
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/server/enabled
+        value: false
+    target:
+      kind: ArgoCD
