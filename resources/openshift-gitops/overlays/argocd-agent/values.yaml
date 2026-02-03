@@ -11,7 +11,7 @@ logLevel: "info"
 # -- Log format for the agent (text or json).
 logFormat: "text"
 # -- Principal server address (hostname or host:port).
-server: "openshift-gitops-agent-principal-argocd.apps.hub.ocplab.com"
+server: "argocd-agent-principal-argocd.apps.hub.ocplab.com"
 # -- Principal server port.
 serverPort: "443"
 # -- Metrics server port exposed by the agent.
