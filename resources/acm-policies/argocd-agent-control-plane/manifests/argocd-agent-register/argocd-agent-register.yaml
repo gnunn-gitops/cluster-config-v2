@@ -82,10 +82,8 @@ object-templates-raw: |
       stringData:
         config: |
           {
-            "username": "foo",
-            "password": "bar",
             "tlsClientConfig": {
-                "insecure": false
+                "insecure": false,
                 "certData": "{{ (fromSecret "argocd" (printf "argocd-principal-%s" $agent_name ) "tls.crt") }}",
                 "keyData": "{{ (fromSecret "argocd" (printf "argocd-principal-%s" $agent_name ) "tls.key") }}",
                 "caData": "{{ (fromSecret "argocd" (printf "argocd-principal-%s" $agent_name ) "ca.crt") }}"
