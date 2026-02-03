@@ -13,7 +13,27 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: view
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: argocd-agent-policy
+  namespace: acm-policies
+---
+# Needs permissions to read ManagedCluster
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: argocd-agent-policy
+    app.kubernetes.io/managed-by: rhacm
+    app.kubernetes.io/name: argocd-agent-policy
+    app.kubernetes.io/part-of: argocd-agent
+  name: argocd-agent-policy
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  # Troubleshoot by trying out the cluster-reader role
+  name: cluster-reader
 subjects:
 - kind: ServiceAccount
   name: argocd-agent-policy

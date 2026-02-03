@@ -6,5 +6,5 @@ namespace: argocd-agent
 resources:
 - github.com/gnunn-gitops/cluster-config-v2/resources/openshift-gitops/overlays/argocd-agent
 - argocd-agent-ca.yaml
-# - argocd-agent-client-tls.yaml
+- argocd-agent-client-tls.yaml
 

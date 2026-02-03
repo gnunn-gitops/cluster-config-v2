@@ -17,7 +17,7 @@ serverPort: "443"
 # -- Metrics server port exposed by the agent.
 metricsPort: "8181"
 # -- Whether to skip TLS verification for client connections.
-tlsClientInSecure: "false"
+tlsClientInSecure: "true"
 # -- Healthz server port exposed by the agent.
 healthzPort: "8002"
 # -- Redis address used by the agent.

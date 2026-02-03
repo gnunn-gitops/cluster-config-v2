@@ -4,7 +4,7 @@ metadata:
   name: argocd-agent-ca
   namespace: argocd-agent
 data:
-  ca.crt: '{{ hub (fromSecret "argocd" "argocd-agent-ca" "ca.crt") hub }}'
+  ca.crt: '{{hub (fromSecret "argocd" "argocd-agent-ca"  "ca.crt") hub}}'
 
 
 

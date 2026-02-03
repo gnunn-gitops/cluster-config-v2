@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - placement.yaml
 - policy-service-account.yaml
+- policy-clusterrole.yaml
 - policy-rolebinding.yaml
 
 generators:
