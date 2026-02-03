@@ -1,8 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: argocd
+namespace: argocd-agent
 
 resources:
 - github.com/gnunn-gitops/cluster-config-v2/resources/openshift-gitops/overlays/argocd-agent
+- argocd-agent-ca.yaml
+# - argocd-agent-client-tls.yaml
 

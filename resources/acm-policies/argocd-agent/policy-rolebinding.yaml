@@ -1,0 +1,20 @@
+# Give permissions to SA in acm-policies to read secrets from argocd namespace
+# Used to copy certificate secrets from hub to managed clusters
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: argocd-agent-policy
+    app.kubernetes.io/managed-by: rhacm
+    app.kubernetes.io/name: argocd-agent-policy
+    app.kubernetes.io/part-of: argocd-agent
+  name: argocd-agent-policy
+  namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+- kind: ServiceAccount
+  name: argocd-agent-policy
+  namespace: acm-policies

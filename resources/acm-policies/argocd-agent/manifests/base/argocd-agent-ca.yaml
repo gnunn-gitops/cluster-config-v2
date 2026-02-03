@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-agent-ca
+  namespace: argocd-agent
+data:
+  ca.crt: '{{ hub (fromSecret "argocd" "argocd-agent-ca" "ca.crt") hub }}'
+
+
+
+
