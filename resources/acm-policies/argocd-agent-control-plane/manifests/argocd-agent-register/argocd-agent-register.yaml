@@ -17,10 +17,10 @@ object-templates-raw: |
       apiVersion: cert-manager.io/v1
       kind: Certificate
       metadata:
-        name:
+        name: argocd-agent-{{ $agent_name }}
         namespace: argocd
       spec:
-        secretName: {{ $agent_name }}-agent
+        secretName: argocd-agent-{{ $agent_name }}
         issuerRef:
           name: argocd-agent-ca
           kind: Issuer
@@ -37,7 +37,7 @@ object-templates-raw: |
       kind: AppProject
       namespace: argocd
       metadata:
-        name: {{ $agent_name }}
+        name: argocd-agent-{{ $agent_name }}
         namespace: argocd
       spec:
         clusterResourceWhitelist:
@@ -49,5 +49,5 @@ object-templates-raw: |
         sourceRepos:
         - '*'
         sourceNamespaces:
-        - {{ $agent_name }}
+        - argocd-agent-{{ $agent_name }}
   {{- end }}
