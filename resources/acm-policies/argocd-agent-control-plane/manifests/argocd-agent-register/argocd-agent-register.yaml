@@ -27,7 +27,26 @@ object-templates-raw: |
         commonName: {{ $agent_name }}
         subject:
           organizationalUnits:
-            - ocplab.com
+            - agent.ocplab.com
+        dnsNames:
+        - {{ $agent_name }}.ocplab.com
+
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: cert-manager.io/v1
+      kind: Certificate
+      metadata:
+        name: argocd-principal-{{ $agent_name }}
+        namespace: argocd
+      spec:
+        secretName: argocd-principal-{{ $agent_name }}
+        issuerRef:
+          name: argocd-agent-ca
+          kind: Issuer
+        commonName: {{ $agent_name }}
+        subject:
+          organizationalUnits:
+            - principal.ocplab.com
         dnsNames:
         - {{ $agent_name }}.ocplab.com
 
@@ -49,4 +68,28 @@ object-templates-raw: |
         - '*'
         sourceNamespaces:
         - argocd-agent-{{ $agent_name }}
+
+  - complianceType: musthave
+    objectDefinition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: argocd-agent-{{ $agent_name }}-cluster
+        namespace: argocd
+        labels:
+          argocd.argoproj.io/secret-type: cluster
+          argocd-agent.argoproj-labs.io/agent-name: argocd-agent-{{ $agent_name }}
+      stringData:
+        config: |
+          {
+            "username": "foo",
+            "password": "bar",
+            "tlsClientConfig": {
+                "insecure": false
+                "certData": "{{ (fromSecret "argocd" (printf "argocd-principal-%s" $agent_name ) "tls.crt") }}",
+                "keyData": "{{ (fromSecret "argocd" (printf "argocd-principal-%s" $agent_name ) "tls.key") }}",
+                "caData": "{{ (fromSecret "argocd" (printf "argocd-principal-%s" $agent_name ) "ca.crt") }}"
+            }
+          }
+
   {{- end }}
