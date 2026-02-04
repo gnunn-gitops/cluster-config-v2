@@ -24,7 +24,7 @@ object-templates-raw: |
         issuerRef:
           name: argocd-agent-ca
           kind: Issuer
-        commonName: {{ $agent_name }}
+        commonName: argocd-agent-{{ $agent_name }}
         subject:
           organizationalUnits:
             - agent.ocplab.com
@@ -43,7 +43,7 @@ object-templates-raw: |
         issuerRef:
           name: argocd-agent-ca
           kind: Issuer
-        commonName: {{ $agent_name }}
+        commonName: argocd-agent-{{ $agent_name }}
         subject:
           organizationalUnits:
             - principal.ocplab.com
