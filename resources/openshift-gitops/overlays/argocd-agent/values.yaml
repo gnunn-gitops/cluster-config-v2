@@ -5,7 +5,7 @@
 # -- Agent mode of operation.
 agentMode: "managed"
 # -- Authentication mode for connecting to the principal.
-auth: "mtls:any"
+auth: "mtls:CN=([^,]+)"
 # -- Log level for the agent.
 logLevel: "info"
 # -- Log format for the agent (text or json).
