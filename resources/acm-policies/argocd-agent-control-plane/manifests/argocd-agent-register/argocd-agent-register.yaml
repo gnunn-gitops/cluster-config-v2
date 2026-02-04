@@ -80,6 +80,8 @@ object-templates-raw: |
           argocd.argoproj.io/secret-type: cluster
           argocd-agent.argoproj-labs.io/agent-name: argocd-agent-{{ $agent_name }}
       stringData:
+        name: argocd-agent-{{ $agent_name }}
+        server: https://argocd-agent-principal-redisproxy.argocd.svc.cluster.local:9090?agentName=argocd-agent-{{ $agent_name }}:9090
         config: |
           {
             "tlsClientConfig": {
