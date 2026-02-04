@@ -3,6 +3,7 @@ kind: PolicyGenerator
 metadata:
   name: bootstrap-policy-generator
 policyDefaults:
+  complianceType: "mustonlyhave"
   namespace: acm-policies
   remediationAction: enforce
 placementBindingDefaults:

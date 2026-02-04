@@ -5,14 +5,14 @@ object-templates-raw: |
     {{- $mc_name := $mc.metadata.name }}
     {{- $agent_name := (index $mc.metadata.labels "argocd-agent")}}
 
-  - complianceType: musthave
+  - complianceType: mustonlyhave
     objectDefinition:
       kind: Namespace
       apiVersion: v1
       metadata:
         name: argocd-agent-{{ $agent_name }}
 
-  - complianceType: musthave
+  - complianceType: mustonlyhave
     objectDefinition:
       apiVersion: cert-manager.io/v1
       kind: Certificate
@@ -31,7 +31,7 @@ object-templates-raw: |
         dnsNames:
         - {{ $agent_name }}.ocplab.com
 
-  - complianceType: musthave
+  - complianceType: mustonlyhave
     objectDefinition:
       apiVersion: cert-manager.io/v1
       kind: Certificate
@@ -50,7 +50,7 @@ object-templates-raw: |
         dnsNames:
         - {{ $agent_name }}.ocplab.com
 
-  - complianceType: musthave
+  - complianceType: mustonlyhave
     objectDefinition:
       apiVersion: argoproj.io/v1alpha1
       kind: AppProject
@@ -69,7 +69,7 @@ object-templates-raw: |
         sourceNamespaces:
         - argocd-agent-{{ $agent_name }}
 
-  - complianceType: musthave
+  - complianceType: mustonlyhave
     objectDefinition:
       apiVersion: v1
       kind: Secret

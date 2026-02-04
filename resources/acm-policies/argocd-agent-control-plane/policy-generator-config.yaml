@@ -5,6 +5,7 @@ metadata:
 placementBindingDefaults:
   name: argocd-agent-control-plane
 policyDefaults:
+  complianceType: "mustonlyhave"
   namespace: acm-policies
   remediationAction: enforce
 policies:

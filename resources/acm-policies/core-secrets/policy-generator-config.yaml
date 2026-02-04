@@ -3,6 +3,7 @@ kind: PolicyGenerator
 metadata:
   name: core-secrets
 policyDefaults:
+  complianceType: "mustonlyhave"
   namespace: core-secrets
   remediationAction: enforce
 placementBindingDefaults:
