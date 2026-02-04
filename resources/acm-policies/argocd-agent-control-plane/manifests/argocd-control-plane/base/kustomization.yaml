@@ -11,7 +11,7 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/dnsNames/0
-        value: openshift-gitops-agent-principal-argocd.apps.hub.ocplab.com
+        value: argocd-agent-principal-argocd.apps.hub.ocplab.com
       - op: replace
         path: /spec/subject/organizationalUnits/0
         value: ocplab.com
