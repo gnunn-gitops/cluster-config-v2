@@ -19,6 +19,10 @@ policies:
     description: Register Argo CD Agents on Control Plane
     manifests:
       - path: manifests/argocd-agent-register
+  - name: argocd-agent-cluster-secret
+    description: Create Argo CD Agents Cluster Secret on Control Plane
+    manifests:
+      - path: manifests/argocd-agent-cluster-secret
 policySets:
   - name: argocd-agent-control-plane
     description: Argo CD Agent Control Plane
