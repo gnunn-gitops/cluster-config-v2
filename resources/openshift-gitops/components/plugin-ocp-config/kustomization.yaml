@@ -32,7 +32,7 @@ patches:
       kind: ArgoCD
   - patch: |-
       - op: add
-        path: /spec/repo/sidecarContainers/volumes/-
+        path: /spec/repo/volumes/-
         value:
           configMap:
             name: setenv-cmp-plugin
@@ -52,6 +52,6 @@ patches:
           - mountPath: /home/argocd/cmp-server/config/plugin.yaml
             subPath: plugin.yaml
             name: setenv-cmp-plugin
-
-
+    target:
+      kind: ArgoCD
 

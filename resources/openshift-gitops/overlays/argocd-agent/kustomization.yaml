@@ -4,9 +4,14 @@ kind: Kustomization
 namespace: argocd-agent
 
 components:
-- ../../components/action-compliance
-- ../../components/extension-assistant-lightspeed
-- ../../components/oidc-keycloak-ocplab
+- ../../components/health-application
+- ../../components/health-build
+- ../../components/health-imagestream
+- ../../components/health-pvc
+- ../../components/health-rolloutmanager
+- ../../components/health-stackrox
+- ../../components/health-subscription
+# - ../../components/plugin-ocp-config
 
 helmCharts:
 - name: redhat-argocd-agent
@@ -25,6 +30,9 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/server/enabled
+        value: false
+      - op: replace
+        path: /spec/server/route/enabled
         value: false
     target:
       kind: ArgoCD

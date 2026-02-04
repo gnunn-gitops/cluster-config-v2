@@ -81,7 +81,7 @@ object-templates-raw: |
           argocd-agent.argoproj-labs.io/agent-name: argocd-agent-{{ $agent_name }}
       stringData:
         name: argocd-agent-{{ $agent_name }}
-        server: https://argocd-agent-principal-resource-proxy.argocd.svc.cluster.local:9090?agentName=argocd-agent-{{ $agent_name }}:9090
+        server: https://argocd-agent-principal-resource-proxy.argocd.svc.cluster.local:9090?agentName=argocd-agent-{{ $agent_name }}
         config: |
           {
             "tlsClientConfig": {
