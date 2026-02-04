@@ -19,6 +19,8 @@ helmCharts:
   repo: https://charts.openshift.io
   namespace: argocd-agent
   releaseName: argocd-agent
+  valuesInline:
+    fullnameOverride: argocd-agent
   valuesFile: values.yaml
 
 resources:
