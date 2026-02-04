@@ -29,7 +29,7 @@ object-templates-raw: |
           organizationalUnits:
             - agent.ocplab.com
         dnsNames:
-        - {{ $agent_name }}.ocplab.com
+        - argocd-agent-{{ $agent_name }}.ocplab.com
 
   - complianceType: mustonlyhave
     objectDefinition:
@@ -48,7 +48,7 @@ object-templates-raw: |
           organizationalUnits:
             - principal.ocplab.com
         dnsNames:
-        - {{ $agent_name }}.ocplab.com
+        - argocd-agent-{{ $agent_name }}.ocplab.com
 
   - complianceType: mustonlyhave
     objectDefinition:
