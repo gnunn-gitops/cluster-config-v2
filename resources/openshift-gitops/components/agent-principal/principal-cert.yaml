@@ -3,13 +3,13 @@ kind: Certificate
 metadata:
   name: argocd-agent-principal-tls
 spec:
-  secretName: argocd-agent-principal-tls
+  dnsNames:
+  - argocd-agent-principal-argocd.apps.hub.ocplab.com
   issuerRef:
     name: argocd-agent-ca
     kind: Issuer
   commonName: principal
+  secretName: argocd-agent-principal-tls
   subject:
     organizationalUnits:
       - ocplab.com
-  dnsNames:
-  - argocd-agent-principal-argocd.apps.hub.ocplab.com

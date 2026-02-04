@@ -27,7 +27,9 @@ object-templates-raw: |
         commonName: argocd-agent-{{ $agent_name }}
         subject:
           organizationalUnits:
-            - agent.ocplab.com
+            - ocplab.com
+        usages:
+          - client auth
         dnsNames:
         - argocd-agent-{{ $agent_name }}.ocplab.com
 
@@ -46,7 +48,9 @@ object-templates-raw: |
         commonName: argocd-agent-{{ $agent_name }}
         subject:
           organizationalUnits:
-            - principal.ocplab.com
+            - ocplab.com
+        usages:
+          - server auth
         dnsNames:
         - argocd-agent-{{ $agent_name }}.ocplab.com
 
