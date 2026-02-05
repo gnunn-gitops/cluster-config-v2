@@ -28,20 +28,14 @@ patches:
               value: '{{ (lookup "config.openshift.io/v1" "DNS" "" "cluster").spec.baseDomain }}'
             - name: COLOR
               value: '{{ default "0066CC" (fromClusterClaim "color") }}'
-    target:
-      kind: ArgoCD
-  - patch: |-
       - op: add
         path: /spec/repo/volumes/-
         value:
           configMap:
             name: setenv-cmp-plugin
           name: setenv-cmp-plugin
-    target:
-      kind: ArgoCD
-  - patch: |-
       - op: add
-        path: /spec/repo/sidecarContainers/volumeMounts
+        path: /spec/repo/volumeMounts
         value:
           - mountPath: /var/run/argocd
             name: var-files
@@ -54,4 +48,3 @@ patches:
             name: setenv-cmp-plugin
     target:
       kind: ArgoCD
-
