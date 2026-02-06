@@ -39,5 +39,6 @@ patches:
         value:
           - "--applicationset-namespaces"
           - "argocd-agent-*"
+          - "--enable-scm-providers=false"
     target:
       kind: ArgoCD
