@@ -34,5 +34,10 @@ patches:
       - op: replace
         path: /spec/applicationSet/enabled
         value: true
+      - op: add
+        path: /spec/applicationSet/extraCommandArgs
+        value:
+          - "--applicationset-namespaces"
+          - "argocd-agent-*"
     target:
       kind: ArgoCD
