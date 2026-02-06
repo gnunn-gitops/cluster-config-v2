@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+ name: cluster-config
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+        revision: main
+        directories:
+          - path: apps/*/*/overlays/all
+          - path: apps/*/*/overlays/hub
+          - path: apps/*/*/overlays/hub-prod
+          - path: apps/*/*/overlays/hub-prod-dc1
+  template:
+    metadata:
+      name: '{{.path.basename}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+        targetRevision: main
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.path.basename}}'
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
