@@ -31,5 +31,8 @@ patches:
         value: false
       - op: remove
         path: /spec/resourceExclusions
+      - op: replace
+        path: /spec/applicationSet/enabled
+        value: true
     target:
       kind: ArgoCD

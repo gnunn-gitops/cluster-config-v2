@@ -27,7 +27,7 @@ spec:
         path: '{{.path.path}}'
       destination:
         name: local-cluster
-        namespace: '{{.path.basename}}'
+        namespace: '{{index .path.segments 1}}'
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
