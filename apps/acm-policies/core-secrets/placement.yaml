@@ -11,16 +11,3 @@ spec:
         matchExpressions:
         - key: core-secret
           operator: Exists
----
-apiVersion: policy.open-cluster-management.io/v1
-kind: PlacementBinding
-metadata:
-  name: core-secrets
-placementRef:
-  apiGroup: cluster.open-cluster-management.io
-  kind: Placement
-  name: core-secrets
-subjects:
-- apiGroup: policy.open-cluster-management.io
-  kind: PolicySet
-  name: core-secrets

@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: openshift-gitops-operator
 
 resources:
-- github.com/gnunn-gitops/cluster-config-v2/resources/openshift-gitops-operator/base
+- github.com/gnunn-gitops/cluster-config-v2/apps/openshift-gitops-operator/base
