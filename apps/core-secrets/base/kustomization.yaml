@@ -2,5 +2,5 @@ namespace: core-secrets
 
 resources:
 - namespace.yaml
-- eso-token-local-hub-secret.yaml
+- eso-token-hub-prod-local-secret.yaml
 

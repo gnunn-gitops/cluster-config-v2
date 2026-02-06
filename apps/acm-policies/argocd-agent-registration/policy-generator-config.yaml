@@ -6,6 +6,7 @@ placementBindingDefaults:
   name: argocd-agent-registration
 policyDefaults:
   complianceType: "mustonlyhave"
+  # Need to keep cluster-secrets in a different manifest for reconciliation
   consolidateManifests: false
   namespace: acm-policies
   remediationAction: enforce
