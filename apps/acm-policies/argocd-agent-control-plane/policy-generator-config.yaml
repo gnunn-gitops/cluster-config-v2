@@ -9,12 +9,6 @@ policyDefaults:
   namespace: acm-policies
   remediationAction: enforce
 policies:
-  - name: argocd-agent-control-plane
-    description: Argo CD Agent Control Plane
-    configurationPolicyAnnotations:
-      policy.open-cluster-management.io/disable-templates: "true"
-    manifests:
-      - path: manifests/argocd-control-plane/base/
   - name: argocd-agent-register
     description: Register Argo CD Agents on Control Plane
     manifests:
@@ -25,7 +19,7 @@ policies:
       - path: manifests/argocd-agent-cluster-secret
 policySets:
   - name: argocd-agent-control-plane
-    description: Argo CD Agent Control Plane
+    description: Argo CD Agent Control Plane Registration
     placement:
       placementName: argocd-agent-control-plane
     generatePolicySetPlacement: true
