@@ -8,10 +8,10 @@ spec:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         revision: main
         directories:
-          - path: apps/*/*/overlays/all
-          - path: apps/*/*/overlays/hub
-          - path: apps/*/*/overlays/hub-prod
-          - path: apps/*/*/overlays/hub-prod-dc1
+          - path: apps/**/overlays/all
+          - path: apps/**/overlays/hub
+          - path: apps/**/overlays/hub-prod
+          - path: apps/**/overlays/hub-prod-dc1
   template:
     metadata:
       name: '{{.path.basename}}'
