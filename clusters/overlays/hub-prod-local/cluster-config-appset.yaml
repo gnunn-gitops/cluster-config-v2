@@ -14,6 +14,39 @@ spec:
           - path: apps/**/overlays/hub
           - path: apps/**/overlays/hub-prod
           - path: apps/**/overlays/hub-prod-local
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: name
+              operator: In
+              values: &core
+                - external-secrets
+                - cert-manager-operator
+
+        - matchExpressions:
+            - key: name
+              operator: In
+              values: &config
+                - cert-manager
+                - cluster-certs
+
+        # - matchExpressions:
+        #     - key: name
+        #       operator: In
+        #       values: &operators
+        #         - cert-manager-issuers
+        #         - cluster-certs
+
+        - matchExpressions:
+            - key: name
+              operator: NotIn
+              values:
+                - "*core"
+                - "*config"
+                # - *operators
+
   template:
     metadata:
       name: '{{index .path.segments 1}}'
