@@ -70,3 +70,13 @@ spec:
           enabled: true
           selfHeal: true
           prune: false
+  templatePatch: |
+    {{- if or (eq (index .path.segments 1) "external-secrets") }}
+    metadata:
+      annotations:
+        argocd.argoproj.io/compare-options: ServerSideDiff=true
+    spec:
+      syncPolicy:
+        syncOptions:
+          - ServerSideApply=true
+    {{- end }}
