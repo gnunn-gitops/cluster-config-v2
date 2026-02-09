@@ -17,7 +17,7 @@ patches:
         path: /spec/commonName
         value: "*.apps.workload.ocplab.com"
       - op: replace
-        path: /spec/dnsNames
+        path: /spec/dnsNames/0
         value: "*.apps.workload.ocplab.com"
     target:
       kind: Certificate
@@ -27,7 +27,7 @@ patches:
         path: /spec/commonName
         value: "api.workload.ocplab.com"
       - op: replace
-        path: /spec/dnsNames
+        path: /spec/dnsNames/0
         value: "api.workload.ocplab.com"
     target:
       kind: Certificate
