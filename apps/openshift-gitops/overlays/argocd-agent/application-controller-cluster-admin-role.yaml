@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: argocd-argocd-application-controller
-    namespace: gitops-agent
+    namespace: argocd-agent
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
