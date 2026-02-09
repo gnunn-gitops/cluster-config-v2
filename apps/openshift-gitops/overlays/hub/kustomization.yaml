@@ -12,3 +12,7 @@ components:
 
 resources:
 - ../../base
+# AppSets in Any Namespace require more permissions then what operator gives
+# since it is not supported yet.
+- appset-in-any-namespace-clusterrole.yaml
+- console-link.yaml

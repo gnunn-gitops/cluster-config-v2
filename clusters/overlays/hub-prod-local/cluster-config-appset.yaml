@@ -1,7 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
- name: cluster-config
+  name: cluster-config
+  namespace: argocd-agent-hub-prod-local
+  labels:
+    cluster-name: hub-prod-local
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -49,18 +52,21 @@ spec:
 
   template:
     metadata:
-      name: '{{index .path.segments 1}}'
+      name: "{{index .path.segments 1}}"
       labels:
-        name: '{{index .path.segments 1}}'
+        name: "{{index .path.segments 1}}"
+        cluster-name: hub-prod-local
     spec:
       project: "default"
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
-        path: '{{.path.path}}'
+        path: "{{.path.path}}"
       destination:
-        name: local-cluster
-        namespace: '{{index .path.segments 1}}'
+        name: argocd-agent-hub-prod-local
+        namespace: "{{index .path.segments 1}}"
       syncPolicy:
-        syncOptions:
-        - CreateNamespace=true
+        automated:
+          enabled: true
+          selfHeal: true
+          prune: false
