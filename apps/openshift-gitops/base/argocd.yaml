@@ -8,6 +8,7 @@ spec:
     exec.enabled: "true"
     resource.respectRBAC: "normal"
     resource.ignoreResourceUpdatesEnabled: 'true'
+  kustomizeBuildOptions: "--enable-helm --enable-alpha-plugins"
   server:
     autoscale:
       enabled: false

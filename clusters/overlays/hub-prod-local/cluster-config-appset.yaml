@@ -57,7 +57,7 @@ spec:
         name: "{{index .path.segments 1}}"
         cluster-name: hub-prod-local
     spec:
-      project: "default"
+      project: argocd-agent-hub-prod-local
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
