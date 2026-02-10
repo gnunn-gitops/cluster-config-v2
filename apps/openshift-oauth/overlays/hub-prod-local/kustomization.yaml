@@ -1,0 +1,14 @@
+resources:
+  - ../../base
+
+components:
+  - ../../components/keycloak
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/authentication/logoutRedirect
+        value: https://sso.ocplab.com/realms/ocplab/protocol/openid-connect/logout?client_id=openshift&post_logout_redirect_uri=https://console-openshift-console.apps.hub.ocplab.com
+    target:
+      kind: Console
+      name: cluster
