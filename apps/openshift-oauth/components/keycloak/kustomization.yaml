@@ -4,6 +4,7 @@ kind: Component
 resources:
 - oidc-client-secret.yaml
 - console.yaml
+- cluster-admins-clusterrolebinding.yaml
 
 patches:
   - patch: |-
