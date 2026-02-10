@@ -49,11 +49,8 @@ object-templates-raw: |
         subject:
           organizationalUnits:
             - ocplab.com
-        usages:
-          - server auth
         dnsNames:
         - argocd-agent-{{ $agent_name }}.ocplab.com
-
   - complianceType: mustonlyhave
     objectDefinition:
       apiVersion: argoproj.io/v1alpha1
