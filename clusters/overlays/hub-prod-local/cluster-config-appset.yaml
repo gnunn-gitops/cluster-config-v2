@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: cluster-config
-  namespace: argocd-agent-hub-prod-local
   labels:
     cluster-name: hub-prod-local
 spec:
