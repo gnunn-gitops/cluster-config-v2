@@ -1,0 +1,6 @@
+resources:
+- ../../base
+
+components:
+- ../../components/keycloak
+#- ../../components/redhat-sso
