@@ -2,21 +2,44 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: cluster-config
-  namespace: argocd-agent-hub-prod-local
+  # namespace: argocd-agent-hub-prod-local
   labels:
     cluster-name: hub-prod-local
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-        revision: main
-        directories:
-          - path: apps/**/overlays/all
-          - path: apps/**/overlays/hub
-          - path: apps/**/overlays/hub-prod
-          - path: apps/**/overlays/hub-prod-local
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+              revision: main
+              directories:
+                - path: apps/**/overlays/all
+                - path: apps/**/overlays/hub
+                - path: apps/**/overlays/hub-prod
+                - path: apps/**/overlays/hub-prod-local
+              values:
+                name: "{{ index .path.segments 1 }}"
+                destinationNamespace: "{{ index .path.segments 1 }}"
+                serverSideApply: "false"
+          - merge:
+              mergeKeys:
+                - name
+              generators:
+                - list:
+                    elements:
+                      - name: "{{index .path.segments 1}}"
+                        destinationNamespace: "{{ index .path.segments 1 }}"
+                        serverSideApply: "false"
+                - list:
+                    elements:
+                      - name: openshift-oauth
+                        destinationNamespace: openshift-config
+                      - name: lvm-operator
+                        destinationNamespace: openshift-storage
+                      - name: external-secrets
+                        serverSideApply: "true"
   strategy:
     type: RollingSync
     rollingSync:
@@ -35,26 +58,19 @@ spec:
                 - cert-manager
                 - cluster-certs
 
-        # - matchExpressions:
-        #     - key: name
-        #       operator: In
-        #       values: &operators
-        #         - cert-manager-issuers
-        #         - cluster-certs
-
         - matchExpressions:
             - key: name
               operator: NotIn
               values:
                 - "*core"
                 - "*config"
-                # - *operators
 
   template:
     metadata:
-      name: "{{index .path.segments 1}}"
+      name: "{{ .name }}"
       labels:
-        name: "{{index .path.segments 1}}"
+        name: "{{ .name }}"
+        serverSideApply: "{{ .serverSideApply }}"
         cluster-name: hub-prod-local
     spec:
       project: argocd-agent-hub-prod-local
@@ -64,14 +80,14 @@ spec:
         path: "{{.path.path}}"
       destination:
         name: argocd-agent-hub-prod-local
-        namespace: "{{index .path.segments 1}}"
+        namespace: "{{ .destinationNamespace }}"
       syncPolicy:
         automated:
           enabled: true
           selfHeal: true
           prune: false
   templatePatch: |
-    {{- if or (eq (index .path.segments 1) "external-secrets") }}
+    {{- if eq .serverSideApply "true" }}
     metadata:
       annotations:
         argocd.argoproj.io/compare-options: ServerSideDiff=true
@@ -79,4 +95,4 @@ spec:
       syncPolicy:
         syncOptions:
           - ServerSideApply=true
-    {{- end }}
+      {{- end }}
