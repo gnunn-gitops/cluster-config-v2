@@ -15,20 +15,20 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/commonName
-        value: "*.apps.workload.ocplab.com"
+        value: "*.apps.home.ocplab.com"
       - op: replace
         path: /spec/dnsNames/0
-        value: "*.apps.workload.ocplab.com"
+        value: "*.apps.home.ocplab.com"
     target:
       kind: Certificate
       name: openshift-wildcard
   - patch: |-
       - op: replace
         path: /spec/commonName
-        value: "api.workload.ocplab.com"
+        value: "api.home.ocplab.com"
       - op: replace
         path: /spec/dnsNames/0
-        value: "api.workload.ocplab.com"
+        value: "api.home.ocplab.com"
     target:
       kind: Certificate
       name: openshift-api
