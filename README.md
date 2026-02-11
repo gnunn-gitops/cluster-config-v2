@@ -92,9 +92,9 @@ Here are some early personal thoughts on this new system, first the positives:
 
 * It is much more readable then my previous version, it's super easy to find out which applications
 are included on which clusters by running some simple `ls` commands.
-* The ApplicationSet Progressive Sync works really well with the Argo CD Agent
+* The ApplicationSet Progressive Sync works really well with the Argo CD Agent in managed mode.
 * Adding or selecting new Applications is as easy as creating a new overlay, the ApplicationSet
-will automatically pick it up with no additional configuration in a values file like I used to have.
+will automatically pick it up with no additional configuration required in the values file like I used to have.
 * Versioning should be easier as well since you can simply set the targetRevision in the ApplicationSet versus
 the separate [cluster-config-pins](https://github.com/gnunn-gitops/cluster-config-v2) repository
 I had previously.
@@ -105,7 +105,7 @@ Some minor drawbacks (none of them deal-breakers):
 does not, this one needs a specific ignoreDifferences, etc. I've worked around this in the ApplicationSet
 using a mix of matrix and merge generators to make dealing with it as simple as possible. However a lot
 of this is just the nature of ApplicationSets, it's a trade-off between ease-of-use and flexibility.
-* Part of the exception challenge is setting the `spec.destinaton.namespace` appropriately
+* Part of the exception challenge is setting the `spec.destination.namespace` appropriately
 for Argo CD Applications since folder names don't always align with namespaces. An easy solution is
 to simply leave it blank but my preference is to set it as a mitigation for someone forgetting to set it
 at the Kustomize level. For now I'm leveraging the exception mechanism in the first point to deal with it.
