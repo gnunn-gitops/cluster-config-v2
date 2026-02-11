@@ -6,12 +6,8 @@ policyDefaults:
   complianceType: "mustonlyhave"
   namespace: acm-policies
   remediationAction: enforce
-placementBindingDefaults:
-  name: "gitops-subscription"
+  generatePolicyPlacement: false
 policies:
   - name: gitops-subscription
     manifests:
       - path: manifests/base/
-    placement:
-      placementName: gitops-subscription
-

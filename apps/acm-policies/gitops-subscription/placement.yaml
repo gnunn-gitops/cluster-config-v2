@@ -1,7 +1,7 @@
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: gitops-subscription
+  name: gitops-subscription-agent
 spec:
   clusterSets:
   - global
@@ -11,4 +11,45 @@ spec:
         matchExpressions:
         - key: argocd-agent
           operator: Exists
-
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-gitops-subscription-agent
+  namespace: acm-policies
+placementRef:
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+  name: gitops-subscription-agent
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: Policy
+  name: gitops-subscription
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: gitops-subscription-control-plane
+spec:
+  clusterSets:
+  - global
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+        - key: argocd-agent-control-plane
+          operator: Exists
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-gitops-subscription-control-plane
+  namespace: acm-policies
+placementRef:
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+  name: gitops-subscription-control-plane
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: Policy
+  name: gitops-subscription
