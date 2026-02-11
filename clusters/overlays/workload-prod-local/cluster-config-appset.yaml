@@ -3,7 +3,7 @@ kind: ApplicationSet
 metadata:
   name: cluster-config
   labels:
-    cluster-name: hub-prod-local
+    cluster-name: workload-prod-local
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -15,9 +15,9 @@ spec:
               revision: main
               directories:
                 - path: apps/**/overlays/all
-                - path: apps/**/overlays/hub
-                - path: apps/**/overlays/hub-prod
-                - path: apps/**/overlays/hub-prod-local
+                - path: apps/**/overlays/workload
+                - path: apps/**/overlays/workload-prod
+                - path: apps/**/overlays/workload-prod-local
               values:
                 name: "{{ index .path.segments 1 }}"
                 destinationNamespace: "{{ index .path.segments 1 }}"
@@ -71,15 +71,15 @@ spec:
       labels:
         name: "{{ .name }}"
         serverSideApply: "{{ .serverSideApply }}"
-        cluster-name: hub-prod-local
+        cluster-name: workload-prod-local
     spec:
-      project: argocd-agent-hub-prod-local
+      project: argocd-agent-workload-prod-local
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
         path: "{{.path.path}}"
       destination:
-        name: argocd-agent-hub-prod-local
+        name: argocd-agent-workload-prod-local
         namespace: "{{ .destinationNamespace }}"
       syncPolicy:
         automated:
