@@ -29,15 +29,17 @@ will likely be migrated to a generic RHACM ConfigurationPolicy alongside the exi
 A Cluster naming convention is being used and this naming convention is used to select the
 Applications being deployed on each cluster. The naming convention used is:
 
-&lt;type&gt;-&lt;environment&gt;-&lt;location&gt;
+```
+<type>-<environment>-<location>
+```
 
 1. *type* - this refers to the type or purpose of the cluster, at this moment there are only
 two types: *hub* and *workload*.
 2. *environment* - the environment the cluster represents, i.e. *prod*, *qa*, *dev*, etc
-3. *location* - Where the cluster is located, in this repo there is only one location which
-is my homelab and referred to as `local`
+3. *location* - Where the cluster is located, in this repo there is only one location which is my homelab and referred to as `local` but in the future there could be some
+in `aws` for example.
 
-So using this system you may have clusters named as follows:
+So using this system there may be clusters named as follows:
 
 * `hub-prod-local`
 * `workload-qa-aws`
@@ -54,13 +56,14 @@ acm-operator
      - hub
 ```
 
-Would target the hub folder, similarly an overlay of `workload-prod` would target workload clusters
-in production.
+With an overlay of `hub` this would target hub clusters, similarly an overlay of
+`workload-prod` would target workload clusters in production.
 
-An overlay name of `all` targets all clusters and requires no specific configuration, i.e there
-is no configuration to reflect the type, environment or specific cluster attributes (cluster_id,
-wildcard subdomain, etc). If it needs specific configuration, even for a single use case, it
-needs to move out of `all` and into more specific overlays.
+An overlay name of `all` is used for Applications which target all clusters and require
+no specific configuration, i.e there is no configuration to reflect the type, environment
+or specific cluster attributes (cluster_id, wildcard subdomain, etc). If it needs specific
+configuration, even for a single use case, it needs to move out of `all` and into more
+specific overlays.
 
 The actual selecting of the Application is done by the cluster specific ApplicationSet using
 the git path generator. For example the cluster `hub-prod-local` has the following generator
@@ -78,21 +81,21 @@ generators:
         - path: apps/**/overlays/hub-prod-local
 ```
 
-It's important to note that you cannot have the same Application multiple times so you
+It's important to note that you cannot have the same Application generated multiple times so you
 cannot have an application with both an `all` overlay and a `hub` overlay for example. Addressing
 this might be a fun future project using an ApplicationSet custom plugin.
 
 Finally note that even though a specific naming convention is being used here, Organizations
-wanting to try this should feel free to create a naming convention that works for them. The key
-here is segmenting applications but the actual segments themselves can be changed as needed.
+wanting to try this system should feel free to create a naming convention that works for them. The key
+here is segmenting applications but what the actual segments themselves are can be changed as needed.
 
 ### Early Thoughts on this System
 
-Here are some early personal thoughts on this new system, first the positives:
+Here are some very early personal thoughts on this new system, first the positives:
 
 * It is much more readable then my previous version, it's super easy to find out which applications
 are included on which clusters by running some simple `ls` commands.
-* The ApplicationSet Progressive Sync works really well with the Argo CD Agent in managed mode.
+* The ApplicationSet Progressive Sync works really well with the Argo CD Agent in Managed mode.
 * Adding or selecting new Applications is as easy as creating a new overlay, the ApplicationSet
 will automatically pick it up with no additional configuration required in the values file like I used to have.
 * Versioning should be easier as well since you can simply set the targetRevision in the ApplicationSet versus
