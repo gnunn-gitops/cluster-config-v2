@@ -4,4 +4,30 @@ kind: Kustomization
 namespace: argocd-agent-hub-prod-local
 
 resources:
-- cluster-config-appset.yaml
+- ../../base
+
+patches:
+  - patch: |
+      - op: replace
+        path: /spec/generators/0/matrix/generators/0/git/directories
+        value:
+          - path: apps/**/overlays/all
+          - path: apps/**/overlays/hub
+          - path: apps/**/overlays/hub-prod
+          - path: apps/**/overlays/hub-prod-local
+      - op: replace
+        path: /spec/template/spec/project
+        value: hub-prod-local
+      - op: replace
+        path: /spec/template/spec/destination/name
+        value: argocd-agent-hub-prod-local
+      - op: replace
+        path: /metadata/labels/cluster-name
+        value: hub-prod-local
+      - op: replace
+        path: /spec/template/metadata/labels/cluster-name
+        value: hub-prod-local
+
+    target:
+      kind: ApplicationSet
+      name: cluster-config
