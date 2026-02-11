@@ -117,7 +117,48 @@ version I used an Argo CD CMP plugin that could dynamically replace standard clu
 and cluster_id, this could be reintroduced to eliminate some common patching requirements and mitigate
 some of the need for more specific overlays.
 
+### Managing the Argo CD Agent
+
+The Argo CD Agent, when registering a new cluster, requires some configuration both on the Control
+Plane (i.e. the Hub) as well as the target cluster. In the future RHACM will have an add-on available
+to manage this but for now I've created some policies to handle this automatically.
+
+*NOTE*: These policies are not supported by Red Hat and it is an interim measure until full RHACM
+support is available through the Add-On. There is no intent to productize these policies in the
+future.
+
+Note that PKI is required for the Argo CD Agent in order to manage the Mutual-TLS certificates required
+on the Control Plane where the Principal resides and on the target cluster where the Agent is residing. These
+policies use `cert-manager` to handle this and deploy an `Issuer` with a self-signed certificate
+to generate the certs. As new Agent clusters are registered, the policies automatically create
+new cluster specific certificates for the Control Plane and the Agent.
+
+There are three policies being used:
+
+* *gitops-subscription*. This installs the OpenShift GitOps subscription on a cluster if it has either
+the `argocd-agent` or the `argocd-agent-control-plane` label.
+* *argocd-agent-registration*. This creates the certificates and the cluster secret needed to register
+the new agent on the control plane. It picks up any ManagedClusters with the label `argocd-agent: <name>`
+and creates the needed resources on the Control Plane.
+* *argocd-agent*. This deploys the agent on the target cluster and copies the required TLS certificates
+from the Control Plane to the target cluster. Only the Control Plane requires `cert-manager`, the workload
+clusters do not.
+
+Note that the Argo CD Agent uses Apps-in-Any-Namespace so the following namespaces are used:
+
+* *argocd*. This is where the Control Plane and Principal is installed. No policy installs this, rather it
+is in the `apps/openshift-gitops/overlays/hub` overlay.
+* *argocd-agent*. This is the namespace used for all agents, since we also install an agent on the Control Plane
+to manage that cluster we needed a different namespace. Plus it makes easier to identify IMHO.
+* *argocd-agent-&lt;cluster-name&gt;* This is the per cluster Apps-In-Any-Namespace that is used for the
+Applications for this cluster. It also supports AppSet-In-Any-Namespace and this is where the `cluster-config`
+ApplicationSet is deployed to in order to configure that cluster.
+
+Finally note that these policies are not generic, it's an example of how things can be done but it's not
+something that can just be ripped out and dropped into a new Hub cluster as is. Some adjustments would
+be required.
+
 ### Credits
 
 Thanks to Ben Colby-Sexton, Tom Stockwell, Jack Adolph and Stephen Leahy for proposing the original
-version of this repo structure.
+version of this repository structure.
