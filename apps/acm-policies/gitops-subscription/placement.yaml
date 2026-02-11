@@ -9,8 +9,6 @@ spec:
   - requiredClusterSelector:
       labelSelector:
         matchExpressions:
-        - key: argocd-agent-control-plane
-          operator: Exists
         - key: argocd-agent
           operator: Exists
 

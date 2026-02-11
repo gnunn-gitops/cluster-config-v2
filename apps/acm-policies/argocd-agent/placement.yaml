@@ -6,7 +6,6 @@ metadata:
 spec:
   clusterSets:
   - global
-  numberOfClusters: 1
   predicates:
   - requiredClusterSelector:
       labelSelector:

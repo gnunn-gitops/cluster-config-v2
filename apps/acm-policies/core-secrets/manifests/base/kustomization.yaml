@@ -4,4 +4,6 @@ kind: Kustomization
 namespace: external-secrets
 
 resources:
+# Let GitOps do this with ESO
+# - namespace.yaml
 - cluster-secret-store.yaml
