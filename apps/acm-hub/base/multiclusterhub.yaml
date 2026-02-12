@@ -17,3 +17,42 @@ spec:
       - name: volsync
         enabled: false
         configOverrides: {}
+      - configOverrides: {}
+        enabled: true
+        name: app-lifecycle
+      - configOverrides: {}
+        enabled: true
+        name: cluster-lifecycle
+      - configOverrides: {}
+        enabled: true
+        name: cluster-permission
+      - configOverrides: {}
+        enabled: true
+        name: console
+      - configOverrides: {}
+        enabled: true
+        name: grc
+      - configOverrides: {}
+        enabled: true
+        name: insights
+      - configOverrides: {}
+        enabled: true
+        name: multicluster-engine
+      - configOverrides: {}
+        enabled: true
+        name: multicluster-observability
+      - configOverrides: {}
+        enabled: true
+        name: search
+      - configOverrides: {}
+        enabled: false
+        name: cluster-backup
+      - configOverrides: {}
+        enabled: false
+        name: fine-grained-rbac-preview
+      - configOverrides: {}
+        enabled: false
+        name: siteconfig
+      - configOverrides: {}
+        enabled: false
+        name: cnv-mtv-integrations-preview
