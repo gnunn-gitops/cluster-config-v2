@@ -22,6 +22,7 @@ helmCharts:
   valuesInline:
     fullnameOverride: argocd-agent
   valuesFile: values.yaml
+  kubeVersion: "v1.33.6"
 
 resources:
 - ../../base
