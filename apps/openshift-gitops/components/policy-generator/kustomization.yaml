@@ -8,6 +8,8 @@ patches:
         value:
           - name: KUSTOMIZE_PLUGIN_HOME
             value: /etc/kustomize/plugin
+          - name: POLICY_GEN_ENABLE_HELM
+            value: "true"
       - op: add
         path: /spec/repo/initContainers
         value:
