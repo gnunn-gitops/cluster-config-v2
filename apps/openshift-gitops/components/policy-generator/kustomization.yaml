@@ -13,15 +13,14 @@ patches:
         value:
           - args:
             - -c
-            - cp /etc/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator/PolicyGenerator
-              /policy-generator/PolicyGenerator
+            - cp /policy-generator/PolicyGenerator-not-fips-compliant /policy-generator-tmp/PolicyGenerator
             command:
             - /bin/bash
-            image: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v2.15
+            image: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v<version>
             name: policy-generator-install
             volumeMounts:
-              - mountPath: /policy-generator-tmp
-                name: policy-generator
+            - mountPath: /policy-generator-tmp
+              name: policy-generator
       - op: add
         path: /spec/repo/volumeMounts
         value:
