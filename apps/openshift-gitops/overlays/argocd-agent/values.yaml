@@ -31,7 +31,7 @@ argoCdRedisPasswordKey: "admin.password"
 # -- Whether to enable WebSocket connections.
 enableWebSocket: false
 # -- Whether to enable gRPC compression.
-enableCompression: false
+enableCompression: true
 # -- Port for pprof server (0 disables pprof).
 pprofPort: "0"
 # -- Whether to enable resource proxy.
