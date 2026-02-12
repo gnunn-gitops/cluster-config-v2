@@ -1,6 +1,9 @@
 apiVersion: operator.open-cluster-management.io/v1
 kind: MultiClusterHub
 metadata:
+  annotations:
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: multiclusterhub
   namespace: open-cluster-management
 spec:
