@@ -3,4 +3,9 @@ kind: NMState
 metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
   name: nmstate
+spec:
+  probeConfiguration:
+    dns:
+      host: root-servers.net
