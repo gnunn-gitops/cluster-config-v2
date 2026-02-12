@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |
+      - op: add
+        path: /spec/repo/env
+        value:
+          - name: KUSTOMIZE_PLUGIN_HOME
+            value: /etc/kustomize/plugin
+      - op: add
+        path: /spec/repo/initContainers
+        value:
+          - args:
+            - -c
+            - cp /etc/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator/PolicyGenerator
+              /policy-generator/PolicyGenerator
+            command:
+            - /bin/bash
+            image: registry.redhat.io/rhacm2/multicluster-operators-subscription-rhel9:v2.15
+            name: policy-generator-install
+            volumeMounts:
+              - mountPath: /policy-generator-tmp
+                name: policy-generator
+      - op: add
+        path: /spec/repo/volumeMounts
+        value:
+          - mountPath: /etc/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator
+            name: policy-generator
+      - op: add
+        path: /spec/repo/volumes
+        value:
+          - emptyDir: {}
+            name: policy-generator
+    target:
+      kind: ArgoCD

@@ -11,6 +11,7 @@ components:
 - ../../components/health-rolloutmanager
 - ../../components/health-stackrox
 - ../../components/health-subscription
+- ../../components/policy-generator
 
 helmCharts:
 - name: redhat-argocd-agent
