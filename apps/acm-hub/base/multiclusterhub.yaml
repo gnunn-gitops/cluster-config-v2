@@ -12,6 +12,8 @@ spec:
   overrides:
     components:
       - name: submariner-addon
+        configOverrides: {}
         enabled: false
       - name: volsync
         enabled: false
+        configOverrides: {}
