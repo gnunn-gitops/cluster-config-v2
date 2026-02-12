@@ -4,6 +4,8 @@ kind: Kustomization
 namespace: acm-policies
 
 resources:
+- acm-policies-namespace.yaml
+- global-managedclusterbindingset.yaml
 - argocd-agent
 - argocd-agent-registration
 - gitops-subscription

@@ -3,5 +3,3 @@ kind: Kustomization
 
 resources:
 - multiclusterhub.yaml
-- acm-policies-namespace.yaml
-- global-managedclusterbindingset.yaml
