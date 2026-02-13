@@ -1,0 +1,18 @@
+apiVersion: search.open-cluster-management.io/v1alpha1
+kind: Search
+metadata:
+  annotations:
+    fine-grained-rbac-preview: "false"
+    argocd.argoproj.io/sync-wave: "5"
+  labels:
+    cluster.open-cluster-management.io/backup: ""
+  name: search-v2-operator
+  namespace: open-cluster-management
+spec:
+  dbStorage:
+    size: 10Gi
+    storageClassName: lvms-vg1
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/infra
+    operator: Exists
