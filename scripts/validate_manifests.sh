@@ -14,10 +14,6 @@ Where:
   -sl | --schema-location      Location containing schemas"
 }
 
-which kustomize && KUSTOMIZE_CMD="kustomize build"
-
-KUSTOMIZE_CMD="${KUSTOMIZE_CMD:-oc kustomize}"
-KUSTOMIZE_OPTIONS="--enable-helm --enable-alpha-plugins"
 IGNORE_MISSING_SCHEMAS="--ignore-missing-schemas"
 SCHEMA_LOCATION="${DIR}/openshift-json-schema"
 KUSTOMIZE_DIRS="${DIR}"
@@ -69,7 +65,7 @@ do
     continue
   fi
 
-  KUSTOMIZE_BUILD_OUTPUT=$(${KUSTOMIZE_CMD} $KUSTOMIZE_OPTIONS "$i")
+  KUSTOMIZE_BUILD_OUTPUT=$(kustomize build --enable-helm --enable-alpha-plugins "$i")
 
   build_response=$?
 
