@@ -21,6 +21,7 @@ ERROR_COLOR='\033[0;31m'
 NO_COLOR='\033[0m'
 POLICY_GENERATOR_VERSION="v1.17.1"
 POLICY_GENERATOR_PATH="${HOME}/.config/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator"
+POLICY_GEN_ENABLE_HELM=true
 
 # Install the Policy Generator kustomize plugin
 echo "Installing PolicyGenerator ${POLICY_GENERATOR_VERSION} at ${POLICY_GENERATOR_PATH}"
