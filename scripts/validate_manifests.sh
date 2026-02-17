@@ -24,14 +24,14 @@ KUSTOMIZE_DIRS="${DIR}"
 ERROR_COLOR='\033[0;31m'
 NO_COLOR='\033[0m'
 POLICY_GENERATOR_VERSION="v1.17.1"
-POLICY_GENERATOR_PATH="${HOME}/.config/kustomize/plugin/policy.open-cluster-management.io/v1"
+POLICY_GENERATOR_PATH="${HOME}/.config/kustomize/plugin/policy.open-cluster-management.io/v1/policygenerator"
 
 # Install the Policy Generator kustomize plugin
 echo "Installing PolicyGenerator ${POLICY_GENERATOR_VERSION} at ${POLICY_GENERATOR_PATH}"
 
 mkdir -p ${POLICY_GENERATOR_PATH}
-curl -sSL https://github.com/open-cluster-management-io/policy-generator-plugin/releases/download/${POLICY_GENERATOR_VERSION}/linux-amd64-PolicyGenerator -o ${POLICY_GENERATOR_PATH}/policygenerator
-chmod +x ${POLICY_GENERATOR_PATH}/policygenerator
+curl -sSL https://github.com/open-cluster-management-io/policy-generator-plugin/releases/download/${POLICY_GENERATOR_VERSION}/linux-amd64-PolicyGenerator -o ${POLICY_GENERATOR_PATH}/PolicyGenerator
+chmod +x ${POLICY_GENERATOR_PATH}/PolicyGenerator
 
 for i in "$@"
 do
