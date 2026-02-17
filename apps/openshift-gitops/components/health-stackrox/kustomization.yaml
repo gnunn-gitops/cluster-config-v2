@@ -42,7 +42,7 @@ patches:
                 end
             end
             hs.status = "Progressing"
-            hs.message = "Waiting for Central to deploy."
+            hs.message = "Waiting for SecuredCluster to deploy."
             return hs
     target:
       kind: ArgoCD
