@@ -14,7 +14,7 @@ patches:
             hs.message = ""
             if obj.status ~= nil then
               if obj.status.phase ~= nil then
-                if ob.status.phase == "Running" then
+                if obj.status.phase == "Running" then
                   hs.status = "Healthy"
                   hs.message = "MultiClusterHub is Running"
                 elseif obj.status.phase == "Paused" then
