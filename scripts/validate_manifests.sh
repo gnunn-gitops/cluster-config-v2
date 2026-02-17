@@ -69,7 +69,7 @@ do
     continue
   fi
 
-  KUSTOMIZE_BUILD_OUTPUT=$(${KUSTOMIZE_CMD} "$i" $KUSTOMIZE_OPTIONS)
+  KUSTOMIZE_BUILD_OUTPUT=$(${KUSTOMIZE_CMD} $KUSTOMIZE_OPTIONS "$i")
 
   build_response=$?
 
