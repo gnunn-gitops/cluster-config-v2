@@ -14,4 +14,3 @@ policies:
       - path: manifests/base/
     placement:
       placementName: core-secrets
-
