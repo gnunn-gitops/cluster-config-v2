@@ -7,6 +7,7 @@ components:
 - ../../components/health-application
 - ../../components/health-build
 - ../../components/health-imagestream
+- ../../components/health-multiclusterhub
 - ../../components/health-pvc
 - ../../components/health-rolloutmanager
 - ../../components/health-stackrox
