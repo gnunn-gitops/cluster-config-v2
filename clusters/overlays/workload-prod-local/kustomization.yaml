@@ -17,7 +17,7 @@ patches:
           - path: apps/**/overlays/workload-prod-local
       - op: replace
         path: /spec/template/spec/project
-        value: workload-prod-local
+        value: argocd-agent-workload-prod-local
       - op: replace
         path: /spec/template/spec/destination/name
         value: argocd-agent-workload-prod-local
