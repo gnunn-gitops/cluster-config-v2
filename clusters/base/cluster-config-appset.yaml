@@ -39,6 +39,9 @@ spec:
                         destinationNamespace: openshift-storage
                       - name: external-secrets
                         serverSideApply: "true"
+  ignoreApplicationDifferences:
+    jsonPointers:
+      - /spec/syncPolicy/automated
   strategy:
     type: RollingSync
     rollingSync:
@@ -64,7 +67,6 @@ spec:
               values:
                 - "*core"
                 - "*config"
-
   template:
     metadata:
       name: "{{ .name }}"
