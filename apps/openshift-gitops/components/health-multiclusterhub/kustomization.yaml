@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/resourceHealthChecks/-
+        value:
+          group: operator.open-cluster-management.io
+          kind: MultiClusterHub
+          check: |
+            hs = {}
+            hs.status = "Progressing"
+            hs.message = ""
+            if obj.status ~= nil then
+              if obj.status.phase ~= nil then
+                if ob.status.phase == "Running" then
+                  hs.status = "Healthy"
+                  hs.message = "MultiClusterHub is Running"
+                elseif obj.status.phase == "Paused" then
+                  hs.status = "Suspended"
+                  hs.message = "MultiClusterHub is paused"
+                elseif obj.status.phase == "Installing" then
+                  hs.message = "MultiClusterHub is installing..."
+                elseif obj.status.phase == "Updating" then
+                  hs.message = "MultiClusterHub is updating..."
+                elseif obj.status.phase == "Uninstalling" then
+                  hs.message = "MultiClusterHub is uninstalling..."
+                elseif obj.status.phase == "UpdatingBlocked" then
+                  hs.status = Degraded
+                  hs.message = "MultiClusterHub updating is blocked, investigating required"
+                elseif obj.status.phase == "Error" then
+                  hs.status = Degraded
+                  hs.message = "MultiClusterHub has an error, investigating required"
+                end
+              end
+            end
+            return hs
+    target:
+      kind: ArgoCD
