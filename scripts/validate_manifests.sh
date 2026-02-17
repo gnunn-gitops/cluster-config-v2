@@ -17,12 +17,21 @@ Where:
 which kustomize && KUSTOMIZE_CMD="kustomize build"
 
 KUSTOMIZE_CMD="${KUSTOMIZE_CMD:-oc kustomize}"
-KUSTOMIZE_OPTIONS="--enable-helm"
+KUSTOMIZE_OPTIONS="--enable-helm --enable-alpha-plugins"
 IGNORE_MISSING_SCHEMAS="--ignore-missing-schemas"
 SCHEMA_LOCATION="${DIR}/openshift-json-schema"
 KUSTOMIZE_DIRS="${DIR}"
 ERROR_COLOR='\033[0;31m'
 NO_COLOR='\033[0m'
+POLICY_GENERATOR_VERSION="v1.17.1"
+POLICY_GENERATOR_PATH="${HOME}/.config/kustomize/plugin/policy.open-cluster-management.io/v1"
+
+# Install the Policy Generator kustomize plugin
+echo "Installing PolicyGenerator ${POLICY_GENERATOR_VERSION} at ${POLICY_GENERATOR_PATH}"
+
+mkdir -p ${POLICY_GENERATOR_PATH}
+curl -sSL https://github.com/open-cluster-management-io/policy-generator-plugin/releases/download/${POLICY_GENERATOR_VERSION}/linux-amd64-PolicyGenerator -o ${POLICY_GENERATOR_PATH}/policygenerator
+chmod +x ${POLICY_GENERATOR_PATH}/policygenerator
 
 for i in "$@"
 do
