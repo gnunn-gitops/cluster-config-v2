@@ -1,5 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: core-secrets
+
 resources:
+# Push secret used by ESO to push secrets to Doppler. Not in repo
+# - eso-token-cluster-push-secret.yaml
 - ../../base
+- push-cluster-secret-store.yaml
