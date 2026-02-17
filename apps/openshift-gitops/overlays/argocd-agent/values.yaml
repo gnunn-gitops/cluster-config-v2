@@ -46,6 +46,3 @@ tlsClientKeyPath: ""
 tlsClientCertPath: ""
 # -- Path to the TLS root CA certificate.
 tlsRootCAPath: ""
-
-
-

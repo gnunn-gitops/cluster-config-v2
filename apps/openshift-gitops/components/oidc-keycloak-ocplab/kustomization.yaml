@@ -21,4 +21,3 @@ patches:
         path: /spec/sso
     target:
       kind: ArgoCD
-

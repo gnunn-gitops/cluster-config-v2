@@ -83,5 +83,3 @@ patches:
             return health_status
     target:
       kind: ArgoCD
-
-

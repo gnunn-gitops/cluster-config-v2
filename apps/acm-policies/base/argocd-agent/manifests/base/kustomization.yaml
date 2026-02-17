@@ -7,4 +7,3 @@ resources:
 - github.com/gnunn-gitops/cluster-config-v2/apps/openshift-gitops/overlays/argocd-agent
 - argocd-agent-ca.yaml
 - argocd-agent-client-tls.yaml
-

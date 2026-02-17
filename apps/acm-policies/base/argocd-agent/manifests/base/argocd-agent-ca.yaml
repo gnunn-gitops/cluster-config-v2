@@ -5,7 +5,3 @@ metadata:
   namespace: argocd-agent
 data:
   tls.crt: '{{hub (fromSecret "argocd" "argocd-agent-ca"  "tls.crt") hub}}'
-
-
-
-
