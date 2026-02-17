@@ -28,10 +28,10 @@ patches:
                   hs.message = "MultiClusterHub is uninstalling..."
                 elseif obj.status.phase == "UpdatingBlocked" then
                   hs.status = Degraded
-                  hs.message = "MultiClusterHub updating is blocked, investigating required"
+                  hs.message = "MultiClusterHub updating is blocked, investigation required"
                 elseif obj.status.phase == "Error" then
                   hs.status = Degraded
-                  hs.message = "MultiClusterHub has an error, investigating required"
+                  hs.message = "MultiClusterHub has an error, investigation required"
                 end
               end
             end
