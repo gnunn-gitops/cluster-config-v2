@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: rhacs-operator
+
+resources:
+- ../../base
+- acs-admission-control-tls-secret.yaml
+- acs-sensor-tls-secret.yaml
+- acs-collector-tls-secret.yaml
+- secured-cluster.yaml

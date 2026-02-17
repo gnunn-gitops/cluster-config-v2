@@ -1,0 +1,19 @@
+kind: SecuredCluster
+apiVersion: platform.stackrox.io/v1alpha1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: stackrox-secured-cluster-services
+spec:
+  clusterName: <replaceme>
+  centralEndpoint: central-rhacs-operator.apps.hub.ocplab.com:443
+  admissionControl:
+    contactImageScanners: ScanIfMissing
+    listenOnCreates: true
+    listenOnUpdates: true
+    timeoutSeconds: 6
+  scannerV4:
+    scannerComponent: AutoSense
+    monitoring:
+      exposeEndpoint: Enabled
