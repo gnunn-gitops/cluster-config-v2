@@ -60,6 +60,16 @@ spec:
               values: &config
                 - cert-manager
                 - cluster-certs
+                - openshift-monitoring
+                - openshift-oauth
+                - banner
+
+        - matchExpressions:
+            - key: name
+              operator: In
+              values: &operators
+                - rhacs-operator
+                - open-cluster-management
 
         - matchExpressions:
             - key: name
@@ -67,6 +77,7 @@ spec:
               values:
                 - "*core"
                 - "*config"
+                - "*operators"
   template:
     metadata:
       name: "{{ .name }}"
