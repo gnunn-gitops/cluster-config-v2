@@ -40,8 +40,8 @@ spec:
                       - name: external-secrets
                         serverSideApply: "true"
   ignoreApplicationDifferences:
-    jsonPointers:
-      - /spec/syncPolicy/automated
+    - jsonPointers:
+        - /spec/syncPolicy/automated
   strategy:
     type: RollingSync
     rollingSync:
