@@ -7,6 +7,7 @@ placementBindingDefaults:
 policyDefaults:
   namespace: acm-policies
   remediationAction: enforce
+  complianceType: "mustonlyhave"
 policies:
   - name: argocd-agent
     description: Argo CD Agent
