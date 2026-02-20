@@ -5,3 +5,4 @@ namespace: noobaa
 
 resources:
 - ../../base
+- backingstore.yaml
