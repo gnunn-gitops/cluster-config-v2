@@ -7,6 +7,7 @@ spec:
   autoSizingReserved: true
   machineConfigPoolSelector:
     matchLabels:
-      custom-kubelet: custom-worker-config
+      # Use the default OpenShift label for worker nodes
+      pools.operator.machineconfiguration.openshift.io/worker: ""
   kubeletConfig:
     maxPods: 350
