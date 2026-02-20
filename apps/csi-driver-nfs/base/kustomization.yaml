@@ -11,3 +11,6 @@ helmCharts:
   releaseName: csi-driver-nfs
   valuesFile: values.yaml
   kubeVersion: "v1.33.6"
+
+resources:
+- namespace.yaml
