@@ -11,5 +11,11 @@ patches:
       - op: add
         path: /spec/pvPoolDefaultStorageClass
         value: nfs-csi
+      - op: add
+        path: /spec/disableLoadBalancerService
+        value: true
+      - op: add
+        path: /spec/disableRoutes
+        value: false
     target:
       kind: NooBaa
