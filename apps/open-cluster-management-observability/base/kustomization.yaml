@@ -1,18 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 namespace: open-cluster-management-observability
 
 generatorOptions:
- disableNameSuffixHash: true
- labels:
-   grafana-custom-dashboard: "true"
+  disableNameSuffixHash: true
+  labels:
+    grafana-custom-dashboard: "true"
 
 resources:
-- github.com/redhat-cop/gitops-catalog/advanced-cluster-management/instance/observability?ref=23ef08f6d95af0ee3bedaa07674e9a7a1ca5aa9b
-- custom-metrics-allowlist.yaml
+  - github.com/redhat-cop/gitops-catalog/advanced-cluster-management/instance/observability?ref=23ef08f6d95af0ee3bedaa07674e9a7a1ca5aa9b
+  - custom-metrics-allowlist.yaml
 
 configMapGenerator:
-- name: gitops-dashboard
-  files:
-    - gitops.json=gitops-dashboard.json
+  - name: gitops-dashboard
+    files:
+      - gitops.json=gitops-dashboard.json
 
 patches:
   - patch: |-

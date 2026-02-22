@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: open-cluster-management-observability
 
 resources:
-- ../../base
+  - ../../base
