@@ -1,0 +1,56 @@
+namespace: open-cluster-management-observability
+
+generatorOptions:
+ disableNameSuffixHash: true
+ labels:
+   grafana-custom-dashboard: "true"
+
+resources:
+- github.com/redhat-cop/gitops-catalog/advanced-cluster-management/instance/observability?ref=23ef08f6d95af0ee3bedaa07674e9a7a1ca5aa9b
+- custom-metrics-allowlist.yaml
+
+configMapGenerator:
+- name: gitops-dashboard
+  files:
+    - gitops.json=gitops-dashboard.json
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/objectBucketName
+        value: obc-open-cluster-management-observability-acm-observability
+      - op: replace
+        path: /spec/storageClassName
+        value: noobaa.noobaa.io
+    target:
+      kind: ObjectBucketClaim
+      name: acm-observability
+  - patch: |-
+      - op: replace
+        path: /spec/storageConfig/storageClass
+        value: lvms-vg1
+      - op: replace
+        path: /spec/observabilityAddonSpec/interval
+        value: 60
+      - op: add
+        path: /spec/advanced
+        value:
+          alertmanager:
+            replicas: 1
+          grafana:
+            replicas: 1
+          observatoriumAPI:
+            replicas: 1
+          query:
+            replicas: 1
+          queryFrontend:
+            replicas: 1
+          queryFrontendMemcached:
+            replicas: 1
+          rbacQueryProxy:
+            replicas: 1
+          receive:
+            replicas: 1
+    target:
+      kind: MultiClusterObservability
+      name: observability

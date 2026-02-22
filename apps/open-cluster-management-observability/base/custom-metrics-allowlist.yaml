@@ -1,0 +1,31 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: observability-metrics-custom-allowlist
+  namespace: open-cluster-management-observability
+data:
+  metrics_list.yaml: |
+    names:
+      - argocd_cluster_info
+      - argocd-server-metrics
+      - argocd_app_info
+      - argocd_app_sync_total
+      - argocd_app_reconcile_count
+      - argocd_app_reconcile_bucket
+      - argocd_app_k8s_request_total
+      - argocd_kubectl_exec_pending
+      - argocd-metrics
+      - argocd_cluster_api_resource_objects
+      - argocd_cluster_api_resources
+      - argocd_cluster_events_total
+      - argocd_git_request_total
+      - argocd_git_request_duration_seconds_bucket
+      - argocd-repo-server
+      - argocd_redis_request_total
+      - process_start_time_seconds
+      - workqueue_depth
+      - go_memstats_heap_alloc_bytes
+      - process_cpu_seconds_total
+      - go_goroutines
+      - go_gc_duration_seconds
+      - grpc_server_handled_total
