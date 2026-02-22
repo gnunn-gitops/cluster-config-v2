@@ -5,4 +5,11 @@ namespace: noobaa
 
 resources:
 - ../../base
-- backingstore.yaml
+
+patches:
+  - patch: |
+      - op: add
+        path: /spec/pvPoolDefaultStorageClass
+        value: nfs-csi
+    target:
+      kind: NooBaa
