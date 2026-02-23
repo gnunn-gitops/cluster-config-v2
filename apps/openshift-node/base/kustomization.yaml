@@ -5,3 +5,4 @@ resources:
 - set-max-pods.yaml
 - wake-on-lan-mc.yaml
 - worker-machineconfigpool.yaml
+- master-machineconfigpool.yaml

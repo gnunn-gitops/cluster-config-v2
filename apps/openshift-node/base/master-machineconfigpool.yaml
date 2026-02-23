@@ -1,0 +1,12 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfigPool
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=true
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
+  labels:
+    machineconfiguration.openshift.io/mco-built-in: ''
+    operator.machineconfiguration.openshift.io/required-for-upgrade: ''
+    pools.operator.machineconfiguration.openshift.io/master: ''
+    kubeletconfig: custom-node-sizing
+  name: master
