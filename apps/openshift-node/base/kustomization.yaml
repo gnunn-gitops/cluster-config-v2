@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
 - set-max-pods.yaml
 - wake-on-lan-mc.yaml
-- worker-machienconfigpool.yaml
+- worker-machineconfigpool.yaml
