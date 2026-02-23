@@ -46,3 +46,6 @@ tlsClientKeyPath: ""
 tlsClientCertPath: ""
 # -- Path to the TLS root CA certificate.
 tlsRootCAPath: ""
+
+image.repository: quay.io/gnunn/argocd-agent
+image.tag: latest
