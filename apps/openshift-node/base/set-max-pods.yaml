@@ -7,8 +7,6 @@ spec:
   autoSizingReserved: true
   machineConfigPoolSelector:
     matchLabels:
-      # Target all nodes
-      pools.operator.machineconfiguration.openshift.io/worker: ""
-      pools.operator.machineconfiguration.openshift.io/master: ""
+      kubeletconfig: custom-node-sizing
   kubeletConfig:
     maxPods: 350
