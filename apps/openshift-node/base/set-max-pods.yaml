@@ -1,7 +1,7 @@
 apiVersion: machineconfiguration.openshift.io/v1
 kind: KubeletConfig
 metadata:
-  name: custom-worker-config
+  name: custom-node-sizing
 spec:
   # Use auto sizing for reserving space for system processes
   autoSizingReserved: true

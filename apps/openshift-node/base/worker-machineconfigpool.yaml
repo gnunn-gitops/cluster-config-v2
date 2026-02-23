@@ -1,0 +1,11 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfigPool
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=true
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
+  labels:
+    machineconfiguration.openshift.io/mco-built-in: ""
+    pools.operator.machineconfiguration.openshift.io/worker: ""
+    kubeletconfig: custom-node-sizing
+  name: worker
