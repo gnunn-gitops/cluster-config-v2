@@ -33,7 +33,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: eso-push-secret
-\roleRef:
+- roleRef:
   kind: Role
   name: eso-role
   apiGroup: rbac.authorization.k8s.io
