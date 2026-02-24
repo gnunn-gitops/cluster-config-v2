@@ -28,7 +28,7 @@ spec:
                   - argocd-server
           namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: gitops
+              kubernetes.io/metadata.name: argocd
     - ports:
         - protocol: TCP
           port: 8443
@@ -38,7 +38,7 @@ spec:
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - openshift-gitops-server
+                  - argocd-server
           namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: openshift-gitops
+              kubernetes.io/metadata.name: demo-gitops
