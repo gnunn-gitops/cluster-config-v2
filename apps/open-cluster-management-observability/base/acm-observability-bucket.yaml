@@ -7,6 +7,7 @@ metadata:
 spec:
   additionalConfig:
     bucketclass: noobaa-default-bucket-class
-  generateBucketName: acm-observability
+  # Force bucket name for predictability
+  bucketName: acm-observability
   objectBucketName: acm-observability
   storageClassName: noobaa.noobaa.io
