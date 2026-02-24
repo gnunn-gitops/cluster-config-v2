@@ -39,5 +39,7 @@ patches:
       - op: replace
         path: /spec/server/route/enabled
         value: false
+      - op: remove
+        path: /spec/sso
     target:
       kind: ArgoCD
