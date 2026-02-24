@@ -5,3 +5,4 @@ namespace: openshift-monitoring
 
 resources:
 - alertmanager-main-secret.yaml
+- pending-csr-rule.yaml
