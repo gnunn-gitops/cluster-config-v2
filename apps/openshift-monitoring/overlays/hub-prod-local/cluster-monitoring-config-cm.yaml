@@ -7,7 +7,6 @@ data:
     alertmanagerMain:
       enableUserAlertmanagerConfig: true
     enableUserWorkload: true
-    enableUserWorkload: true
     nodeExporter:
       collectors:
         buddyinfo: {}
