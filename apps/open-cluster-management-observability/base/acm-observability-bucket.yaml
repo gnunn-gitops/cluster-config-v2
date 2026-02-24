@@ -9,5 +9,5 @@ spec:
     bucketclass: noobaa-default-bucket-class
   # Force bucket name for predictability
   bucketName: acm-observability
-  objectBucketName: acm-observability
+  objectBucketName: obc-open-cluster-management-observability-acm-observability
   storageClassName: noobaa.noobaa.io
