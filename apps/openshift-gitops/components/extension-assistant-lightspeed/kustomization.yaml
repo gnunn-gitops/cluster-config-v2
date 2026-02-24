@@ -3,6 +3,9 @@ kind: Component
 
 resources:
 - openshift-service-ca.yaml
+- lightspeed-cluster-role-binding.yaml
+- lightspeed-token-secret.yaml
+- lightspeed-auth-secret.yaml
 
 patches:
   - patch: |-
