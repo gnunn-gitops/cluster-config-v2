@@ -1,0 +1,38 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cluster-monitoring-config
+data:
+  config.yaml: |
+    alertmanagerMain:
+      enableUserAlertmanagerConfig: true
+    enableUserWorkload: true
+    enableUserWorkload: true
+    nodeExporter:
+      collectors:
+        buddyinfo: {}
+        cpufreq: {}
+        ksmd: {}
+        mountstats: {}
+        netclass: {}
+        netdev: {}
+        processes: {}
+        systemd: {}
+        tcpstat: {}
+    prometheusK8s:
+      additionalAlertmanagerConfigs:
+      - apiVersion: v2
+        bearerToken:
+          key: token
+          name: observability-alertmanager-accessor-1800df5d06d84eeabef
+        scheme: https
+        staticConfigs:
+        - alertmanager-open-cluster-management-observability.apps.hub.ocplab.com
+        tlsConfig:
+          ca:
+            key: service-ca.crt
+            name: hub-alertmanager-router-ca-1800df5d06d84eeabef
+          insecureSkipVerify: false
+      externalLabels:
+        cluster_name: hub-prod-local
+        managed_cluster: 1800df5d-06d8-4eea-bef8-e7f9ec791610
