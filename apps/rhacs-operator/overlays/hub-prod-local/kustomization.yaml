@@ -12,3 +12,5 @@ resources:
 - collector-tls-push-secret.yaml
 - sensor-tls-push-secret.yaml
 - secured-cluster.yaml
+- declarative-config.yaml
+- certificate.yaml

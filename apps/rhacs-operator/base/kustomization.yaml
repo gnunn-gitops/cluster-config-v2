@@ -7,7 +7,6 @@ resources:
   - namespace.yaml
   - operatorgroup.yaml
   - subscription.yaml
-  - declarative-config.yaml
 
 # patches:
 #   - patch: |-
