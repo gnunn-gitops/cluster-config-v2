@@ -17,7 +17,7 @@ spec:
           minimumRole: None
           uiEndpoint: central-stackrox.central-rhacs-operator.apps.hub.ocplab.com:443
           oidc:
-              issuer: https://sso.ocplab.com/realms/openshift
+              issuer: https://sso.ocplab.com/realms/ocplab
               mode: auto
               clientID: acs
               clientSecret: {{ .keycloak_client_secret }}
@@ -27,7 +27,10 @@ spec:
                 value: admin@ocplab.com
                 role: Admin
               - key: email
-                value: clusteradmin@workshop-noreply.com
+                value: gnunn+admin@redhat.com
+                role: Admin
+              - key: group
+                value: cluster-admins
                 role: Admin
         namespace-admin-permission-set.yaml: |
           name: Namespace Administrator
