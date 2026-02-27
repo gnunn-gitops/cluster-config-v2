@@ -19,7 +19,8 @@ spec:
     persistence:
       persistentVolumeClaim:
         claimName: stackrox-db
-  configAsCodeComponent: Enabled
+  configAsCode:
+    configAsCodeComponent: Enabled
   egress:
     connectivityPolicy: Online
   scanner:
