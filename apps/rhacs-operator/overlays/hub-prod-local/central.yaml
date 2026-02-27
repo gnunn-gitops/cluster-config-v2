@@ -8,6 +8,9 @@ metadata:
   name: central
 spec:
   central:
+    declarativeConfiguration:
+          secrets:
+            - name: declarative-configurations
     exposure:
       loadBalancer:
         enabled: false
@@ -19,8 +22,6 @@ spec:
     persistence:
       persistentVolumeClaim:
         claimName: stackrox-db
-  configAsCode:
-    configAsCodeComponent: Enabled
   egress:
     connectivityPolicy: Online
   scanner:
