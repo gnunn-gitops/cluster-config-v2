@@ -23,11 +23,8 @@ spec:
               clientSecret: {{ .keycloak_client_secret }}
               disableOfflineAccessScope: true
           groups:
-              - key: email
-                value: admin@ocplab.com
-                role: Admin
-              - key: email
-                value: gnunn+admin@redhat.com
+              - key: groups
+                value: cluster-admins
                 role: Admin
         namespace-admin-permission-set.yaml: |
           name: Namespace Administrator
