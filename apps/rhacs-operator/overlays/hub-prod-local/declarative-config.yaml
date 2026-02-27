@@ -29,9 +29,6 @@ spec:
               - key: email
                 value: gnunn+admin@redhat.com
                 role: Admin
-              - key: group
-                value: cluster-admins
-                role: Admin
         namespace-admin-permission-set.yaml: |
           name: Namespace Administrator
           description: A user that is an administrator of one or namespaces across various clusters
