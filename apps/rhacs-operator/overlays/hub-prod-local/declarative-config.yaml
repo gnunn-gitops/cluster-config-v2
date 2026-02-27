@@ -15,7 +15,7 @@ spec:
         keycloak-auth.yaml: |
           name: keycloak
           minimumRole: None
-          uiEndpoint: central-stackrox.central-rhacs-operator.apps.hub.ocplab.com:443
+          uiEndpoint: central-rhacs-operator.apps.hub.ocplab.com:443
           oidc:
               issuer: https://sso.ocplab.com/realms/ocplab
               mode: auto
