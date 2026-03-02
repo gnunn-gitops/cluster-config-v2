@@ -9,8 +9,8 @@ metadata:
 spec:
   central:
     declarativeConfiguration:
-          secrets:
-            - name: declarative-configurations
+      secrets:
+        - name: declarative-configurations
     exposure:
       loadBalancer:
         enabled: false
