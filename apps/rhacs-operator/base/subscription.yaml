@@ -3,7 +3,7 @@ kind: Subscription
 metadata:
   name: rhacs-operator
 spec:
-  channel: rhacs-4.9
+  channel: rhacs-4.10
   installPlanApproval: Automatic
   name: rhacs-operator
   source: redhat-operators
