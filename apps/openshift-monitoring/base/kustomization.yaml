@@ -6,3 +6,6 @@ namespace: openshift-monitoring
 resources:
 - alertmanager-main-secret.yaml
 - pending-csr-rule.yaml
+- monitoring-role-binding.yaml
+- service-account.yaml
+- token-secret.yaml
