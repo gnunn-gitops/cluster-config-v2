@@ -18,11 +18,11 @@ spec:
     feastoperator:
       managementState: Removed
     kserve:
-      managementState: Removed
+      managementState: Managed
       modelsAsService:
-        managementState: Removed
+        managementState: Managed
       nim:
-        managementState: Removed
+        managementState: Managed
       rawDeploymentServiceConfig: Headless
     kueue:
       defaultClusterQueueName: default
