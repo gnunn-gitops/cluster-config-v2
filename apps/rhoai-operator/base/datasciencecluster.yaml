@@ -11,25 +11,25 @@ spec:
   components:
     aipipelines:
       argoWorkflowsControllers:
-        managementState: Managed
-      managementState: Managed
+        managementState: Removed
+      managementState: Removed
     dashboard:
-      managementState: Managed
+      managementState: Removed
     feastoperator:
-      managementState: Managed
+      managementState: Removed
     kserve:
-      managementState: Managed
+      managementState: Removed
       modelsAsService:
         managementState: Removed
       nim:
-        managementState: Managed
+        managementState: Removed
       rawDeploymentServiceConfig: Headless
     kueue:
       defaultClusterQueueName: default
       defaultLocalQueueName: default
       managementState: Removed
     llamastackoperator:
-      managementState: Removed
+      managementState: Managed
     mlflowoperator:
       managementState: Removed
     modelregistry:
@@ -46,7 +46,7 @@ spec:
         lmeval:
           permitCodeExecution: deny
           permitOnline: deny
-      managementState: Managed
+      managementState: Removed
     workbenches:
-      managementState: Managed
+      managementState: Removed
       workbenchNamespace: rhods-notebooks
