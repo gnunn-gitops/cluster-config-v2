@@ -18,11 +18,11 @@ spec:
     feastoperator:
       managementState: Removed
     kserve:
-      managementState: Managed
+      managementState: Removed
       modelsAsService:
-        managementState: Managed
+        managementState: Removed
       nim:
-        managementState: Managed
+        managementState: Removed
       rawDeploymentServiceConfig: Headless
     kueue:
       defaultClusterQueueName: default
@@ -33,7 +33,7 @@ spec:
     mlflowoperator:
       managementState: Removed
     modelregistry:
-      managementState: Managed
+      managementState: Removed
       registriesNamespace: rhoai-model-registries
     ray:
       managementState: Removed
