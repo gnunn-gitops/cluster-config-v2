@@ -2,10 +2,8 @@ apiVersion: config.openshift.io/v1
 kind: Console
 metadata:
   annotations:
-    include.release.openshift.io/ibm-cloud-managed: "true"
-    include.release.openshift.io/self-managed-high-availability: "true"
-    include.release.openshift.io/single-node-developer: "true"
-    release.openshift.io/create-only: "true"
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
+    argocd.argoproj.io/sync-options: ServerSideApply=true
   name: cluster
 spec:
   authentication:
