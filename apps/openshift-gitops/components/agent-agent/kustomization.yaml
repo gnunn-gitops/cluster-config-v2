@@ -15,7 +15,7 @@ patches:
             client:
               enableCompression: true
               enableWebSocket: false
-              mode: autonomous
+              mode: managed
               principalServerAddress: argocd-agent-principal-argocd.apps.hub.ocplab.com
             tls:
               rootCASecretName: argocd-agent-ca

@@ -5,6 +5,8 @@ metadata:
   labels:
     cluster-name: hub-prod-local
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
@@ -96,8 +98,8 @@ spec:
         namespace: "{{ .destinationNamespace }}"
       syncPolicy:
         automated:
-          enabled: true
-          selfHeal: true
+          enabled: false
+          selfHeal: false
           prune: false
   templatePatch: |
     {{- if eq .serverSideApply "true" }}
