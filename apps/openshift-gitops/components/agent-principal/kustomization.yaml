@@ -19,7 +19,6 @@ patches:
               allowedNamespaces:
                 - "argocd-agent-*"
             enabled: true
-            image: quay.io/gnunn/argocd-agent:latest
             jwt:
               secretName: argocd-agent-jwt-signing
             auth: mtls:CN=([^,]+)
