@@ -14,7 +14,6 @@ spec:
       - name: DeepSeek-R1-Distill-Qwen-14B-W4A16
       name: red_hat_openshift_ai
       type: rhoai_vllm
-      #url: https://deepseek-r1-qwen-14b-w4a16-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1
       url: https://litellm-litemaas.apps.prod.rhoai.rh-aiservices-bu.com/v1
   ols:
     defaultModel: DeepSeek-R1-Distill-Qwen-14B-W4A16
