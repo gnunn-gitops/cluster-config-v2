@@ -27,7 +27,6 @@ helmCharts:
 
 resources:
 - ../../base
-- agent-redis-networkpolicy.yaml
 - application-controller-cluster-admin-role.yaml
 - argocd-agent-cluster-admin-role.yaml
 

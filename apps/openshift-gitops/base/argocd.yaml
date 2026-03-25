@@ -201,11 +201,3 @@ spec:
       requests:
         cpu: 250m
         memory: 1Gi
-  resourceIgnoreDifferences:
-    resourceIdentifiers:
-    - kind: Secret
-      name: v4-0-config-user-idp-0-client-secret
-      namespace: openshift-authentication
-      customization:
-        jsonPointers:
-          - /metadata/annotations
