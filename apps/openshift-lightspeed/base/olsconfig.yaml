@@ -18,4 +18,4 @@ spec:
   ols:
     defaultModel: r1-qwen-14b-w4a16
     defaultProvider: red_hat_openshift_ai
-    logLevel: INFO
+    logLevel: DEBUG
