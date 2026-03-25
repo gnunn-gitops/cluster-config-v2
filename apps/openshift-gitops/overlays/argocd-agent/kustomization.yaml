@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: argocd-agent
 
 components:
+- ../../components/agent-agent
 - ../../components/health-application
 - ../../components/health-build
 - ../../components/health-imagestream
@@ -13,17 +14,6 @@ components:
 - ../../components/health-stackrox
 - ../../components/health-subscription
 - ../../components/policy-generator
-
-helmCharts:
-- name: redhat-argocd-agent
-  version: 0.5.4
-  repo: https://charts.openshift.io
-  namespace: argocd-agent
-  releaseName: argocd-agent
-  valuesInline:
-    fullnameOverride: argocd-agent
-  valuesFile: values.yaml
-  kubeVersion: "v1.33.6"
 
 resources:
 - ../../base
