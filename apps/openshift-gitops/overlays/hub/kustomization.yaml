@@ -13,6 +13,7 @@ components:
 resources:
 - ../../base
 # AppSets in Any Namespace require more permissions then what operator gives
-# since it is not supported yet.
-- appset-in-any-namespace-clusterrole.yaml
+# since it is not supported yet. Commented out for now as we switch to destination
+# based routing but might re-use if I decide to have tenants share the same instance
+# - appset-in-any-namespace-clusterrole.yaml
 - console-link.yaml

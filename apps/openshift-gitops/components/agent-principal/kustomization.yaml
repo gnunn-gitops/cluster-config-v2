@@ -15,6 +15,7 @@ patches:
         path: /spec/argoCDAgent
         value:
           principal:
+            destinationBasedMapping: true
             namespace:
               allowedNamespaces:
                 - "argocd-agent-*"
@@ -22,10 +23,6 @@ patches:
             jwt:
               secretName: argocd-agent-jwt-signing
             auth: mtls:CN=([^,]+)
-      - op: add
-        path: /spec/sourceNamespaces
-        value:
-          - "argocd-agent-*"
       - op: add
         path: /spec/controller/enabled
         value: false
@@ -37,11 +34,5 @@ patches:
       - op: replace
         path: /spec/applicationSet/webhookServer/route/enabled
         value: true
-      - op: add
-        path: /spec/applicationSet/extraCommandArgs
-        value:
-          - "--applicationset-namespaces"
-          - "argocd-agent-*"
-          - "--enable-scm-providers=false"
     target:
       kind: ArgoCD
