@@ -58,7 +58,7 @@ object-templates-raw: |
           kind: '*'
         destinations:
         - namespace: '*'
-          server: '*'
+          server: "{{ $agent_name }}"
         sourceRepos:
         - '*'
         sourceNamespaces:
