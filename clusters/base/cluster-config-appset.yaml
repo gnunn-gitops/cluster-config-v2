@@ -94,7 +94,7 @@ spec:
         targetRevision: main
         path: "{{.path.path}}"
       destination:
-        name: argocd-agent-hub-prod-local
+        name: hub-prod-local
         namespace: "{{ .destinationNamespace }}"
       syncPolicy:
         automated:

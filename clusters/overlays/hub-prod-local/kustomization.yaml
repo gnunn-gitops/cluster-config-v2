@@ -1,8 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: argocd-agent-hub-prod-local
-
 resources:
 - ../../base
 
@@ -17,10 +15,10 @@ patches:
           - path: apps/**/overlays/hub-prod-local
       - op: replace
         path: /spec/template/spec/project
-        value: argocd-agent-hub-prod-local
+        value: hub-prod-local
       - op: replace
         path: /spec/template/spec/destination/name
-        value: argocd-agent-hub-prod-local
+        value: hub-prod-local
       - op: replace
         path: /metadata/labels/cluster-name
         value: hub-prod-local
