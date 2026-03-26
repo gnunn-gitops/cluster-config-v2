@@ -18,7 +18,7 @@ patches:
         value: hub-prod-local
       - op: replace
         path: /spec/template/metadata/name
-        value: "hpL-{{ .name }}"
+        value: "hpl-{{ .name }}"
       - op: replace
         path: /spec/template/spec/destination/name
         value: hub-prod-local
