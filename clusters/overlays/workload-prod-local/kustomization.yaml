@@ -17,6 +17,9 @@ patches:
         path: /spec/template/spec/project
         value: workload-prod-local
       - op: replace
+        path: /spec/template/metadata/name
+        value: "wpl-{{ .name }}"
+      - op: replace
         path: /spec/template/spec/destination/name
         value: workload-prod-local
       - op: replace

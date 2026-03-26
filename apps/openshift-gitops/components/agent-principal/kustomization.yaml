@@ -16,9 +16,6 @@ patches:
         value:
           principal:
             destinationBasedMapping: true
-            namespace:
-              allowedNamespaces:
-                - "argocd-agent-*"
             enabled: true
             jwt:
               secretName: argocd-agent-jwt-signing
