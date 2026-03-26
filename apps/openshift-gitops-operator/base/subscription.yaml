@@ -14,6 +14,8 @@ spec:
       value: gitops-server
     - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
       value: "true"
+    - name: CLUSTER_SCOPED_ARGO_ROLLOUTS_NAMESPACES
+      value: "rollout-manager"
   channel: gitops-1.20
   installPlanApproval: Automatic
   name: openshift-gitops-operator
