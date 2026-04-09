@@ -5,18 +5,8 @@ resources:
 - oidc-external-secret.yaml
 
 patches:
-  - patch: |-
-      - op: add
-        path: /spec/oidcConfig
-        value: |
-          name: Keycloak
-          issuer: https://sso.ocplab.com/realms/ocplab
-          clientID: argocd
-          clientSecret: $oidc.keycloak.clientSecret
-          requestedScopes: ["openid", "profile", "email", "groups"]
-    target:
-      kind: ArgoCD
-  - patch: |-
+  - path: oidc-config-patch.yaml
+  - patch: |
       - op: remove
         path: /spec/sso
     target:

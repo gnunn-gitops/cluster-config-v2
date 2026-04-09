@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  name: argocd
+spec:
+  argoCDAgent:
+    agent:
+      enabled: true
+      creds: mtls:CN=([^,]+)
+      client:
+        enableCompression: true
+        enableWebSocket: false
+        mode: managed
+        principalServerAddress: argocd-agent-principal-argocd.apps.hub.ocplab.com
+      destinationBasedMapping:
+        enabled: true
+        createNamespace: true
+      tls:
+        rootCASecretName: argocd-agent-ca
+        secretName: argocd-agent-client-tls
+  server:
+    enabled: false

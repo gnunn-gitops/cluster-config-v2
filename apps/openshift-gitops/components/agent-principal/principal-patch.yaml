@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  name: argocd
+spec:
+  applicationSet:
+    enabled: true
+  argoCDAgent:
+    principal:
+      destinationBasedMapping: true
+      enabled: true
+      jwt:
+        secretName: argocd-agent-jwt-signing
+      auth: mtls:CN=([^,]+)
+  controller:
+    enabled: false

@@ -10,26 +10,4 @@ resources:
 - resource-proxy.yaml
 
 patches:
-  - patch: |-
-      - op: add
-        path: /spec/argoCDAgent
-        value:
-          principal:
-            destinationBasedMapping: true
-            enabled: true
-            jwt:
-              secretName: argocd-agent-jwt-signing
-            auth: mtls:CN=([^,]+)
-      - op: add
-        path: /spec/controller/enabled
-        value: false
-      - op: remove
-        path: /spec/resourceExclusions
-      - op: replace
-        path: /spec/applicationSet/enabled
-        value: true
-      - op: replace
-        path: /spec/applicationSet/webhookServer/route/enabled
-        value: true
-    target:
-      kind: ArgoCD
+  - path: principal-patch.yaml

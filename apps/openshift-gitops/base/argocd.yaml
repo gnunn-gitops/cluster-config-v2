@@ -83,7 +83,7 @@ spec:
       ingress:
         enabled: false
       route:
-        enabled: false
+        enabled: true
   rbac:
     defaultPolicy: 'role:none'
     # Assistant included since it can be patched in via a component, only
