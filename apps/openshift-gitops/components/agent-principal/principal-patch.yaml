@@ -13,5 +13,6 @@ spec:
       jwt:
         secretName: argocd-agent-jwt-signing
       auth: mtls:CN=([^,]+)
+      image: quay.io/gnunn/argocd-agent:namespace-mapping-fix
   controller:
     enabled: false
