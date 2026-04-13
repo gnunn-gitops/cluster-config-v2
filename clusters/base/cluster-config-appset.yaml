@@ -97,9 +97,8 @@ spec:
         namespace: "{{ .destinationNamespace }}"
       syncPolicy:
         automated:
-          enabled: true
           selfHeal: true
-          prune: false
+          enabled: true
   templatePatch: |
     {{- if eq .serverSideApply "true" }}
     metadata:
