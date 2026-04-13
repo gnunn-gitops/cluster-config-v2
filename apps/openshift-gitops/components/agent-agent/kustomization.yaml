@@ -3,3 +3,8 @@ kind: Component
 
 patches:
   - path: agent-patch.yaml
+  - patch: |-
+      - op: remove
+        path: /spec/sso
+    target:
+      kind: ArgoCD

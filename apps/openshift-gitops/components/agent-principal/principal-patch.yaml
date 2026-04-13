@@ -6,9 +6,17 @@ metadata:
 spec:
   applicationSet:
     enabled: true
+    extraCommandArgs:
+      - "--enable-scm-providers=false"
+      - "--enable-progressive-syncs"
+      - "--applicationset-namespaces"
+      - "argocd-agent-*"
   argoCDAgent:
     principal:
-      destinationBasedMapping: true
+      namespace:
+        allowedNamespaces:
+          - "argocd-agent-*"
+      destinationBasedMapping: false
       enabled: true
       jwt:
         secretName: argocd-agent-jwt-signing
@@ -16,3 +24,5 @@ spec:
       image: quay.io/gnunn/argocd-agent:namespace-mapping-fix
   controller:
     enabled: false
+  sourceNamespaces:
+    - "argocd-agent-*"

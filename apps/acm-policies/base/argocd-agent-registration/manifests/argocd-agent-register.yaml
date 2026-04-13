@@ -7,6 +7,13 @@ object-templates-raw: |
 
   - complianceType: mustonlyhave
     objectDefinition:
+      kind: Namespace
+      apiVersion: v1
+      metadata:
+        name: argocd-agent-{{ $agent_name }}
+
+  - complianceType: mustonlyhave
+    objectDefinition:
       apiVersion: cert-manager.io/v1
       kind: Certificate
       metadata:
@@ -17,14 +24,14 @@ object-templates-raw: |
         issuerRef:
           name: argocd-agent-ca
           kind: Issuer
-        commonName: {{ $agent_name }}
+        commonName: argocd-agent-{{ $agent_name }}
         subject:
           organizationalUnits:
             - ocplab.com
         usages:
           - client auth
         dnsNames:
-        - {{ $agent_name }}.ocplab.com
+        - argocd-agent-{{ $agent_name }}.ocplab.com
 
   - complianceType: mustonlyhave
     objectDefinition:
@@ -38,19 +45,18 @@ object-templates-raw: |
         issuerRef:
           name: argocd-agent-ca
           kind: Issuer
-        commonName: {{ $agent_name }}
+        commonName: argocd-agent-{{ $agent_name }}
         subject:
           organizationalUnits:
             - ocplab.com
         dnsNames:
-        - {{ $agent_name }}.ocplab.com
-
+        - argocd-agent-{{ $agent_name }}.ocplab.com
   - complianceType: mustonlyhave
     objectDefinition:
       apiVersion: argoproj.io/v1alpha1
       kind: AppProject
       metadata:
-        name: {{ $agent_name }}
+        name: argocd-agent-{{ $agent_name }}
         namespace: argocd
       spec:
         clusterResourceWhitelist:
@@ -58,10 +64,10 @@ object-templates-raw: |
           kind: '*'
         destinations:
         - namespace: '*'
-          name: "{{ $agent_name }}"
+          server: '*'
         sourceRepos:
         - '*'
         sourceNamespaces:
-        - '*'
+        - argocd-agent-{{ $agent_name }}
 
   {{- end }}
