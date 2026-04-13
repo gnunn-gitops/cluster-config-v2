@@ -93,12 +93,12 @@ spec:
         targetRevision: main
         path: "{{.path.path}}"
       destination:
-        name: hub-prod-local
+        name: argocd-agent-hub-prod-local
         namespace: "{{ .destinationNamespace }}"
       syncPolicy:
         automated:
-          enabled: true
-          selfHeal: true
+          enabled: false
+          selfHeal: false
           prune: false
   templatePatch: |
     {{- if eq .serverSideApply "true" }}
