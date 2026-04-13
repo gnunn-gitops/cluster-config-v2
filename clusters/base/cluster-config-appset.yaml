@@ -85,7 +85,6 @@ spec:
       name: "{{ .name }}"
       labels:
         name: "{{ .name }}"
-        serverSideApply: "{{ .serverSideApply }}"
         cluster-name: hub-prod-local
     spec:
       project: argocd-agent-hub-prod-local
