@@ -14,8 +14,8 @@ spec:
         mode: managed
         principalServerAddress: argocd-agent-principal-argocd.apps.hub.ocplab.com
       destinationBasedMapping:
-        enabled: true
-        createNamespace: true
+        enabled: false
+        createNamespace: false
       tls:
         rootCASecretName: argocd-agent-ca
         secretName: argocd-agent-client-tls
