@@ -51,6 +51,7 @@ object-templates-raw: |
             - ocplab.com
         dnsNames:
         - argocd-agent-{{ $agent_name }}.ocplab.com
+
   - complianceType: mustonlyhave
     objectDefinition:
       apiVersion: argoproj.io/v1alpha1
