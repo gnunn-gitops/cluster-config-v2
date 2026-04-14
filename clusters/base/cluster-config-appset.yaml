@@ -4,6 +4,9 @@ metadata:
   name: cluster-config
   labels:
     cluster-name: hub-prod-local
+  # Use finalizer to delete resources when Application is deleted
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
