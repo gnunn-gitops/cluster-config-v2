@@ -3,7 +3,7 @@ kind: Subscription
 metadata:
   name: advanced-cluster-management
 spec:
-  channel: release-2.15
+  channel: release-2.16
   installPlanApproval: Automatic
   name: advanced-cluster-management
   source: redhat-operators
