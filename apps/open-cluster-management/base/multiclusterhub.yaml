@@ -53,4 +53,7 @@ spec:
         name: siteconfig
       - configOverrides: {}
         enabled: false
-        name: cnv-mtv-integrations-preview
+        name: fine-grained-rbac
+      - configOverrides: {}
+        enabled: false
+        name: cnv-mtv-integrations
