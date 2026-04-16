@@ -50,9 +50,6 @@ spec:
         name: cluster-backup
       - configOverrides: {}
         enabled: false
-        name: fine-grained-rbac-preview
-      - configOverrides: {}
-        enabled: false
         name: siteconfig
       - configOverrides: {}
         enabled: false
