@@ -66,6 +66,11 @@ do
     continue
   fi
 
+  if grep -q "kind: Component" "$i/kustomization.yaml"; then
+    echo "Kustomize component, skipping validation"
+    continue
+  fi
+
   KUSTOMIZE_BUILD_OUTPUT=$(kustomize build --enable-helm --enable-alpha-plugins "$i")
 
   build_response=$?
