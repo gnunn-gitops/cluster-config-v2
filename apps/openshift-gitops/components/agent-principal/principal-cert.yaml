@@ -3,6 +3,8 @@ kind: Certificate
 metadata:
   name: argocd-agent-principal-tls
 spec:
+  privateKey:
+    rotationPolicy: Never
   dnsNames:
   - argocd-agent-principal-argocd.apps.hub.ocplab.com
   issuerRef:

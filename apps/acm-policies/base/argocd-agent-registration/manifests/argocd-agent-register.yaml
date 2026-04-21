@@ -13,6 +13,8 @@ object-templates-raw: |
         name: argocd-agent-{{ $agent_name }}
         namespace: argocd
       spec:
+        privateKey:
+          rotationPolicy: Never
         secretName: argocd-agent-{{ $agent_name }}
         issuerRef:
           name: argocd-agent-ca
@@ -34,6 +36,8 @@ object-templates-raw: |
         name: argocd-principal-{{ $agent_name }}
         namespace: argocd
       spec:
+        privateKey:
+          rotationPolicy: Never
         secretName: argocd-principal-{{ $agent_name }}
         issuerRef:
           name: argocd-agent-ca
