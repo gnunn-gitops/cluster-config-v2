@@ -7,21 +7,14 @@ spec:
   applicationSet:
     enabled: true
     extraCommandArgs:
-      - "--enable-scm-providers=false"
       - "--enable-progressive-syncs"
-      - "--applicationset-namespaces"
-      - "argocd-agent-*"
   argoCDAgent:
     principal:
-      namespace:
-        allowedNamespaces:
-          - "argocd-agent-*"
-      destinationBasedMapping: false
+      destinationBasedMapping: true
       enabled: true
       jwt:
         secretName: argocd-agent-jwt-signing
       auth: mtls:CN=([^,]+)
+      image: quay.io/gnunn/argocd-agent:namespace-mapping-fix
   controller:
     enabled: false
-  sourceNamespaces:
-    - "argocd-agent-*"
