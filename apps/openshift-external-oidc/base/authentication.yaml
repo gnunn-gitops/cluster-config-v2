@@ -1,0 +1,43 @@
+apiVersion: config.openshift.io/v1
+kind: Authentication
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false,ServerSideApply=true
+  name: cluster
+spec:
+  type: OIDC
+  webhookTokenAuthenticator: null
+  oidcProviders:
+  - claimMappings:
+      groups:
+        prefixPolicy: NoPrefix
+        claim: groups
+      uid:
+        prefixPolicy: NoPrefix
+        claim: "sub"
+      username:
+        prefixPolicy: NoPrefix
+        claim: name
+    issuer:
+      audiences:
+      - openshift
+      - oc-cli
+      issuerURL: https://sso.ocplab.com/realms/ocplab
+    name: 'keycloak-oidc-server'
+    oidcClients:
+    - clientID: oc-cli
+      componentName: cli
+      componentNamespace: openshift-console
+      extraScopes:
+        - email
+        - groups
+        - profile
+    - clientID: openshift
+      clientSecret:
+        name: console-secret
+      componentName: console
+      componentNamespace: openshift-console
+      extraScopes:
+        - email
+        - groups
+        - profile
