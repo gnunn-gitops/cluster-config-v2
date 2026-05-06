@@ -65,15 +65,15 @@ spec:
         cluster-name: hub-prod-local
         group: "{{ .group }}"
     spec:
-      info:
-        - name: "parameters"
-          value: |
-            {{ toPrettyJson . }}
+      # info:
+      #   - name: "parameters"
+      #     value: |
+      #       {{ toPrettyJson . }}
       project: hub-prod-local
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
-        path: .
+        path: '{{ .path.path }}'
       destination:
         name: hub-prod-local
         namespace: '{{ .values.destinationNamespace }}'
