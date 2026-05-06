@@ -10,10 +10,8 @@ spec:
   oidcProviders:
   - claimMappings:
       groups:
-        prefixPolicy: NoPrefix
         claim: groups
       uid:
-        prefixPolicy: NoPrefix
         claim: "sub"
       username:
         prefixPolicy: NoPrefix
