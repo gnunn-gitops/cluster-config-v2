@@ -12,6 +12,9 @@ spec:
     principal:
       destinationBasedMapping: true
       enabled: true
+      namespace:
+        allowedNamespaces:
+          - argocd
       jwt:
         secretName: argocd-agent-jwt-signing
       auth: mtls:CN=([^,]+)
