@@ -13,37 +13,20 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - matrix:
-        generators:
-          - git:
-              repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-              revision: main
-              directories:
-                - path: apps/**/overlays/all
-                - path: apps/**/overlays/hub
-                - path: apps/**/overlays/hub-prod
-                - path: apps/**/overlays/hub-prod-local
-              values:
-                name: "{{ index .path.segments 1 }}"
-                destinationNamespace: "{{ index .path.segments 1 }}"
-                serverSideApply: "false"
-          - merge:
-              mergeKeys:
-                - name
-              generators:
-                - list:
-                    elements:
-                      - name: "{{index .path.segments 1}}"
-                        destinationNamespace: "{{ index .path.segments 1 }}"
-                        serverSideApply: "false"
-                - list:
-                    elements:
-                      - name: openshift-oauth
-                        destinationNamespace: openshift-config
-                      - name: lvm-operator
-                        destinationNamespace: openshift-storage
-                      - name: external-secrets
-                        serverSideApply: "true"
+    - git:
+        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+        revision: main
+        files:
+          - path: apps/**/overlays/all/config.json
+          - path: apps/**/overlays/all/config.json
+          - path: apps/**/overlays/hub/config.json
+          - path: apps/**/overlays/hub-prod/config.json
+          - path: apps/**/overlays/hub-prod-local/config.json
+        values:
+          name: '{{ ternary (index . "name") (index .path.segments 1) (hasKey . "name") }}'
+          destinationNamespace: '{{ ternary (index . "namespace") (index .path.segments 1) (hasKey . "namespace") }}'
+          group: '{{ ternary (index . "group") "other" (hasKey . "group") }}'
+          serverSideApply: '{{ ternary (index . "serverSideApply") "false" (hasKey . "serverSideApply") }}'
   ignoreApplicationDifferences:
     - jsonPointers:
         - /spec/syncPolicy/automated
@@ -52,58 +35,54 @@ spec:
     rollingSync:
       steps:
         - matchExpressions:
-            - key: name
+            - key: group
               operator: In
-              values: &core
-                - external-secrets
-                - cert-manager-operator
-                - lvm-operator
-
-        - matchExpressions:
-            - key: name
-              operator: In
-              values: &config
-                - cert-manager
-                - cluster-certs
-                - openshift-monitoring
-                - openshift-oauth
-                - banner
-
-        - matchExpressions:
-            - key: name
-              operator: In
-              values: &operators
-                - rhacs-operator
-                - open-cluster-management
-
-        - matchExpressions:
-            - key: name
-              operator: NotIn
               values:
-                - "*core"
-                - "*config"
-                - "*operators"
+                - core
+
+        - matchExpressions:
+            - key: name
+              operator: In
+              values:
+                - config
+
+        - matchExpressions:
+            - key: name
+              operator: In
+              values:
+                - operators
+
+        - matchExpressions:
+            - key: name
+              operator: In
+              values:
+                - other
   template:
     metadata:
-      name: "hpl-{{ .name }}"
+      name: 'hpl-{{ .values.name }}'
       labels:
-        name: "{{ .name }}"
+        name: '{{ .values.name }}'
         cluster-name: hub-prod-local
+        group: "{{ .group }}"
     spec:
+      info:
+        - name: "parameters"
+          value: |
+            {{ toPrettyJson . }}
       project: hub-prod-local
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
-        path: "{{.path.path}}"
+        path: .
       destination:
         name: hub-prod-local
-        namespace: "{{ .destinationNamespace }}"
+        namespace: '{{ .values.destinationNamespace }}'
       syncPolicy:
         automated:
-          selfHeal: true
           enabled: true
+          selfHeal: true
   templatePatch: |
-    {{- if eq .serverSideApply "true" }}
+    {{- if eq .values.serverSideApply "true" }}
     metadata:
       annotations:
         argocd.argoproj.io/compare-options: ServerSideDiff=true

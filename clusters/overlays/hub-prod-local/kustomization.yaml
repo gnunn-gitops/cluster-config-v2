@@ -9,15 +9,15 @@ resources:
 patches:
   - patch: |
       - op: replace
-        path: /spec/generators/0/matrix/generators/0/git/directories
+        path: /spec/generators/0/git/files
         value:
-          - path: apps/**/overlays/all
-          - path: apps/**/overlays/hub
-          - path: apps/**/overlays/hub-prod
-          - path: apps/**/overlays/hub-prod-local
+          - path: apps/**/overlays/all/config.json
+          - path: apps/**/overlays/hub/config.json
+          - path: apps/**/overlays/hub-prod/config.json
+          - path: apps/**/overlays/hub-prod-local/config.json
       - op: replace
         path: /spec/template/metadata/name
-        value: "hpl-{{ .name }}"
+        value: "hpl-{{ .values.name }}"
       - op: replace
         path: /spec/template/spec/project
         value: hub-prod-local
