@@ -6,7 +6,6 @@ metadata:
   name: cluster
 spec:
   type: OIDC
-  webhookTokenAuthenticator: null
   oidcProviders:
   - claimMappings:
       groups:
