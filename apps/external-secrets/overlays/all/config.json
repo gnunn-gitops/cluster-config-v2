@@ -1,3 +1,4 @@
 {
+    "serverSideApply": "true",
     "group": "core"
 }
