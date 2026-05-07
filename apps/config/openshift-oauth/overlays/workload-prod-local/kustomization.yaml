@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: openshift-config
+
+components:
+  - ../../components/keycloak
+
+resources:
+  - ../../base
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/authentication/logoutRedirect
+        value: https://sso.ocplab.com/realms/ocplab/protocol/openid-connect/logout?client_id=openshift&post_logout_redirect_uri=https://console-openshift-console.apps.home.ocplab.com
+    target:
+      kind: Console
+      name: cluster
