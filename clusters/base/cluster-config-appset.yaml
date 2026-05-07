@@ -13,20 +13,27 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-        revision: main
-        files:
-          - path: apps/**/overlays/all/config.json
-          - path: apps/**/overlays/all/config.json
-          - path: apps/**/overlays/hub/config.json
-          - path: apps/**/overlays/hub-prod/config.json
-          - path: apps/**/overlays/hub-prod-local/config.json
-        values:
-          name: '{{ ternary (index . "name") (index .path.segments 1) (hasKey . "name") }}'
-          destinationNamespace: '{{ ternary (index . "namespace") (index .path.segments 1) (hasKey . "namespace") }}'
-          group: '{{ ternary (index . "group") "other" (hasKey . "group") }}'
-          serverSideApply: '{{ ternary (index . "serverSideApply") "false" (hasKey . "serverSideApply") }}'
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+              revision: main
+              files:
+                - path: apps/**/overlays/all/config.json
+                - path: apps/**/overlays/all/config.json
+                - path: apps/**/overlays/hub/config.json
+                - path: apps/**/overlays/hub-prod/config.json
+                - path: apps/**/overlays/hub-prod-local/config.json
+              values:
+                name: '{{ ternary (index . "appName") (index .path.segments 1) (hasKey . "appName") }}'
+                destinationNamespace: '{{ ternary (index . "namespace") (index .path.segments 1) (hasKey . "namespace") }}'
+                group: '{{ ternary (index . "group") "other" (hasKey . "group") }}'
+                serverSideApply: '{{ ternary (index . "serverSideApply") "false" (hasKey . "serverSideApply") }}'
+          - clusters:
+              selector:
+                matchLabels:
+                  argocd-agent.argoproj-labs.io/agent-name: hub-prod-local
+                  argocd.argoproj.io/secret-type: cluster
   ignoreApplicationDifferences:
     - jsonPointers:
         - /spec/syncPolicy/automated
@@ -62,20 +69,20 @@ spec:
       name: 'hpl-{{ .values.name }}'
       labels:
         name: '{{ .values.name }}'
-        cluster-name: hub-prod-local
+        cluster-name: '{{ .name }}'
         group: "{{ .group }}"
     spec:
-      # info:
-      #   - name: "parameters"
-      #     value: |
-      #       {{ toPrettyJson . }}
+      info:
+        - name: "parameters"
+          value: |
+            {{ toPrettyJson . }}
       project: hub-prod-local
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
         path: '{{ .path.path }}'
       destination:
-        name: hub-prod-local
+        name: '{{ .name }}'
         namespace: '{{ .values.destinationNamespace }}'
       syncPolicy:
         automated:
@@ -90,4 +97,4 @@ spec:
       syncPolicy:
         syncOptions:
           - ServerSideApply=true
-      {{- end }}
+    {{- end }}
