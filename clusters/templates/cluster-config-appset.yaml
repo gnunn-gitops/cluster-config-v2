@@ -24,12 +24,19 @@ spec:
               repoURL: https://github.com/gnunn-gitops/cluster-config-v2
               revision: refactor
               files:
+                # Pick up kustomize applications
                 - path: apps/**/**/overlays/all/app-config.yaml
                 - path: apps/**/**/overlays/{{ $clusterType }}/app-config.yaml
                 - path: apps/**/**/overlays/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
                 - path: apps/**/**/overlays/{{ .Values.clusterName }}/app-config.yaml
+                # Pick up Helm applications
+                - path: apps/**/**/values/all/app-config.yaml
+                - path: apps/**/**/values/{{ $clusterType }}/app-config.yaml
+                - path: apps/**/**/values/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
+                - path: apps/**/**/values/{{ .Values.clusterName }}/app-config.yaml
               values:
                 appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
+                # Is appType needed or just pick up from `values` being in the path
                 appType: '{{ `{{ ternary (index . "appType") "kustomize" (hasKey . "appType") }}` }}'
                 grouping: '{{ `{{ index .path.segments 1 }}` }}'
                 destinationNamespace: '{{ `{{ ternary (index . "namespace") (index .path.segments 2) (hasKey . "namespace") }}` }}'
