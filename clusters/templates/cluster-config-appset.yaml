@@ -24,10 +24,10 @@ spec:
               repoURL: https://github.com/gnunn-gitops/cluster-config-v2
               revision: refactor
               files:
-                - path: apps/**/**/values/all/app-config.yaml
-                - path: apps/**/**/values/{{ $clusterType }}/app-config.yaml
-                - path: apps/**/**/values/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
-                - path: apps/**/**/values/{{ .Values.clusterName }}/app-config.yaml
+                - path: apps/**/**/overlays/all/app-config.yaml
+                - path: apps/**/**/overlays/{{ $clusterType }}/app-config.yaml
+                - path: apps/**/**/overlays/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
+                - path: apps/**/**/overlays/{{ .Values.clusterName }}/app-config.yaml
               values:
                 appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
                 appType: '{{ `{{ ternary (index . "appType") "kustomize" (hasKey . "appType") }}` }}'
@@ -73,13 +73,13 @@ spec:
       name: 'hpl-{{ `{{ .values.appName }}` }}'
       labels:
         name: '{{ `{{ .values.appName }}` }}'
-        cluster-name: '`{{ .name }}`'
+        cluster-name: '{{ `{{ .name }}` }}'
         grouping: '{{ `{{ .values.grouping }}` }}'
     spec:
-      info:
-        - name: "parameters"
-          value: |
-            {{ `{{ toPrettyJson . }}` }}
+      # info:
+      #   - name: "parameters"
+      #     value: |
+      #       {{ `{{ toPrettyJson . }}` }}
       project: '{{ .Values.clusterName }}'
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
@@ -93,35 +93,39 @@ spec:
           enabled: true
           selfHeal: true
   templatePatch: | {{`
+    {{- if hasKey . "annotations" }}
     metadata:
-      {{- if hasKey "annotations" }}
       annotations:
           {{- with .annotations }}
           {{ toYaml . | indent 4 }}
           {{- end }}
-      {{- end }}
+    {{- end }}
     spec:
       {{- if eq .values.appType "helm" }}
       source:
-        chart: '{{`{{ .values.appName }}`}}'
-        path: '{{ `apps/{{ index .path.segments 1 }}/{{ index .path.segments 2 }}/chart` }}'
+        chart: '{{ .values.appName }}'
+        path: 'apps/{{ index .path.segments 1 }}/{{ index .path.segments 2 }}/chart'
         helm:
           parameters:
             - name: baseDomain
-              value: '{{ `{{ .metadata.annotations.baseDomain }}` }}'
+              value: '{{ .metadata.annotations.baseDomain }}'
             - name: clusterID
-              value: '{{ `{{ .metadata.annotations.clusterID }}` }}'
+              value: '{{ .metadata.annotations.clusterID }}'
             - name: infrastructureID
-              value: '{{ `{{ .metadata.annotations.infrastructureID }}` }}'
+              value: '{{ .metadata.annotations.infrastructureID }}'
             - name: subdomain
-              value: '{{ `{{ .metadata.annotations.subdomain }}` }}'
+              value: '{{ .metadata.annotations.subdomain }}'
           valueFiles:
-          - '{{ `{{ .path.path }}` }}/values.yaml'
+          - '{{ .path.path }}/values.yaml'
       {{- end }}
-      {{- if hasKey "syncPolicy" }}
-        syncPolicy:
-          {{- with .syncPolicy }}
-          {{ toYaml . | indent 4 }}
-          {{- end }}
+    {{- if hasKey . "syncOptions" }}
+      syncPolicy:
+        automated:
+          enabled: true
+          selfHeal: true
+        syncOptions:
+        {{- with .syncOptions }}
+        {{ toYaml . | indent 4 }}
+        {{- end }}
       {{- end }}
     `}}
