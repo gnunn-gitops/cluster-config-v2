@@ -1,5 +1,4 @@
 annotations:
   argocd.argoproj.io/compare-options: ServerSideDiff=true
-syncPolicy:
-  syncOptions:
-   - ServerSideApply=true
+syncOptions:
+  - ServerSideApply=true
