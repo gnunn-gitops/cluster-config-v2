@@ -1,0 +1,137 @@
+{{ $clusterParts := split "-" .Values.clusterName }}
+{{ $clusterType := $clusterParts._0 }}
+{{ $clusterEnv := $clusterParts._1 }}
+{{ $clusterRegion := $clusterParts._2 }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ .Values.clusterName }}
+  labels:
+    cluster-name: {{ .Values.clusterName }}
+  # Use finalizer to delete resources when Application is deleted
+  # finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+              revision: refactor
+              files:
+                - path: apps/**/**/values/all/app-config.yaml
+                - path: apps/**/**/values/{{ $clusterType }}/app-config.yaml
+                - path: apps/**/**/values/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
+                - path: apps/**/**/values/{{ .Values.clusterName }}/app-config.yaml
+              values:
+                appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
+                appType: '{{ `{{ ternary (index . "appType") "kustomize" (hasKey . "appType") }}` }}'
+                partOf: '{{ `{{ index .path.segments 1 }}` }}'
+                destinationNamespace: '{{ `{{ ternary (index . "namespace") (index .path.segments 2) (hasKey . "namespace") }}` }}'
+                serverSideApply: '{{ `{{ ternary (index . "serverSideApply") "false" (hasKey . "serverSideApply") }}` }}'
+          - clusters:
+              selector:
+                matchLabels:
+                  argocd-agent.argoproj-labs.io/agent-name: {{ .Values.clusterName }}
+                  argocd.argoproj.io/secret-type: cluster
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy/automated
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: app.kubernetes.io/part-of
+              operator: In
+              values:
+                - core
+
+        - matchExpressions:
+            - key: app.kubernetes.io/part-of
+              operator: In
+              values:
+                - config
+
+        - matchExpressions:
+            - key: app.kubernetes.io/part-of
+              operator: In
+              values:
+                - operators
+
+        - matchExpressions:
+            - key: app.kubernetes.io/part-of
+              operator: In
+              values:
+                - other
+  template:
+    metadata:
+      name: 'hpl-{{ `{{ .values.appName }}` }}'
+      labels:
+        name: '{{ `{{ .values.appName }}` }}'
+        cluster-name: '`{{ .name }}`'
+        app.kubernetes.io/part-of: '{{ `{{ .values.partOf }}` }}'
+    spec:
+      info:
+        - name: "parameters"
+          value: |
+            {{ `{{ toPrettyJson . }}` }}
+      project: '{{ .Values.clusterName }}'
+      source:
+        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+        targetRevision: main
+        path: '{{ `{{ .path.path }}` }}'
+        helm:
+          parameters:
+            - name: baseDomain
+              value: '{{ `{{ .metadata.annotations.baseDomain }}` }}'
+            - name: clusterID
+              value: '{{ `{{ .metadata.annotations.clusterID }}` }}'
+            - name: infrastructureID
+              value: '{{ `{{ .metadata.annotations.infrastructureID }}` }}'
+            - name: subdomain
+              value: '{{ `{{ .metadata.annotations.subdomain }}` }}'
+          valueFiles:
+          - '{{ `{{ .path.path }}` }}/values.yaml'
+      destination:
+        name: '{{ `{{ .name }}` }}'
+        namespace: '{{ `{{ .values.destinationNamespace }}` }}'
+      syncPolicy:
+        automated:
+          enabled: true
+          selfHeal: true
+  templatePatch: | {{`
+    metadata:
+      annotations:
+        {{- if eq .values.serverSideApply "true" }}
+        argocd.argoproj.io/compare-options: ServerSideDiff=true
+        {{- end }}
+    spec:
+      {{- if eq .values.appType "helm" }}
+      source:
+        chart: '{{`{{ .values.appName }}`}}'
+        path: '{{ `apps/{{ index .path.segments 1 }}/{{ index .path.segments 2 }}/chart` }}'
+        helm:
+          parameters:
+            - name: baseDomain
+              value: '{{ `{{ .metadata.annotations.baseDomain }}` }}'
+            - name: clusterID
+              value: '{{ `{{ .metadata.annotations.clusterID }}` }}'
+            - name: infrastructureID
+              value: '{{ `{{ .metadata.annotations.infrastructureID }}` }}'
+            - name: subdomain
+              value: '{{ `{{ .metadata.annotations.subdomain }}` }}'
+          valueFiles:
+          - '{{ `{{ .path.path }}` }}/values.yaml'
+      {{-end }}
+      syncPolicy:
+        {{- if eq .values.serverSideApply "true" }}
+        syncOptions:
+          - ServerSideApply=true
+        {{- end }}
+    `}}
