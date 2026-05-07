@@ -31,9 +31,8 @@ spec:
               values:
                 appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
                 appType: '{{ `{{ ternary (index . "appType") "kustomize" (hasKey . "appType") }}` }}'
-                partOf: '{{ `{{ index .path.segments 1 }}` }}'
+                grouping: '{{ `{{ index .path.segments 1 }}` }}'
                 destinationNamespace: '{{ `{{ ternary (index . "namespace") (index .path.segments 2) (hasKey . "namespace") }}` }}'
-                serverSideApply: '{{ `{{ ternary (index . "serverSideApply") "false" (hasKey . "serverSideApply") }}` }}'
           - clusters:
               selector:
                 matchLabels:
@@ -47,35 +46,35 @@ spec:
     rollingSync:
       steps:
         - matchExpressions:
-            - key: app.kubernetes.io/part-of
+            - key: grouping
               operator: In
               values:
                 - 00-core
 
         - matchExpressions:
-            - key: app.kubernetes.io/part-of
+            - key: grouping
               operator: In
               values:
                 - 10-config
 
         - matchExpressions:
-            - key: app.kubernetes.io/part-of
+            - key: grouping
               operator: In
               values:
                 - 20-operators
 
         - matchExpressions:
-            - key: app.kubernetes.io/part-of
+            - key: grouping
               operator: In
               values:
-                - 99-other
+                - 99-indefinite
   template:
     metadata:
       name: 'hpl-{{ `{{ .values.appName }}` }}'
       labels:
         name: '{{ `{{ .values.appName }}` }}'
         cluster-name: '`{{ .name }}`'
-        app.kubernetes.io/part-of: '{{ `{{ .values.partOf }}` }}'
+        grouping: '{{ `{{ .values.grouping }}` }}'
     spec:
       info:
         - name: "parameters"
@@ -86,18 +85,6 @@ spec:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
         path: '{{ `{{ .path.path }}` }}'
-        helm:
-          parameters:
-            - name: baseDomain
-              value: '{{ `{{ .metadata.annotations.baseDomain }}` }}'
-            - name: clusterID
-              value: '{{ `{{ .metadata.annotations.clusterID }}` }}'
-            - name: infrastructureID
-              value: '{{ `{{ .metadata.annotations.infrastructureID }}` }}'
-            - name: subdomain
-              value: '{{ `{{ .metadata.annotations.subdomain }}` }}'
-          valueFiles:
-          - '{{ `{{ .path.path }}` }}/values.yaml'
       destination:
         name: '{{ `{{ .name }}` }}'
         namespace: '{{ `{{ .values.destinationNamespace }}` }}'
@@ -107,10 +94,12 @@ spec:
           selfHeal: true
   templatePatch: | {{`
     metadata:
+      {{- if hasKey "annotations" }}
       annotations:
-        {{- if eq .values.serverSideApply "true" }}
-        argocd.argoproj.io/compare-options: ServerSideDiff=true
-        {{- end }}
+          {{- with .annotations }}
+          {{ toYaml . | indent 4 }}
+          {{- end }}
+      {{- end }}
     spec:
       {{- if eq .values.appType "helm" }}
       source:
@@ -128,10 +117,11 @@ spec:
               value: '{{ `{{ .metadata.annotations.subdomain }}` }}'
           valueFiles:
           - '{{ `{{ .path.path }}` }}/values.yaml'
-      {{-end }}
-      syncPolicy:
-        {{- if eq .values.serverSideApply "true" }}
-        syncOptions:
-          - ServerSideApply=true
-        {{- end }}
+      {{- end }}
+      {{- if hasKey "syncPolicy" }}
+        syncPolicy:
+          {{- with .syncPolicy }}
+          {{ toYaml . | indent 4 }}
+          {{- end }}
+      {{- end }}
     `}}
