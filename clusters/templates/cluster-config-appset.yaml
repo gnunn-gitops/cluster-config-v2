@@ -50,25 +50,25 @@ spec:
             - key: app.kubernetes.io/part-of
               operator: In
               values:
-                - core
+                - 00-core
 
         - matchExpressions:
             - key: app.kubernetes.io/part-of
               operator: In
               values:
-                - config
+                - 10-config
 
         - matchExpressions:
             - key: app.kubernetes.io/part-of
               operator: In
               values:
-                - operators
+                - 20-operators
 
         - matchExpressions:
             - key: app.kubernetes.io/part-of
               operator: In
               values:
-                - other
+                - 99-other
   template:
     metadata:
       name: 'hpl-{{ `{{ .values.appName }}` }}'
