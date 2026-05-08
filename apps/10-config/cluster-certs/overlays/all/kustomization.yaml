@@ -15,6 +15,7 @@ resources:
 #         value: apps.home.ocplab.com
 #     target:
 #       kind: ConfigMap
+#       labelSelector: "clusterSettings=true"
 
 # The Argo CD Application uses a kustomize patch to update the ConfigMap cluster-settings
 # with the correct values for this specific cluster retrieved from the cluster generator. We

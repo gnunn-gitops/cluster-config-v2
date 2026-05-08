@@ -36,8 +36,6 @@ spec:
                 - path: apps/**/**/values/{{ .Values.clusterName }}/app-config.yaml
               values:
                 appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
-                # Is appType needed or just pick up from `values` being in the path
-                appType: '{{ `{{ ternary (index . "appType") "kustomize" (hasKey . "appType") }}` }}'
                 grouping: '{{ `{{ index .path.segments 1 }}` }}'
                 destinationNamespace: '{{ `{{ ternary (index . "namespace") (index .path.segments 2) (hasKey . "namespace") }}` }}'
           - clusters:
@@ -83,10 +81,10 @@ spec:
         cluster-name: '{{ `{{ .name }}` }}'
         grouping: '{{ `{{ .values.grouping }}` }}'
     spec:
-      # info:
-      #   - name: "parameters"
-      #     value: |
-      #       {{ `{{ toPrettyJson . }}` }}
+      info:
+        - name: "parameters"
+          value: |
+            {{ `{{ toPrettyJson . }}` }}
       project: '{{ .Values.clusterName }}'
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
@@ -107,25 +105,30 @@ spec:
           {{ toYaml . | indent 4 }}
           {{- end }}
     {{- end }}
+    {{- if or (hasKey . "syncOptions") (hasKey . "clusterSettings") }}
     spec:
-      {{- if eq .values.appType "helm" }}
+      {{- if hasKey . "clusterSettings"}}
       source:
-        chart: '{{ .values.appName }}'
-        path: 'apps/{{ index .path.segments 1 }}/{{ index .path.segments 2 }}/chart'
-        helm:
-          parameters:
-            - name: baseDomain
-              value: '{{ .metadata.annotations.baseDomain }}'
-            - name: clusterID
-              value: '{{ .metadata.annotations.clusterID }}'
-            - name: infrastructureID
-              value: '{{ .metadata.annotations.infrastructureID }}'
-            - name: subdomain
-              value: '{{ .metadata.annotations.subdomain }}'
-          valueFiles:
-          - '{{ .path.path }}/values.yaml'
+        kustomize:
+          patches:
+            - patch: |
+                - op: add
+                  path: /data/baseDomain
+                  value: {{ .metadata.annotations.baseDomain }}
+                - op: add
+                  path: /data/subdomain
+                  value: {{ .metadata.annotations.subDomain }}
+                - op: add
+                  path: /data/clusterID
+                  value: {{ .metadata.annotations.clusterID }}
+                - op: add
+                  path: /data/clusterID
+                  value: {{ .metadata.annotations.infrastructureID }}
+              target:
+                kind: ConfigMap
+                labelSelector: "clusterSettings=true"
       {{- end }}
-    {{- if hasKey . "syncOptions" }}
+      {{- if hasKey . "syncOptions" }}
       syncPolicy:
         automated:
           enabled: true
@@ -135,4 +138,6 @@ spec:
         {{ toYaml . | indent 4 }}
         {{- end }}
       {{- end }}
+
+    {{- end}}
     `}}
