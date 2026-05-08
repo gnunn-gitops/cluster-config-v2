@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+data:
+  baseDomain: hub.ocplab.com
+  subdomain: apps.hub.ocplab.com
+  clusterID: xxxx
+  infrastructureID: xxxx
