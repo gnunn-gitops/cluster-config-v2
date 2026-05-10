@@ -22,7 +22,7 @@ spec:
         generators:
           - git:
               repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-              revision: refactor
+              revision: main
               files:
                 # Pick up kustomize applications
                 - path: apps/**/**/overlays/all/app-config.yaml
