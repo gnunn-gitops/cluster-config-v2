@@ -8,3 +8,4 @@ rules:
   line-length: disable
   truthy:
     ignore: .github/workflows/
+    ignore: clusters/templates/cluster-config-appset.yaml
