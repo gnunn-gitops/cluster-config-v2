@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cluster-settings
+  namespace: openshift-config
   labels:
     clusterSettings: "true"
 data:
