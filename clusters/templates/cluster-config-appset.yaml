@@ -123,7 +123,7 @@ spec:
                   path: /data/clusterID
                   value: {{ .metadata.annotations.clusterID }}
                 - op: add
-                  path: /data/clusterID
+                  path: /data/infrastructureID
                   value: {{ .metadata.annotations.infrastructureID }}
               target:
                 kind: ConfigMap
