@@ -81,10 +81,11 @@ spec:
         cluster-name: '{{ `{{ .name }}` }}'
         grouping: '{{ `{{ .values.grouping }}` }}'
     spec:
-      info:
-        - name: "parameters"
-          value: |
-            {{ `{{ toPrettyJson . }}` }}
+      # Comment out for debugging appset parameters
+      # info:
+      #   - name: "parameters"
+      #     value: |
+      #       {{ `{{ toPrettyJson . }}` }}
       project: '{{ .Values.clusterName }}'
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
@@ -117,7 +118,7 @@ spec:
                   value: {{ .metadata.annotations.baseDomain }}
                 - op: add
                   path: /data/subdomain
-                  value: {{ .metadata.annotations.subDomain }}
+                  value: {{ .metadata.annotations.subdomain }}
                 - op: add
                   path: /data/clusterID
                   value: {{ .metadata.annotations.clusterID }}
