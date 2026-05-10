@@ -1,0 +1,144 @@
+{{ $clusterParts := split "-" .Values.clusterName }}
+{{ $clusterType := $clusterParts._0 }}
+{{ $clusterEnv := $clusterParts._1 }}
+{{ $clusterRegion := $clusterParts._2 }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ .Values.clusterName }}
+  labels:
+    cluster-name: {{ .Values.clusterName }}
+  # Use finalizer to delete resources when Application is deleted
+  # finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+              revision: refactor
+              files:
+                # Pick up kustomize applications
+                - path: apps/**/**/overlays/all/app-config.yaml
+                - path: apps/**/**/overlays/{{ $clusterType }}/app-config.yaml
+                - path: apps/**/**/overlays/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
+                - path: apps/**/**/overlays/{{ .Values.clusterName }}/app-config.yaml
+                # Pick up Helm applications
+                - path: apps/**/**/values/all/app-config.yaml
+                - path: apps/**/**/values/{{ $clusterType }}/app-config.yaml
+                - path: apps/**/**/values/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
+                - path: apps/**/**/values/{{ .Values.clusterName }}/app-config.yaml
+              values:
+                appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
+                grouping: '{{ `{{ index .path.segments 1 }}` }}'
+                destinationNamespace: '{{ `{{ ternary (index . "namespace") (index .path.segments 2) (hasKey . "namespace") }}` }}'
+          - clusters:
+              selector:
+                matchLabels:
+                  argocd-agent.argoproj-labs.io/agent-name: {{ .Values.clusterName }}
+                  argocd.argoproj.io/secret-type: cluster
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy/automated
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: grouping
+              operator: In
+              values:
+                - 00-core
+
+        - matchExpressions:
+            - key: grouping
+              operator: In
+              values:
+                - 10-config
+
+        - matchExpressions:
+            - key: grouping
+              operator: In
+              values:
+                - 20-operators
+
+        - matchExpressions:
+            - key: grouping
+              operator: In
+              values:
+                - 99-indefinite
+  template:
+    metadata:
+      name: 'hpl-{{ `{{ .values.appName }}` }}'
+      labels:
+        name: '{{ `{{ .values.appName }}` }}'
+        cluster-name: '{{ `{{ .name }}` }}'
+        grouping: '{{ `{{ .values.grouping }}` }}'
+    spec:
+      # Comment out for debugging appset parameters
+      # info:
+      #   - name: "parameters"
+      #     value: |
+      #       {{ `{{ toPrettyJson . }}` }}
+      project: '{{ .Values.clusterName }}'
+      source:
+        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+        targetRevision: main
+        path: '{{ `{{ .path.path }}` }}'
+      destination:
+        name: '{{ `{{ .name }}` }}'
+        namespace: '{{ `{{ .values.destinationNamespace }}` }}'
+      syncPolicy:
+        automated:
+          enabled: true
+          selfHeal: true
+  templatePatch: | {{`
+    {{- if hasKey . "annotations" }}
+    metadata:
+      annotations:
+          {{- with .annotations }}
+          {{ toYaml . | indent 4 }}
+          {{- end }}
+    {{- end }}
+    {{- if or (hasKey . "syncOptions") (hasKey . "clusterSettings") }}
+    spec:
+      {{- if hasKey . "clusterSettings"}}
+      source:
+        kustomize:
+          patches:
+            - patch: |
+                - op: add
+                  path: /data/baseDomain
+                  value: {{ .metadata.annotations.baseDomain }}
+                - op: add
+                  path: /data/subdomain
+                  value: {{ .metadata.annotations.subdomain }}
+                - op: add
+                  path: /data/clusterID
+                  value: {{ .metadata.annotations.clusterID }}
+                - op: add
+                  path: /data/clusterID
+                  value: {{ .metadata.annotations.infrastructureID }}
+              target:
+                kind: ConfigMap
+                labelSelector: "clusterSettings=true"
+      {{- end }}
+      {{- if hasKey . "syncOptions" }}
+      syncPolicy:
+        automated:
+          enabled: true
+          selfHeal: true
+        syncOptions:
+        {{- with .syncOptions }}
+        {{ toYaml . | indent 4 }}
+        {{- end }}
+      {{- end }}
+
+    {{- end}}
+    `}}
