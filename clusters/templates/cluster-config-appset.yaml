@@ -40,9 +40,9 @@ spec:
                 matchLabels:
                   argocd-agent.argoproj-labs.io/agent-name: {{ .Values.clusterName }}
                   argocd.argoproj.io/secret-type: cluster
-  ignoreApplicationDifferences:
-    - jsonPointers:
-        - /spec/syncPolicy/automated
+  # ignoreApplicationDifferences:
+  #   - jsonPointers:
+  #       - /spec/syncPolicy/automated
   strategy:
     type: RollingSync
     rollingSync:
@@ -96,7 +96,6 @@ spec:
         namespace: '{{ `{{ .values.destinationNamespace }}` }}'
       syncPolicy:
         automated:
-          enabled: true
           selfHeal: true
   templatePatch: | {{`
     {{- if hasKey . "annotations" }}
@@ -132,7 +131,6 @@ spec:
       {{- if hasKey . "syncOptions" }}
       syncPolicy:
         automated:
-          enabled: true
           selfHeal: true
         syncOptions:
         {{- with .syncOptions }}

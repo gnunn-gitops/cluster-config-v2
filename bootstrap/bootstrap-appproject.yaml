@@ -10,6 +10,8 @@ spec:
   destinations:
   - namespace: '*'
     server: '*'
+  sourceNamespaces:
+  - hub-prod-local
   sourceRepos:
   - '*'
   roles:
