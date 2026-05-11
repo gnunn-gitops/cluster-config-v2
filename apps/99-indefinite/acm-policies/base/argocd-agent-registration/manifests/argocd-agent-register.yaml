@@ -67,5 +67,11 @@ object-templates-raw: |
         - '*'
         sourceNamespaces:
         - '{{ $agent_name }}'
-
+        roles:
+        - name: cluster-admins
+          policies:
+          - p, proj:bootstrap:admin, applications, *, bootstrap/*, allow
+          groups:
+          - "cluster-admins"
+          - "system:cluster-admins"
   {{- end }}
