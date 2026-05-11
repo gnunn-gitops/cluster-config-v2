@@ -67,7 +67,7 @@ spec:
       #   - name: "parameters"
       #     value: |
       #       {{ toPrettyJson . }}
-      project: 'bootstrap'
+      project: '{{ .name }}'
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: main
