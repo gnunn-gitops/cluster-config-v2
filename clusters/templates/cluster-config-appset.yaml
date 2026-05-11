@@ -2,6 +2,8 @@
 {{ $clusterType := $clusterParts._0 }}
 {{ $clusterEnv := $clusterParts._1 }}
 {{ $clusterRegion := $clusterParts._2 }}
+
+{{ $clusterShortName := replace "-" " " .Values.clusterName | initials }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -29,11 +31,6 @@ spec:
                 - path: apps/**/**/overlays/{{ $clusterType }}/app-config.yaml
                 - path: apps/**/**/overlays/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
                 - path: apps/**/**/overlays/{{ .Values.clusterName }}/app-config.yaml
-                # Pick up Helm applications
-                - path: apps/**/**/values/all/app-config.yaml
-                - path: apps/**/**/values/{{ $clusterType }}/app-config.yaml
-                - path: apps/**/**/values/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
-                - path: apps/**/**/values/{{ .Values.clusterName }}/app-config.yaml
               values:
                 appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
                 grouping: '{{ `{{ index .path.segments 1 }}` }}'
@@ -75,11 +72,14 @@ spec:
                 - 99-indefinite
   template:
     metadata:
-      name: 'hpl-{{ `{{ .values.appName }}` }}'
+      name: '{{ $clusterShortName }}-{{ `{{ .values.appName }}` }}'
       labels:
         name: '{{ `{{ .values.appName }}` }}'
         cluster-name: '{{ `{{ .name }}` }}'
         grouping: '{{ `{{ .values.grouping }}` }}'
+        env: '{{ $clusterEnv }}'
+        region: '{{ $clusterRegion }}'
+        type: '{{ $clusterType }}'
     spec:
       # Comment out for debugging appset parameters
       # info:
