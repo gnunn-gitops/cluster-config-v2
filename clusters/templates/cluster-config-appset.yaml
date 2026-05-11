@@ -89,7 +89,7 @@ spec:
       project: '{{ .Values.clusterName }}'
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-        targetRevision: main
+        targetRevision: '{{ .Values.targetRevision }}'
         path: '{{ `{{ .path.path }}` }}'
       destination:
         name: '{{ `{{ .name }}` }}'

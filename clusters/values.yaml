@@ -1,1 +1,2 @@
 clusterName: hub-prod-local
+targetRevision: HEAD

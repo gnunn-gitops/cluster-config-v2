@@ -1,0 +1,85 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrap
+  namespace: argocd
+  # Use finalizer to delete resources when Application is deleted
+  # finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - clusters:
+        selector:
+          matchExpressions:
+            - key: argocd-agent.argoproj-labs.io/agent-name
+              operator: Exists
+            - key: argocd.argoproj.io/secret-type
+              operator: In
+              values:
+                - cluster
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy/automated
+  strategy:
+    # do a rolling sync through the different environments
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: env
+              operator: In
+              values:
+                - lab
+
+        - matchExpressions:
+            - key: env
+              operator: In
+              values:
+                - dev
+
+        - matchExpressions:
+            - key: env
+              operator: In
+              values:
+                - staging
+
+        - matchExpressions:
+            - key: env
+              operator: In
+              values:
+                - prod
+
+  template:
+    metadata:
+      name: 'bootstrap-{{ .name }}'
+      labels:
+        cluster-name: '{{ .name }}'
+        env: '{{ .metadata.labels.env }}'
+        region: '{{ .metadata.labels.region }}'
+        type: '{{ .metadata.labels.type }}'
+    spec:
+      # Comment out for debugging appset parameters
+      # info:
+      #   - name: "parameters"
+      #     value: |
+      #       {{ toPrettyJson . }}
+      project: 'bootstrap'
+      source:
+        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+        targetRevision: main
+        path: clusters
+        helm:
+          parameters:
+            - name: clusterName
+              value: '{{ .name }}'
+      destination:
+        name: in-cluster
+        namespace: argocd
+      syncPolicy:
+        automated:
+          enabled: true
+          selfHeal: true
