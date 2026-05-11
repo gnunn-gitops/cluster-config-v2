@@ -1,5 +1,8 @@
 extends: default
 
+ignore:
+  - /clusters/templates/cluster-config-appset.yaml
+
 rules:
   comments-indentation: disable
   document-start: disable
@@ -8,4 +11,3 @@ rules:
   line-length: disable
   truthy:
     ignore: .github/workflows/
-    ignore: clusters/templates/cluster-config-appset.yaml
