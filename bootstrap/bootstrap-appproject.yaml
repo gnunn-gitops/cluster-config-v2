@@ -9,7 +9,7 @@ spec:
     kind: '*'
   destinations:
   - namespace: '*'
-    server: '*'
+    name: hub-prod-local
   sourceNamespaces:
   - hub-prod-local
   sourceRepos:

@@ -77,7 +77,7 @@ spec:
             - name: clusterName
               value: '{{ .name }}'
       destination:
-        name: in-cluster
+        name: hub-prod-local
         namespace: argocd
       syncPolicy:
         automated:
