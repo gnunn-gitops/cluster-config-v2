@@ -17,7 +17,7 @@ jobs:
         uses: ibiqlik/action-yamllint@v3
         with:
           format: github
-          config_file: .yamllint.yml
+          config_file: .yamllint.yaml
   lint-kustomize:
     runs-on: ubuntu-latest
     steps:
