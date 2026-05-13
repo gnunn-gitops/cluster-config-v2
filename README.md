@@ -1,5 +1,3 @@
-*Note:* This is a work in progress and subject to rapid change.
-
 ### Introduction
 
 This is a new iteration of cluster configuration using the Argo CD Agent in managed mode. Given that
@@ -7,7 +5,7 @@ the Agent is operating in Managed mode I can no longer use my previous method of
 Applications with a Helm chart using sync waves. As a result there is a switch to ApplicationSets
 with Progressive Sync to bulk deploy the cluster-configuration Applications per cluster.
 
-As part of the switch I'm trying out a new system that was internally proposed by Red Hat
+As part of the switch I'm trying out a modified version of system that was internally proposed by Red Hat
 Consultants (see credits below). My original system was very DRY (Don't Repeat Yourself) but this
 came at the expense of readability. This new system is more readable but in larger environments
 (i.e. 100s or 1000s of clusters) managing all of the overlays may become onerous, more on that
@@ -25,8 +23,14 @@ and has two primary folders:
 2. *clusters* - This is the ApplicationSets for each individual cluster, at some point this
 will likely be migrated to a generic RHACM ConfigurationPolicy alongside the existing
 `agent-registration` policy.
+3. *bootstrap* - This bootstraps the per-cluster ApplicationSet in *cluster* across all
+Argo CD Agent clusters that have been registered. It uses Progressive Sync and operates
+in order of environment (lab > dev > stage > prod) which is part of the cluster naming
+convention.
 
-A Cluster naming convention is being used and this naming convention is used to select the
+### Cluster Naming Convention
+
+A Cluster naming convention is being used and this is used to select the
 Applications being deployed on each cluster. The naming convention used is:
 
 ```
@@ -74,11 +78,11 @@ generators:
     - git:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         revision: main
-        directories:
-        - path: apps/**/overlays/all
-        - path: apps/**/overlays/hub
-        - path: apps/**/overlays/hub-prod
-        - path: apps/**/overlays/hub-prod-local
+        files:
+        - path: apps/**/**/overlays/all/app-config.yaml
+        - path: apps/**/**/overlays/{{ $clusterType }}/app-config.yaml
+        - path: apps/**/**/overlays/{{ $clusterType }}-{{ $clusterEnv }}/app-config.yaml
+        - path: apps/**/**/overlays/{{ .Values.clusterName }}/app-config.yaml
 ```
 
 It's important to note that you cannot have the same Application generated multiple times so you
@@ -88,6 +92,30 @@ this might be a fun future project using an ApplicationSet custom plugin.
 Finally note that even though a specific naming convention is being used here, Organizations
 wanting to try this system should feel free to create a naming convention that works for them. The key
 here is segmenting applications but what the actual segments themselves are can be changed as needed.
+
+### Reducing Overlays
+
+OpenShift typically has some static information (subdomain, base domain, clusterID, infrastructureID) that
+needs to be referenced in cluster configuration. One option is to simply handle this in kustomize
+with overlays and with a smaller number of clusters this works fine. However when dealing
+with large fleets of clusters this can become onerous.
+
+There are typically a few different ways of handling this:
+
+1. Live with the pain and manually define the overlays as needed. This is burdensome and error prone.
+2. Use external automation, for example Ansible, to generate the required overlays in git
+3. Use RHACM ConfigurationPolicy to communicate these values to Argo CD via some mechanism
+
+Since I'm already using RHACM ConfigurationPolicy to manage the Argo CD Agent cluster secrets on the Hub
+I've opted to go with 3.
+
+When a new Agent is registered RHACM automatically includes this static information as annotations
+in the cluster secret which in turn can be used by the ApplicationSet cluster generator. With
+the git file generator a parameter `clusterSettings` can be set to true and if present the ApplicationSet
+will include a kustomize patch in the generated Application to update a ConfigMap with these values.
+
+In kustomize, the Replacements feature is then used to pull these values from the ConfigMap and patch
+them where they need to go.
 
 ### Early Thoughts on this System
 
@@ -105,17 +133,9 @@ I had previously.
 Some minor drawbacks (none of them deal-breakers):
 
 * It's more difficult to deal with exceptions, i.e. this app needs to use ServerSideApply and this one
-does not, this one needs a specific ignoreDifferences, etc. I've worked around this in the ApplicationSet
-using a mix of matrix and merge generators to make dealing with it as simple as possible. However a lot
-of this is just the nature of ApplicationSets, it's a trade-off between ease-of-use and flexibility.
-* Part of the exception challenge is setting the `spec.destination.namespace` appropriately
-for Argo CD Applications since folder names don't always align with namespaces. An easy solution is
-to simply leave it blank but my preference is to set it as a mitigation for someone forgetting to set it
-at the Kustomize level. For now I'm leveraging the exception mechanism in the first point to deal with it.
-* In larger fleets of clusters creating the cluster specific overlays might get a bit much. In my previous
-version I used an Argo CD CMP plugin that could dynamically replace standard cluster values like subdomain
-and cluster_id, this could be reintroduced to eliminate some common patching requirements and mitigate
-some of the need for more specific overlays.
+does not, this one needs a specific ignoreDifferences, etc. I've worked around this by including
+exceptions as parameters in the `app-config.yaml` picked up by the git files generator. The ApplicationSet
+then uses a `templatePatch` to set these appropriately.
 
 ### Managing the Argo CD Agent
 
@@ -144,18 +164,15 @@ and creates the needed resources on the Control Plane.
 from the Control Plane to the target cluster. Only the Control Plane requires `cert-manager`, the workload
 clusters do not.
 
-Note that the Argo CD Agent uses Apps-in-Any-Namespace so the following namespaces are used:
+The Argo CD Agent is using destination mapping, the following namespaces are used:
 
 * *argocd*. This is where the Control Plane and Principal is installed. No policy installs this, rather it
 is in the `apps/openshift-gitops/overlays/hub` overlay.
 * *argocd-agent*. This is the namespace used for all agents, since we also install an agent on the Control Plane
 to manage that cluster we needed a different namespace. Plus it makes easier to identify IMHO.
-* *argocd-agent-&lt;cluster-name&gt;* This is the per cluster Apps-In-Any-Namespace that is used for the
-Applications for this cluster. It also supports AppSet-In-Any-Namespace and this is where the `cluster-config`
-ApplicationSet is deployed to in order to configure that cluster.
 
 Finally note that these policies are not generic, it's an example of how things can be done but it's not
-something that can just be ripped out and dropped into a new Hub cluster as is. Some adjustments would
+something that can just be ripped out and dropped into a new Hub cluster as is. Some adjustments will
 be required.
 
 ### Credits
