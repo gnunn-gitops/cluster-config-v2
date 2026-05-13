@@ -8,6 +8,7 @@ components:
 - ../../components/health-application
 - ../../components/health-pvc
 - ../../components/health-subscription
+- ../../components/oidc-keycloak-ocplab
 
 resources:
 - ../../base
