@@ -16,8 +16,14 @@ resources:
 patches:
   - patch: |
       - op: replace
+        path: /metadata/name
+        value: openshift-gitops
+    target:
+      kind: ArgoCD
+  - patch: |
+      - op: replace
         path: /spec/provider/kubernetes/remoteNamespace
-        value: demo-gitops
+        value: openshift-gitops
     target:
       kind: SecretStore
       name: k8s-store
