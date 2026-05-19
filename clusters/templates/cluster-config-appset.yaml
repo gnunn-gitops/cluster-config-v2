@@ -81,14 +81,14 @@ spec:
         type: '{{ $clusterType }}'
     spec:
       # Comment out for debugging appset parameters
-      # info:
-      #   - name: "parameters"
-      #     value: |
-      #       {{ `{{ toPrettyJson . }}` }}
+      info:
+        - name: "parameters"
+          value: |
+            {{ `{{ toPrettyJson . }}` }}
       project: '{{ .Values.clusterName }}'
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-        targetRevision: '{{ .Values.targetRevision }}'
+        targetRevision: '{{ `{{ ternary (index . "targetRevision") (.metadata.annotations.targetRevision) (hasKey . "targetRevision") }}` }}'
         path: '{{ `{{ .path.path }}` }}'
       destination:
         name: '{{ `{{ .name }}` }}'
@@ -106,7 +106,7 @@ spec:
     {{- end }}
     {{- if or (hasKey . "syncOptions") (hasKey . "clusterSettings") }}
     spec:
-      {{- if hasKey . "clusterSettings"}}
+      {{- if hasKey . "clusterSettings" }}
       source:
         kustomize:
           patches:
