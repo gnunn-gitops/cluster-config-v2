@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: rhtas-rekor
+spec:
+  href: 'https://rekor-search-ui-trusted-artifact-signer.apps.hub.ocplab.com/'
+  location: ApplicationMenu
+  text: Trusted Artifact Signer
+  applicationMenu:
+    section: Red Hat Applications
+    imageURL: https://rekor-search-ui-trusted-artifact-signer.apps.hub.ocplab.com/favicon.ico
