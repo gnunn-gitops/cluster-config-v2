@@ -18,11 +18,15 @@ jobs:
         with:
           format: github
           config_file: .yamllint.yaml
-  lint-kustomize:
+  validate-manifests:
     runs-on: ubuntu-latest
     steps:
       - name: Code Checkout
         uses: actions/checkout@v3
+      - name: Setup Kubeconform
+        uses: bmuschko/setup-kubeconform@v1
+        with:
+          version: 'latest' # Or a specific version like 'v0.6.3'
       - name: Verify Kustomize CLI Installation
         run: |
           which kustomize

@@ -81,14 +81,18 @@ do
     errors=$((errors + 1))
   fi
 
-#  echo "$KUSTOMIZE_BUILD_OUTPUT" | kubeval ${IGNORE_MISSING_SCHEMAS} --schema-location="file://${SCHEMA_LOCATION}" --force-color
+ # Validate with kubeconform but ignore missing schemas
+ echo "$KUSTOMIZE_BUILD_OUTPUT" | kubeconform -ignore-missing-schemas -kubernetes-version 1.34.5 \
+   -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
+   -schema-location 'https://raw.githubusercontent.com/melmorabity/openshift-json-schemas/main/v4.20-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
+   -schema-location 'https://raw.githubusercontent.com/KevinNitroG/argocd-json-schema/main/schemas/v3.39/standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json'
 
-#  validation_response=$?
+ validation_response=$?
 
-#  if [ $validation_response -ne 0 ]; then
-#    echo "Error validating $i"
-#    exit 1
-#  fi
+ if [ $validation_response -ne 0 ]; then
+   echo "Error validating $i"
+   exit 1
+ fi
 done
 
 # Validate helm

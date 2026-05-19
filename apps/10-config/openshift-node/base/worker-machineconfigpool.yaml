@@ -9,3 +9,4 @@ metadata:
     pools.operator.machineconfiguration.openshift.io/worker: ""
     kubeletconfig: custom-node-sizing
   name: worker
+spec: {}

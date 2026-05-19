@@ -10,3 +10,4 @@ metadata:
     pools.operator.machineconfiguration.openshift.io/master: ''
     kubeletconfig: custom-node-sizing
   name: master
+spec: {}

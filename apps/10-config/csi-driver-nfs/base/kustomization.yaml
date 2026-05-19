@@ -5,12 +5,12 @@ namespace: csi-driver-nfs
 
 helmCharts:
 - name: csi-driver-nfs
-  version: v4.13.1
+  version: v4.13.2
   repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
   namespace: csi-driver-nfs
   releaseName: csi-driver-nfs
   valuesFile: values.yaml
-  kubeVersion: "v1.33.6"
+  kubeVersion: "v1.34.6"
 
 resources:
 - namespace.yaml
