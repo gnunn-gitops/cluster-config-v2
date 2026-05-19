@@ -1,0 +1,10 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  labels:
+    argocd-agent: workload-prod-local
+    core-secret: workload-prod-local
+    name: workload-prod-local
+  name: workload-prod-local
+spec:
+  hubAcceptsClient: true

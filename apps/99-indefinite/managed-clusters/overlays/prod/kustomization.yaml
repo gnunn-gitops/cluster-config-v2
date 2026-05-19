@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonAnnotations:
+  targetRevision: v1.0.0
+
+resources:
+- local-cluster.yaml
+- workload-prod-local.yaml

@@ -1,0 +1,12 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  labels:
+    argocd-agent: hub-prod-local
+    argocd-agent-control-plane: "true"
+    core-secret: hub-prod-local
+    local-cluster: "true"
+    name: local-cluster
+  name: local-cluster
+spec:
+  hubAcceptsClient: true
