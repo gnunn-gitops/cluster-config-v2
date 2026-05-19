@@ -7,7 +7,7 @@ spec:
   refreshInterval: 1h
   secretStoreRef:
     kind: ClusterSecretStore
-    name: doppler-cluster
+    name: cluster
   target:
     name: postgresql
     creationPolicy: Owner
