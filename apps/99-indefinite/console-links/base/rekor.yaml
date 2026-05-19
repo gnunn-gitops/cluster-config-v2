@@ -8,4 +8,4 @@ spec:
   text: Trusted Artifact Signer
   applicationMenu:
     section: Red Hat Applications
-    imageURL: https://rekor-search-ui-trusted-artifact-signer.apps.hub.ocplab.com/favicon.ico
+    imageURL: https://rekor-search-ui-trusted-artifact-signer.apps.hub.ocplab.com/_next/static/media/Logo-Red_Hat-Trusted_Artifact_Signer-A-Reverse-RGB.22a59824.svg
