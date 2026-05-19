@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/resourceHealthChecks/-
+        value:
+          group: networking.k8s.io
+          kind: Ingress
+          check: |
+            hs = {}
+            hs.status = "Progressing"
+            hs.message = ""
+            if obj.status ~= nil then
+              if obj.status.loadbalancer ~= nil then
+                hs.status = "Healthy"
+                return hs
+              end
+            end
+            return hs
+    target:
+      kind: ArgoCD
