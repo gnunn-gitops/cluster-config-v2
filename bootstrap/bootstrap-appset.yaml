@@ -76,6 +76,8 @@ spec:
           parameters:
             - name: clusterName
               value: '{{ .name }}'
+            - name: targetRevision
+              value: '{{ .metadata.annotations.targetRevision }}'
       destination:
         name: hub-prod-local
         namespace: argocd
