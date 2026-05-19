@@ -85,7 +85,7 @@ do
  echo "$KUSTOMIZE_BUILD_OUTPUT" | kubeconform -ignore-missing-schemas -kubernetes-version 1.34.5 \
    -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
    -schema-location 'https://raw.githubusercontent.com/melmorabity/openshift-json-schemas/main/v4.20-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
-   -schema-location 'https://raw.githubusercontent.com/KevinNitroG/argocd-json-schema/main/schemas/v3.39/standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json'
+   -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
 
  validation_response=$?
 
