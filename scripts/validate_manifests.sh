@@ -14,7 +14,8 @@ Where:
   -sl | --schema-location      Location containing schemas"
 }
 
-IGNORE_MISSING_SCHEMAS="--ignore-missing-schemas"
+KUBERNETES_VERSION="1.34.5"
+IGNORE_MISSING_SCHEMAS="-ignore-missing-schemas"
 SCHEMA_LOCATION="${DIR}/openshift-json-schema"
 KUSTOMIZE_DIRS="${DIR}"
 ERROR_COLOR='\033[0;31m'
@@ -82,7 +83,7 @@ do
   fi
 
  # Validate with kubeconform but ignore missing schemas
- echo "$KUSTOMIZE_BUILD_OUTPUT" | kubeconform -ignore-missing-schemas -kubernetes-version 1.34.5 \
+ echo "$KUSTOMIZE_BUILD_OUTPUT" | kubeconform $IGNORE_MISSING_SCHEMAS -kubernetes-version $KUBERNETES_VERSION \
    -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
    -schema-location 'https://raw.githubusercontent.com/melmorabity/openshift-json-schemas/main/v4.20-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
    -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
@@ -116,6 +117,19 @@ do
     >&2 echo -e "${ERROR_COLOR}Error building $i${NO_COLOR}"
     errors=$((errors + 1))
   fi
+
+ # Validate with kubeconform but ignore missing schemas
+ echo "$HELM_BUILD_OUTPUT" | kubeconform $IGNORE_MISSING_SCHEMAS -kubernetes-version $KUBERNETES_VERSION \
+   -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{ .NormalizedKubernetesVersion }}-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
+   -schema-location 'https://raw.githubusercontent.com/melmorabity/openshift-json-schemas/main/v4.20-standalone{{ .StrictSuffix }}/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
+   -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
+
+ validation_response=$?
+
+ if [ $validation_response -ne 0 ]; then
+   echo "Error validating $i"
+   exit 1
+ fi
 
 done
 
