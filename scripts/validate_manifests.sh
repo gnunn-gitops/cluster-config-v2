@@ -55,6 +55,7 @@ done
 
 errors=0
 
+# Validate kustomize
 for i in $(find "${KUSTOMIZE_DIRS}" -name "kustomization.yaml" -exec dirname {} \;)
 do
   echo
@@ -88,6 +89,30 @@ do
 #    echo "Error validating $i"
 #    exit 1
 #  fi
+done
+
+# Validate helm
+for i in $(find "${KUSTOMIZE_DIRS}" -name "Chart.yaml" -exec dirname {} \;)
+do
+
+  echo
+  echo "Validating $i"
+  echo
+
+  if [ -f "$i/.skip_validation" ]; then
+    echo "Skipping validation due to .skip_validation marker file"
+    continue
+  fi
+
+  HELM_BUILD_OUTPUT=$(helm template "$i")
+
+  build_response=$?
+
+  if [ $build_response -ne 0 ]; then
+    >&2 echo -e "${ERROR_COLOR}Error building $i${NO_COLOR}"
+    errors=$((errors + 1))
+  fi
+
 done
 
 echo
