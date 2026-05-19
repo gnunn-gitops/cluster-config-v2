@@ -6,3 +6,4 @@ resources:
 - sso-link.yaml
 - rekor.yaml
 - rhtpa.yaml
+- rhacs.yaml

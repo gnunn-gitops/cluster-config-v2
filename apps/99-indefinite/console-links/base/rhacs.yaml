@@ -1,11 +1,11 @@
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
-  name: rhtas-rekor
+  name: rhacs
 spec:
-  href: 'https://rekor-search-ui-trusted-artifact-signer.apps.hub.ocplab.com/'
+  href: 'https://central-rhacs-operator.apps.hub.ocplab.com/'
   location: ApplicationMenu
-  text: Trusted Artifact Signer
+  text: Advanced Cluster Security
   applicationMenu:
     section: Red Hat Applications
     imageURL: https://console-openshift-console.apps.hub.ocplab.com/static/assets/public/imgs/logos/redhat.svg
