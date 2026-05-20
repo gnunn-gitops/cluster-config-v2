@@ -1,4 +1,5 @@
 namespace: open-cluster-management
+targetRevision: HEAD
 annotations:
   argocd.argoproj.io/compare-options: ServerSideDiff=true
 syncOptions:
