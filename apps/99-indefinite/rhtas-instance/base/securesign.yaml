@@ -18,9 +18,9 @@ spec:
       organizationName: Red Hat
     config:
       OIDCIssuers:
-      - ClientID: trusted-artifact-signer
-        Issuer: <replaceme>
-        IssuerURL: <replaceme>
+      - ClientID: tekton-builder
+        Issuer: https://sso.ocplab.com/realms/ocplab
+        IssuerURL: https://sso.ocplab.com/realms/ocplab
         Type: email
     externalAccess:
       enabled: true
