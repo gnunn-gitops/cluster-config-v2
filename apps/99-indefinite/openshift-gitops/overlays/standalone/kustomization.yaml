@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: openshift-gitops
+namespace: argocd-standalone
 
 components:
 - ../../components/extension-assistant-lightspeed
@@ -16,24 +16,18 @@ resources:
 patches:
   - patch: |
       - op: replace
-        path: /metadata/name
-        value: openshift-gitops
-    target:
-      kind: ArgoCD
-  - patch: |
-      - op: replace
         path: /spec/provider/kubernetes/remoteNamespace
-        value: openshift-gitops
+        value: argocd-standalone
     target:
       kind: SecretStore
       name: k8s-store
   - patch: |
       - op: replace
         path: /subjects/0/namespace
-        value: openshift-gitops
+        value: argocd-standalone
       - op: replace
         path: /metadata/name
-        value: lightspeed-operator-query-access-openshift-gitops
+        value: lightspeed-operator-query-access-argocd-standalone
     target:
       kind: ClusterRoleBinding
       name: lightspeed-operator-query-access-argocd
