@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "15"
+    argocd.argoproj.io/sync-options: ServerSideApply=true
+  name: trillian-db
+  namespace: trusted-artifact-signer
+spec:
+  template:
+    spec:
+      containers:
+      - name: trillian-db
+        securityContext:
+          allowPrivilegeEscalation: false
+          ## Needed to fix https://redhat.atlassian.net/browse/SECURESIGN-4504
+          capabilities:
+            drop: ["ALL"]
+          runAsNonRoot: true

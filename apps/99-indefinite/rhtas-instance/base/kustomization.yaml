@@ -6,3 +6,4 @@ namespace: trusted-artifact-signer
 resources:
 - namespace.yaml
 - securesign.yaml
+- trillian-db.yaml
