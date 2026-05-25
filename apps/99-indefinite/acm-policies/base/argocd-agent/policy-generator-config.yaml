@@ -8,6 +8,7 @@ policyDefaults:
   namespace: acm-policies
   remediationAction: enforce
   complianceType: "mustonlyhave"
+  recreateOption: IfRequired
 policies:
   - name: argocd-agent
     description: Argo CD Agent
