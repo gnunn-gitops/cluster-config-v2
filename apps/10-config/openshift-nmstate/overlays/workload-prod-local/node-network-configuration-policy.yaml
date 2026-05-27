@@ -24,4 +24,4 @@ spec:
         auto-dns: true
       dispatch:
         post-activation: |
-          /usr/sbin/ethtool -s eth1 wol g
+          /usr/sbin/ethtool -s enp8s0 wol g
