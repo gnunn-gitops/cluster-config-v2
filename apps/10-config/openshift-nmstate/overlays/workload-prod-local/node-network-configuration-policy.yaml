@@ -12,4 +12,5 @@ spec:
       type: ethernet
       state: up
       ethtool:
-        wake-on-lan: magic
+        feature:
+          wake-on-lan: magic
