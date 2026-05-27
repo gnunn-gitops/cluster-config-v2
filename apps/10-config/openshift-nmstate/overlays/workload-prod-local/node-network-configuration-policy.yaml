@@ -18,6 +18,10 @@ spec:
     - name: enp8s0
       type: ethernet
       state: up
+      ipv4:
+        dhcp: true
+        enabled: true
+        auto-dns: true
       dispatch:
         post-activation: |
-          /sbin/ethtool -s eth1 wol g
+          /usr/sbin/ethtool -s eth1 wol g
