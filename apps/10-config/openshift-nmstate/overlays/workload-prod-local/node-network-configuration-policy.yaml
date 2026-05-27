@@ -8,13 +8,13 @@ metadata:
 spec:
   desiredState:
     interfaces:
-    - name: enp7s0
-      state: absent
-      type: ethernet
-      ipv4:
-        dhcp: true
-        enabled: true
-        auto-dns: true
+    # - name: enp7s0
+    #   state: absent
+    #   type: ethernet
+    #   ipv4:
+    #     dhcp: true
+    #     enabled: true
+    #     auto-dns: true
     - name: enp8s0
       type: ethernet
       state: up
