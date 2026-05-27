@@ -8,9 +8,6 @@ metadata:
 spec:
   desiredState:
     interfaces:
-    - name: enp7s0
-      state: absent
-      type: ethernet
     - name: enp8s0
       type: ethernet
       state: up
