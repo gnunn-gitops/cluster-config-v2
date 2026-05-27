@@ -43,7 +43,6 @@ spec:
     await-sidecar-readiness: true
     coschedule: workspaces
     default-service-account: pipeline
-    disable-affinity-assistant: true
     disable-creds-init: false
     enable-api-fields: beta
     enable-bundles-resolver: true
