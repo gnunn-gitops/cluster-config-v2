@@ -11,6 +11,5 @@ spec:
     - name: enp8s0
       type: ethernet
       state: up
-      dispatch:
-        post-activation: |
-          /usr/sbin/ethtool -s enp8s0 wol g
+      ethtool:
+        wake-on-lan: magic
