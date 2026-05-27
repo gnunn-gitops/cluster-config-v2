@@ -6,12 +6,9 @@ resources:
 
 patches:
   - patch: |
-      - op: replace
-        path: /spec/config/systemd/units/0/name
-        value: wol@enp8s0.service
       - op: add
         path: /metadata/labels/machineconfiguration.openshift.io~1role
         value: master
     target:
       kind: MachineConfig
-      name: 99-wol-service
+      name: 99-networkmanager-wol
