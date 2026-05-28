@@ -7,4 +7,5 @@ metadata:
     kubernetes.io/metadata.name: openshift-pipelines
     openshift.io/cluster-monitoring: "true"
     operator.tekton.dev/disable-proxy: "true"
+    cluster-secrets: "true"
   name: openshift-pipelines

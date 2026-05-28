@@ -3,4 +3,6 @@ kind: Namespace
 metadata:
   annotations:
     openshift.io/display-name: Red Hat Advanced Cluster Security Operator
+  labels:
+    cluster-secrets: "true"
   name: rhacs-operator

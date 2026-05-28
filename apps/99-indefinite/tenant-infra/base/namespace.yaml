@@ -3,4 +3,6 @@ kind: Namespace
 metadata:
   annotations:
     openshift.io/display-name: Tenant Infrastructure
+  labels:
+    cluster-secrets: "true"
   name: tenant-infra

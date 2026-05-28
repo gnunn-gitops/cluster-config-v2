@@ -16,3 +16,12 @@ resources:
 # since it is not supported yet. Commented out for now as we switch to destination
 # based routing but might re-use if I decide to have tenants share the same instance
 # - appset-in-any-namespace-clusterrole.yaml
+
+patches:
+- patch: |
+    - op: add
+      path: /metadata/labels/cluster-secrets
+      value: true
+  target:
+    kind: Namespace
+    name: argocd
