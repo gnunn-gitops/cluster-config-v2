@@ -21,7 +21,7 @@ patches:
 - patch: |
     - op: add
       path: /metadata/labels/cluster-secrets
-      value: true
+      value: "true"
   target:
     kind: Namespace
     name: argocd
