@@ -10,4 +10,5 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-reader
+  # needs to have write permissions to support resource actions in Argo CD
+  name: cluster-admin
