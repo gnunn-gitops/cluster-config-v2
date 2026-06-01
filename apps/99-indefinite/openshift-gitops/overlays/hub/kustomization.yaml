@@ -9,6 +9,7 @@ components:
 - ../../components/extension-assistant-lightspeed
 - ../../components/oidc-keycloak-ocplab
 - ../../components/agent-principal
+- ../../components/plugin-ocp-config
 
 resources:
 - ../../base
