@@ -26,4 +26,4 @@ patches:
                 obj.metadata.annotations["compliance.openshift.io/rescan"] = ""
                 return obj
     target:
-      kind: Argo CD
+      kind: ArgoCD

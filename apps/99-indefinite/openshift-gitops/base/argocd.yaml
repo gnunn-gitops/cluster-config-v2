@@ -4,6 +4,7 @@ metadata:
   name: argocd
 spec:
   resourceHealthChecks: []
+  resourceActions: []
   extraConfig:
     exec.enabled: "true"
     resource.respectRBAC: "normal"

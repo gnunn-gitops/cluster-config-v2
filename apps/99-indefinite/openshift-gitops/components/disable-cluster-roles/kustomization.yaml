@@ -7,4 +7,4 @@ patches:
         path: /spec/defaultClusterScopedRoleDisabled
         value: true
     target:
-      kind: Argo CD
+      kind: ArgoCD
