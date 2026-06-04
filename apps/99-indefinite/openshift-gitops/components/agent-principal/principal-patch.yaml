@@ -14,10 +14,13 @@ spec:
       enabled: true
       namespace:
         allowedNamespaces:
-          - argocd
+          - "argocd"
+          - "*-argocd"
       jwt:
         secretName: argocd-agent-jwt-signing
       auth: mtls:CN=([^,]+)
       image: quay.io/gnunn/argocd-agent:namespace-mapping-fix
   controller:
     enabled: false
+  sourceNamespaces:
+    - "*-argocd"
