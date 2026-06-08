@@ -65,8 +65,6 @@ object-templates-raw: |
           name: '{{ $agent_name }}'
         sourceRepos:
         - '*'
-        sourceNamespaces:
-        - '{{ $agent_name }}'
         roles:
         - name: cluster-admins
           policies:
