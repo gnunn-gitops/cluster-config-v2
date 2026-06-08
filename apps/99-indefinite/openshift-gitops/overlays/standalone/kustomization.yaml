@@ -12,6 +12,7 @@ components:
 
 resources:
 - ../../base
+- namespace.yaml
 
 patches:
   - patch: |

@@ -13,6 +13,7 @@ components:
 
 resources:
 - ../../base
+- namespace.yaml
 - server-clusterrole.yaml
 # AppSets in Any Namespace require more permissions then what operator gives
 # since it is not supported yet. Commented out for now as we switch to destination

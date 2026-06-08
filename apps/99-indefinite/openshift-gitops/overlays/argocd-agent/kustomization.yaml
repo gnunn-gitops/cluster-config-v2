@@ -11,6 +11,7 @@ components:
 - ../../components/health-ingress
 - ../../components/health-multiclusterhub
 - ../../components/health-pvc
+- ../../components/health-policy
 - ../../components/health-rolloutmanager
 - ../../components/health-stackrox
 - ../../components/health-subscription
