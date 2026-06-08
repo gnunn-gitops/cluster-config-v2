@@ -42,8 +42,8 @@ spec:
           targetRevision: 2.0.1
           helm:
             releaseName: sealed-secrets
-            values: '$values/{{index .path.segments 1}}/values.yaml'
-            additionalValues:
+            valueFiles:
+              - '$values/{{index .path.segments 1}}/values.yaml'
               - '$values/{{index .path.segments 0}}/{{index .path.segments 1}}/cluster-values.yaml'
         - repoURL: 'https://github.com/gnunn-gitops/tenants'
           targetRevision: main
