@@ -17,7 +17,7 @@ spec:
         files:
           - path: "**/**/cluster-values.yaml"
         template:
-          metadata:
+          metadata: {}
           spec:
             project: '{{index .path.segments 1}}'
   # ignoreApplicationDifferences:
