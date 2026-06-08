@@ -1,0 +1,68 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tenants-infra
+  # Use finalizer to delete resources when Application is deleted
+  # finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/gnunn-gitops/tenants
+        revision: main
+        files:
+          - path: "**/**/cluster-values.yaml"
+        template:
+          spec:
+            project: '{{index .path.segments 1}}'
+  # ignoreApplicationDifferences:
+  #   - jsonPointers:
+  #       - /spec/syncPolicy/automated
+  template:
+    metadata:
+      name: '{{index .path.segments 1}}-{{index .path.segments 0}}'
+      labels:
+        cluster-name: '{{index .path.segments 1}}'
+        tenant: '{{index .path.segments 0}}'
+    spec:
+      # Comment out for debugging appset parameters
+      # info:
+      #   - name: "parameters"
+      #     value: |
+      #       {{ toPrettyJson . }}
+      project: 'default'
+      sources:
+        - chart: tenant
+          repoURL: https://gnunn-gitops.github.io/helm-charts
+          targetRevision: 2.0.1
+          helm:
+            releaseName: sealed-secrets
+            values: '$values/{{index .path.segments 1}}/values.yaml'
+            additionalValues:
+              - '$values/{{index .path.segments 0}}/{{index .path.segments 1}}/cluster-values.yaml'
+        - repoURL: 'https://github.com/gnunn-gitops/tenants'
+          targetRevision: main
+          ref: values
+      destination:
+        name: '{{index .path.segments 1}}'
+        namespace: tenants-infra
+      syncPolicy:
+        automated:
+          selfHeal: true
+  templatePatch: |
+    {{- $clusterParts := split "-" (index .path.segments 1) }}
+    {{- $clusterType := $clusterParts._0 }}
+    {{- $clusterEnv := $clusterParts._1 }}
+    {{- $clusterRegion := $clusterParts._2 }}
+    {{- $clusterShortName := replace "-" " " (index .path.segments 1) | initials }}
+
+    metadata:
+      name: '{{- $clusterShortName }}-{{index .path.segments 0}}'
+      labels:
+        env: '{{- $clusterEnv }}'
+        type: '{{- $clusterType }}'
+        region: '{{- $clusterRegion }}'
