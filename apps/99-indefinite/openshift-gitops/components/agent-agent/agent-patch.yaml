@@ -23,3 +23,5 @@ spec:
         secretName: argocd-agent-client-tls
   server:
     enabled: false
+  sourceNamespaces:
+    - "*-argocd"
