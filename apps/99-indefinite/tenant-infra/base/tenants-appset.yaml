@@ -43,7 +43,7 @@ spec:
           helm:
             releaseName: sealed-secrets
             valueFiles:
-              - '$values/{{index .path.segments 1}}/values.yaml'
+              - '$values/{{index .path.segments 0}}/values.yaml'
               - '$values/{{index .path.segments 0}}/{{index .path.segments 1}}/cluster-values.yaml'
         - repoURL: 'https://github.com/gnunn-gitops/tenants'
           targetRevision: main
