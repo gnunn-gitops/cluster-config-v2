@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: tenants-infra
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: '*'
+    name: '*'
+  sourceRepos:
+  - '*'
+  roles:
+  - name: cluster-admins
+    policies:
+    - p, proj:bootstrap:admin, applications, *, bootstrap/*, allow
+    groups:
+    - "cluster-admins"
+    - "system:cluster-admins"

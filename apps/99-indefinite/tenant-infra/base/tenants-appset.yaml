@@ -16,10 +16,10 @@ spec:
         revision: main
         files:
           - path: "**/**/cluster-values.yaml"
-        template:
-          metadata: {}
-          spec:
-            project: '{{index .path.segments 1}}'
+        # template:
+        #   metadata: {}
+        #   spec:
+        #     project: '{{index .path.segments 1}}'
   # ignoreApplicationDifferences:
   #   - jsonPointers:
   #       - /spec/syncPolicy/automated
@@ -35,7 +35,7 @@ spec:
       #   - name: "parameters"
       #     value: |
       #       {{ toPrettyJson . }}
-      project: 'default'
+      project: 'tenants-infra'
       sources:
         - chart: tenant
           repoURL: https://gnunn-gitops.github.io/helm-charts

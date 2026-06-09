@@ -4,5 +4,4 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-- tenants-appproject.yaml
-- tenants-appset.yaml
+- ../../base
