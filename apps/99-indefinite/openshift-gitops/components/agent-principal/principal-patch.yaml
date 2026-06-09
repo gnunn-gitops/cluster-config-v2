@@ -8,6 +8,8 @@ spec:
     enabled: true
     extraCommandArgs:
       - "--enable-progressive-syncs"
+    sourceNamespaces:
+      - "*-argocd"
   argoCDAgent:
     principal:
       destinationBasedMapping: true
