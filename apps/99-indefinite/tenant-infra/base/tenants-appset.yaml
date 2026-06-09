@@ -50,7 +50,7 @@ spec:
           ref: values
       destination:
         name: '{{index .path.segments 1}}'
-        namespace: tenants-infra
+        # namespace: tenants-infra
       syncPolicy:
         automated:
           selfHeal: true
