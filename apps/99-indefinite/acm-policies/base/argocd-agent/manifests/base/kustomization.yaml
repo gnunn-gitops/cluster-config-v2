@@ -12,6 +12,6 @@ patches:
   - patch: |
       - op: replace
         path: /spec/argoCDAgent/agent/allowedNamespaces/0
-        value: '{{ tenary "argocd-agent" "*-argocd" (eq .ManagedClusterName "hub-prod-local") }}'
+        value: '{{hub tenary "argocd-agent" "*-argocd" (eq .ManagedClusterName "hub-prod-local") }}'
     target:
       kind: ArgoCD
