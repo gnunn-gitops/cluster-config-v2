@@ -12,7 +12,7 @@ patches:
   - patch: |
       - op: replace
         path: /spec/argoCDAgent/agent/allowedNamespaces/0
-        value: |
+        value: |-
           '{{hub (ternary "argocd-agent" "*-argocd" (eq .ManagedClusterName "hub-prod-local"))}}'
     target:
       kind: ArgoCD
