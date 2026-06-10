@@ -7,3 +7,11 @@ resources:
 - github.com/gnunn-gitops/cluster-config-v2/apps/99-indefinite/openshift-gitops/overlays/argocd-agent
 - argocd-agent-ca.yaml
 - argocd-agent-client-tls.yaml
+
+patches:
+  - patch: |
+      - op: replace
+        path: /spec/argoCDAgent/agent/allowedNamespaces/0
+        value: '{{ tenary "argocd-agent" "*-argocd" (eq .ManagedClusterName "hub-prod-local") }}'
+    target:
+      kind: ArgoCD
