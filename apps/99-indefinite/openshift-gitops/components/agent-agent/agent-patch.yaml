@@ -7,7 +7,7 @@ spec:
   argoCDAgent:
     agent:
       allowedNamespaces:
-        - "*-argocd"
+        - '{{hub (ternary "argocd-agent" "*-argocd" (eq .ManagedClusterName "hub-prod-local"))}}'
       enabled: true
       creds: mtls:CN=([^,]+)
       client:

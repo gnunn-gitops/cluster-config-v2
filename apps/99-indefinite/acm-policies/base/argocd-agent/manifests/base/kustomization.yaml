@@ -8,11 +8,11 @@ resources:
 - argocd-agent-ca.yaml
 - argocd-agent-client-tls.yaml
 
-patches:
-  - patch: |
-      - op: replace
-        path: /spec/argoCDAgent/agent/allowedNamespaces/0
-        value: |-
-          '{{hub (ternary "argocd-agent" "*-argocd" (eq .ManagedClusterName "hub-prod-local"))}}'
-    target:
-      kind: ArgoCD
+# patches:
+#   - patch: |
+#       - op: replace
+#         path: /spec/argoCDAgent/agent/allowedNamespaces/0
+#         value: |-
+#           '{{hub (ternary "argocd-agent" "*-argocd" (eq .ManagedClusterName "hub-prod-local"))}}'
+#     target:
+#       kind: ArgoCD
