@@ -4,4 +4,7 @@ kind: Kustomization
 namespace: tenant-infra
 
 resources:
-- ../../base
+- namespace.yaml
+- service-account.yaml
+- tenants-token-secret.yaml
+- tenants-secret-store.yaml
