@@ -11,7 +11,7 @@ spec:
   - namespace: '*'
     name: hub-prod-local
   sourceNamespaces:
-  - hub-prod-local
+  - argocd
   sourceRepos:
   - '*'
   roles:
