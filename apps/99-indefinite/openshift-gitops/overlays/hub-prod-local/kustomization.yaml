@@ -11,6 +11,19 @@ components:
 - ../../components/agent-principal
 - ../../components/disable-cluster-roles
 - ../../components/policy-generator
+- ../../components/health-application
+- ../../components/health-build
+- ../../components/health-imagestream
+- ../../components/health-ingress
+- ../../components/health-multiclusterhub
+- ../../components/health-pvc
+- ../../components/health-policy
+- ../../components/health-rolloutmanager
+- ../../components/health-stackrox
+- ../../components/health-subscription
+- ../../components/policy-generator
+- ../../components/disable-cluster-roles
+
 
 resources:
 - ../../base
