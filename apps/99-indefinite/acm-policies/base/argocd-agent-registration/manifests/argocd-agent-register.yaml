@@ -55,7 +55,7 @@ object-templates-raw: |
       kind: AppProject
       metadata:
         labels:
-          argocd-agent=true
+          argocd-agent: "true"
         name: {{ $agent_name }}
         namespace: argocd
       spec:
