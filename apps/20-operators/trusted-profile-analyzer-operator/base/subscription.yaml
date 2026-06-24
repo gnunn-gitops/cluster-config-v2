@@ -3,6 +3,8 @@ kind: Subscription
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
+    # Use this to workaround RHTPHA operator not yet available in 4.22
+    argocd.argoproj.io/ignore-healthcheck: "true"
   labels:
     operators.coreos.com/rhtpa-operator.trusted-profile-analyzer: ""
   name: rhtpa-operator
