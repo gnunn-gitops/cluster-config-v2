@@ -6,7 +6,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: argocd-agent-agent
-    namespace: argocd-agent
+    namespace: argocd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

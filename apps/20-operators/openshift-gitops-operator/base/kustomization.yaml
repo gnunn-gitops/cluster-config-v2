@@ -7,5 +7,5 @@ resources:
 - namespace.yaml
 - operatorgroup.yaml
 - subscription.yaml
-- gitops-controller-rbac.yaml
-- gitops-server-rbac.yaml
+# - gitops-controller-rbac.yaml
+# - gitops-server-rbac.yaml

@@ -3,6 +3,8 @@ kind: Certificate
 metadata:
   name: argocd-agent-resource-proxy-tls
 spec:
+  privateKey:
+    rotationPolicy: Never
   secretName: argocd-agent-resource-proxy-tls
   issuerRef:
     name: argocd-agent-ca

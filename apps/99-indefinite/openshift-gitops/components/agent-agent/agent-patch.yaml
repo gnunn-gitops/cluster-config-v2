@@ -9,6 +9,9 @@ spec:
       allowedNamespaces:
         - "*-argocd"
       enabled: true
+      env:
+        - name: ARGOCD_AGENT_LABEL_SELECTOR
+          value: "argocd-agent=true"
       creds: mtls:CN=([^,]+)
       client:
         enableCompression: true

@@ -14,6 +14,9 @@ spec:
     principal:
       destinationBasedMapping: true
       enabled: true
+      env:
+        - name: ARGOCD_PRINCIPAL_LABEL_SELECTOR
+          value: "argocd-agent=true"
       namespace:
         allowedNamespaces:
           - "argocd"
@@ -23,7 +26,5 @@ spec:
       auth: mtls:CN=([^,]+)
       #image: quay.io/gnunn/argocd-agent:namespace-mapping-fix
       image: quay.io/argoprojlabs/argocd-agent:v0.9.0
-  controller:
-    enabled: false
   sourceNamespaces:
     - "*-argocd"

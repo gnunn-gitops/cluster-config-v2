@@ -13,6 +13,7 @@ components:
 
 resources:
 - ../../base
+- application-controller-cluster-admin-role.yaml
 - namespace.yaml
 - server-clusterrole.yaml
 # AppSets in Any Namespace require more permissions then what operator gives

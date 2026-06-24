@@ -4,4 +4,4 @@ metadata:
   annotations:
     openshift.io/cluster-monitoring: "true"
     openshift.io/display-name: Argo CD Agent
-  name: argocd-agent
+  name: argocd

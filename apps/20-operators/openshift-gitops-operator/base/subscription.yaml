@@ -8,10 +8,10 @@ spec:
     env:
     - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
       value: argocd, argocd-agent, openshift-gitops
-    - name: CONTROLLER_CLUSTER_ROLE
-      value: gitops-controller
-    - name: SERVER_CLUSTER_ROLE
-      value: gitops-server
+    # - name: CONTROLLER_CLUSTER_ROLE
+    #   value: gitops-controller
+    # - name: SERVER_CLUSTER_ROLE
+    #   value: gitops-server
     - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
       value: "true"
     - name: CLUSTER_SCOPED_ARGO_ROLLOUTS_NAMESPACES
