@@ -27,7 +27,6 @@ components:
 resources:
 - ../../base
 - application-controller-cluster-admin-role.yaml
-- namespace.yaml
 - hub-prod-local-secret.yaml
 - appproject.yaml
 - server-clusterrole.yaml
