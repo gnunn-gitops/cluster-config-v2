@@ -37,11 +37,10 @@ spec:
           - clusters:
               selector:
                 matchLabels:
-                  argocd-agent.argoproj-labs.io/agent-name: {{ .Values.clusterName }}
+                  app.kubernetes.io/name: "{{ .Values.clusterName }}"
                   argocd.argoproj.io/secret-type: cluster
-  # ignoreApplicationDifferences:
-  #   - jsonPointers:
-  #       - /spec/syncPolicy/automated
+              values:
+                argoCDAgent: '{{ `{{ ternary "true" "false" (ne (index .metadata.labels "argocd-agent.argoproj-labs.io/agent-name") "") }}` }}'
   strategy:
     type: RollingSync
     rollingSync:
@@ -73,6 +72,7 @@ spec:
     metadata:
       name: '{{ $clusterShortName }}-{{ `{{ .values.appName }}` }}'
       labels:
+        argocd-agent: '{{ `{{ .values.argoCDAgent }}` }}'
         name: '{{ `{{ .values.appName }}` }}'
         cluster-name: '{{ `{{ .name }}` }}'
         grouping: '{{ `{{ .values.grouping }}` }}'

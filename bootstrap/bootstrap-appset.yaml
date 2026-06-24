@@ -15,8 +15,6 @@ spec:
     - clusters:
         selector:
           matchExpressions:
-            - key: argocd-agent.argoproj-labs.io/agent-name
-              operator: Exists
             - key: argocd.argoproj.io/secret-type
               operator: In
               values:
