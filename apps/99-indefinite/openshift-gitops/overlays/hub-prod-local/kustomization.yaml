@@ -24,7 +24,6 @@ components:
 - ../../components/policy-generator
 - ../../components/disable-cluster-roles
 
-
 resources:
 - ../../base
 - application-controller-cluster-admin-role.yaml
