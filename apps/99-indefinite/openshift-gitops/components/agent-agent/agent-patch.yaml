@@ -21,8 +21,6 @@ spec:
       destinationBasedMapping:
         enabled: true
         createNamespace: true
-      #image: quay.io/gnunn/argocd-agent:namespace-mapping-fix
-      image: quay.io/argoprojlabs/argocd-agent:v0.9.0
       tls:
         rootCASecretName: argocd-agent-ca
         secretName: argocd-agent-client-tls
