@@ -24,9 +24,5 @@ spec:
       jwt:
         secretName: argocd-agent-jwt-signing
       auth: mtls:CN=([^,]+)
-  server:
-    env:
-      - name: ARGOCD_REDIS_SERVER
-        value: "argocd-agent-principal-redisproxy:6379"
   sourceNamespaces:
     - "*-argocd"
