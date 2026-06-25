@@ -29,7 +29,7 @@ spec:
       labels:
         cluster-name: '{{index .path.segments 1}}'
         tenant: '{{index .path.segments 0}}'
-        argocd-agent: true
+        argocd-agent: "true"
     spec:
       # Comment out for debugging appset parameters
       # info:
