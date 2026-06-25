@@ -1,6 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
+  labels:
+    argocd-agent: "true"
   name: tenants-infra
 spec:
   clusterResourceWhitelist:
