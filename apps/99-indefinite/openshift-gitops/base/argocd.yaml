@@ -203,8 +203,3 @@ spec:
         cpu: 250m
         memory: 1Gi
   webTerminalEnabled: true
-  webhookSecrets:
-    github:
-      webhookSecretRef:
-        key: token
-        name: github-secret
