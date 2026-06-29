@@ -3,3 +3,6 @@ cluster. It uses the folder structure under apps (00-core, 10-config, 20-operato
 with ProgressiveSync to deploy applications in order. This is needed to ensure
 that core services like cert-manager and external-secrets are available for
 use in subsequent applications.
+
+We use a helm chart because we pass the cluster name and adjust that the selected cluster
+is targeted correctly.
