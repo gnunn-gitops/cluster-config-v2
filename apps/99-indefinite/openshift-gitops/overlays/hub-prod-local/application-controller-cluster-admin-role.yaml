@@ -6,6 +6,10 @@ subjects:
   - kind: ServiceAccount
     name: argocd-argocd-application-controller
     namespace: argocd
+  # This is needed for any resource actions that update resources
+  - kind: ServiceAccount
+    name: argocd-argocd-application-controller
+    namespace: argocd-argocd-server
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
