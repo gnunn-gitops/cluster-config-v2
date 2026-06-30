@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cluster-versions
-stringData:
+data:
   lab: HEAD
   dev: HEAD
   stage: v1.1.0
