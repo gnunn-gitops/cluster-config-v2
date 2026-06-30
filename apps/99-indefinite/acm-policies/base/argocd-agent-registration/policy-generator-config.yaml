@@ -14,6 +14,18 @@ policies:
   - name: argocd-agent-registration
     description: Register Argo CD Agents on Control Plane
     manifests:
-      - path: manifests
+      - path: manifests/argocd-agent-register.yaml
+    placement:
+      placementName: argocd-agent-registration
+  - name: argocd-agent-cluster-secret
+    description: Argo CD Agent Cluster Secret on Control Plane
+    manifests:
+      - path: manifests/argocd-agent-cluster-secret.yaml
+    placement:
+      placementName: argocd-agent-registration
+  - name: argocd-control-plane-secret
+    description: Argo CD Control Plane Cluster Secret for Hybrid
+    manifests:
+      - path: manifests/argocd-control-plane-secret.yaml
     placement:
       placementName: argocd-agent-registration
