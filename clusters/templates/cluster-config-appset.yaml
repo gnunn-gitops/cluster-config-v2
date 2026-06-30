@@ -87,7 +87,7 @@ spec:
       #   - name: "parameters"
       #     value: |
       #       {{ `{{ toPrettyJson . }}` }}
-      project: '{{ .Values.clusterName }}'
+      project: cluster-config
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
         targetRevision: '{{ `{{ ternary (index . "targetRevision") (.metadata.annotations.targetRevision) (hasKey . "targetRevision") }}` }}'
