@@ -83,10 +83,10 @@ spec:
         type: '{{ $clusterType }}'
     spec:
       # Comment out for debugging appset parameters
-      info:
-        - name: "parameters"
-          value: |
-            {{ `{{ toPrettyJson . }}` }}
+      # info:
+      #   - name: "parameters"
+      #     value: |
+      #       {{ `{{ toPrettyJson . }}` }}
       project: '{{ .Values.clusterName }}'
       source:
         repoURL: https://github.com/gnunn-gitops/cluster-config-v2
