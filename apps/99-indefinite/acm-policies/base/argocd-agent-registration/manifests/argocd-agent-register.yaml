@@ -49,29 +49,4 @@ object-templates-raw: |
         dnsNames:
         - {{ $agent_name }}.ocplab.com
 
-  - complianceType: mustonlyhave
-    objectDefinition:
-      apiVersion: argoproj.io/v1alpha1
-      kind: AppProject
-      metadata:
-        labels:
-          argocd-agent: "true"
-        name: {{ $agent_name }}
-        namespace: argocd
-      spec:
-        clusterResourceWhitelist:
-        - group: '*'
-          kind: '*'
-        destinations:
-        - namespace: '*'
-          name: '{{ $agent_name }}'
-        sourceRepos:
-        - '*'
-        roles:
-        - name: cluster-admins
-          policies:
-          - p, proj:bootstrap:admin, applications, *, bootstrap/*, allow
-          groups:
-          - "cluster-admins"
-          - "system:cluster-admins"
   {{- end }}
