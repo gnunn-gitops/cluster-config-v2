@@ -5,5 +5,5 @@ metadata:
 data:
   lab: HEAD
   dev: HEAD
-  stage: HEAD
-  prod: HEAD
+  stage: v1.1.0
+  prod: v1.1.0
