@@ -24,9 +24,7 @@ and has two primary folders:
 will likely be migrated to a generic RHACM ConfigurationPolicy alongside the existing
 `agent-registration` policy.
 3. *bootstrap* - This bootstraps the per-cluster ApplicationSet in *cluster* across all
-Argo CD Agent clusters that have been registered. It uses Progressive Sync and operates
-in order of environment (lab > dev > stage > prod) which is part of the cluster naming
-convention.
+Argo CD Agent clusters that have been registered.
 
 ### Cluster Naming Convention
 
@@ -117,6 +115,23 @@ will include a kustomize patch in the generated Application to update a ConfigMa
 In kustomize, the Replacements feature is then used to pull these values from the ConfigMap and patch
 them where they need to go.
 
+### git file versus directory generator
+
+For the per-cluster ApplicationSet I've opted to use the file generator. I found that I have Applications
+where either specific Argo CD Application configuration is required, the destination namespace cannot
+be derived from the path, etc.
+
+The other benefit is that when working on a new Application the AppSet will not pick it up until I have
+added the `app-config.yaml` file. This is convenient when trying to develop new functionality iteratively.
+
+Currently the following parameters are supported in `app-config.yaml`:
+
+* namespace: Used for the destination namespace in the Application, normally derived from the path.
+* targetRevision: Overrides the targetRevision on a per-Application basis. Can be useful when either
+the Application has to use the latest and greatest or for troubleshooting issues.
+* annotations: Add additional annotations to the Application, useful for enabling specific Argo CD behaviors.
+* syncOptions: Specific syncOptions, such as ServerSideApply, that may need to be enabled for Applications.
+
 ### Early Thoughts on this System
 
 Here are some very early personal thoughts on this new system, first the positives:
@@ -164,16 +179,37 @@ and creates the needed resources on the Control Plane.
 from the Control Plane to the target cluster. Only the Control Plane requires `cert-manager`, the workload
 clusters do not.
 
-The Argo CD Agent is using destination mapping, the following namespaces are used:
+The Argo CD Agent is using destination mapping, both the control plane and the agent are installed in the
+`argocd` namespace. On the control plane the hybrid architecture is used so an application-controller is deployed
+to manage local applications that target the control plane cluster.
 
-* *argocd*. This is where the Control Plane and Principal is installed. No policy installs this, rather it
-is in the `apps/openshift-gitops/overlays/hub` overlay.
-* *argocd-agent*. This is the namespace used for all agents, since we also install an agent on the Control Plane
-to manage that cluster we needed a different namespace. Plus it makes easier to identify IMHO.
+To support the hybrid architecture but have the bootstrap ApplicationSet recognize the control plane
+cluster, the `argocd-agent-registration` policy automatically creates a cluster secret with the appropriate
+labels and name as an alternative to the standard `in-cluster`.
 
 Finally note that these policies are not generic, it's an example of how things can be done but it's not
 something that can just be ripped out and dropped into a new Hub cluster as is. Some adjustments will
 be required.
+
+### Versioning
+
+To manage the version of resources that are deployed to the cluster the policies add a `targetRevision`
+annotation to each cluster secret and the `bootstrap` ApplicationSet passes this as a Helm parameter
+to the per cluster ApplicationSet.
+
+The value for targetRevision is sourced from a [ConfigMap](https://github.com/gnunn-gitops/cluster-config-v2/blob/main/apps/99-indefinite/managed-clusters/base/cluster-versions.yaml)
+based on the cluster environment (i.e. lab, dev, stage or prod) but can be overridden
+by either setting the targetRevision on a ManagedCluster or including it as a parameter in app-config.yaml. This
+ConfigMap is only deployed on the Hub cluster where the RHACM agent policies can lookup the values from this
+ConfigMap and add it as an annotation to the cluster secrets.
+
+The Application where this configmap is managed always uses HEAD as the targetRevision, set in
+[app-config.yaml](https://github.com/gnunn-gitops/cluster-config-v2/blob/main/apps/99-indefinite/managed-clusters/overlays/hub-prod-local/app-config.yaml).
+
+The code for this is a bit convoluted for my taste but it's a trade-off between more complex code and simpler
+operational maintenance.
+
+Longer term, when OpenShift GitOps includes the GitOps Promoter as a preview, I'll look at switching this over to use that.
 
 ### Credits
 
