@@ -1,8 +1,6 @@
 appDomain: .apps.hub.ocplab.com
 collector: {}
 createDatabase:
-  annotations:
-    argocd.argoproj.io/sync-wave: "10"
   name:
     valueFrom:
       secretKeyRef:
@@ -112,8 +110,6 @@ modules:
           period: 1d
           source: https://access.redhat.com/security/data/sbom/beta/
   importer:
-    annotations:
-      argocd.argoproj.io/sync-wave: "10"
     concurrency: 4
     enabled: true
     image: {}
@@ -133,8 +129,6 @@ modules:
     enabled: true
     image: {}
   server:
-    annotations:
-      argocd.argoproj.io/sync-wave: "10"
     enabled: true
     image: {}
     infrastructure: {}

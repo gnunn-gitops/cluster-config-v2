@@ -3,13 +3,6 @@ kind: Kustomization
 
 namespace: trusted-profile-analyzer
 
-resources:
-- namespace.yaml
-- obc.yaml
-- oidc-es.yaml
-- postgresql-es.yaml
-- postgresql.yaml
-
 helmCharts:
 - name: redhat-trusted-profile-analyzer
   version: 1.2.6
