@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  extraConfig:
+    globalProjects: |-
+      - labelSelector:
+          matchExpressions:
+            - key: argocd.argoproj.io/project-inherit
+              operator: In
+              values:
+                - global
+        projectName: global

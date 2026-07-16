@@ -23,6 +23,7 @@ components:
 - ../../components/health-subscription
 - ../../components/policy-generator
 - ../../components/disable-cluster-roles
+- ../../components/global-appproject
 
 resources:
 - ../../base

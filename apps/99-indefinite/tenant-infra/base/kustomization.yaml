@@ -5,5 +5,4 @@ namespace: argocd
 
 resources:
 - tenants-infra-appproject.yaml
-- tenants-global-appproject.yaml
 - tenants-appset.yaml
