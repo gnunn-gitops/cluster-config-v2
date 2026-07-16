@@ -1,8 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  labels:
-    argocd-agent: "true"
   name: global
 spec:
   description: Global Configuration
