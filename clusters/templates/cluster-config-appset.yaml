@@ -46,6 +46,10 @@ spec:
   strategy:
     type: RollingSync
     rollingSync:
+      # Todo see if we can template the steps somehow using Helm but
+      # suspect this is a no-go since there is no way AFAIK to read
+      # folder structure. git generator only returns one path at a time,
+      # maybe look at a custom generator for it?
       steps:
         - matchExpressions:
             - key: grouping
