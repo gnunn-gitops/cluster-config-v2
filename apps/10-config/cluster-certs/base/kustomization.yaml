@@ -7,3 +7,47 @@ resources:
   - openshift-wildcard-certificate.yaml
   - apiserver.yaml
   - ingresscontroller.yaml
+
+# The Argo CD Application uses a kustomize patch to update the ConfigMap cluster-settings
+# with the correct values for this specific cluster retrieved from the cluster generator. We
+# then use kustomize replacements to replace these files in the appropriate places.
+#
+# Pros: Do not need per-cluster overlays
+# Cons: We end up deploying a superflous ConfigMap cluster-settings, however it could be useful
+#       for debugging purposes.
+replacements:
+  - source:
+      name: cluster-settings
+      kind: ConfigMap
+      fieldPath: data.baseDomain
+    targets:
+      - select:
+          kind: Certificate
+          name: openshift-api
+        fieldPaths:
+          - spec.dnsNames.0
+        options:
+          delimiter: "."
+          index: 1
+      - select:
+          kind: APIServer
+          name: cluster
+        fieldPaths:
+          - spec.servingCerts.namedCertificates.0.names.0
+        options:
+          delimiter: "."
+          index: 1
+  - source:
+      name: cluster-settings
+      kind: ConfigMap
+      fieldPath: data.subdomain
+    targets:
+      - select:
+          kind: Certificate
+          name: openshift-wildcard
+        fieldPaths:
+          - spec.commonName
+          - spec.dnsNames.0
+        options:
+          delimiter: "."
+          index: 1
