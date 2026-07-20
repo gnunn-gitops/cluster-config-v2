@@ -23,8 +23,8 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-              revision: main
+              repoURL: "{{ .Values.repoURL }}"
+              revision: "{{ .Values.targetRevision }}"
               files:
                 - path: apps/**/**/overlays/all/app-config.yaml
                 - path: apps/**/**/overlays/{{ $clusterType }}/app-config.yaml

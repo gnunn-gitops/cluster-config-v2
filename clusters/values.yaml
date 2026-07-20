@@ -1,1 +1,3 @@
 clusterName: hub-prod-local
+repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+targetRevision: HEAD

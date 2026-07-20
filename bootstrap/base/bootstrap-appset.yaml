@@ -19,6 +19,9 @@ spec:
               operator: In
               values:
                 - cluster
+        values:
+          # This is the repository passed to each Cluster ApplicationSet
+          repoURL: https://github.com/gnunn-gitops/cluster-config-v2
   ignoreApplicationDifferences:
     - jsonPointers:
         - /spec/syncPolicy/automated
@@ -47,6 +50,8 @@ spec:
               value: '{{ .name }}'
             - name: targetRevision
               value: '{{ .metadata.annotations.targetRevision }}'
+            - name: repoURL
+              value: '{{ .values.repoURL }}'
       destination:
         name: hub-prod-local
         namespace: argocd
