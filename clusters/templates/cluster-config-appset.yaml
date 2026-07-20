@@ -22,9 +22,18 @@ spec:
   generators:
     - matrix:
         generators:
+          - clusters:
+              selector:
+                matchLabels:
+                  app.kubernetes.io/name: "{{ .Values.clusterName }}"
+                  argocd.argoproj.io/secret-type: cluster
+              values:
+                argoCDAgent: '{{ `{{ ternary "true" "false" (ne (index .metadata.labels "argocd-agent.argoproj-labs.io/agent-name") "") }}` }}'
           - git:
               repoURL: "{{ .Values.repoURL }}"
-              revision: "{{ .Values.targetRevision }}"
+              # Prefers .metadata.annotations.targetRevision if set on Cluster secret but falls back to Helm chart if needed
+              # We need to generate apps based on version since we do not want to pick up newer apps or deleted apps that could have been done in a later revision
+              revision: '{{ `{{ ternary (index .metadata.annotations "targetRevision")` }} "{{ .Values.targetRevision  }}" {{ `(ne (index .metadata.annotations "targetRevision") nil) }}` }}'
               files:
                 - path: apps/**/**/overlays/all/app-config.yaml
                 - path: apps/**/**/overlays/{{ $clusterType }}/app-config.yaml
@@ -34,13 +43,6 @@ spec:
                 appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
                 grouping: '{{ `{{ index .path.segments 1 }}` }}'
                 destinationNamespace: '{{ `{{ ternary (index . "namespace") (index .path.segments 2) (hasKey . "namespace") }}` }}'
-          - clusters:
-              selector:
-                matchLabels:
-                  app.kubernetes.io/name: "{{ .Values.clusterName }}"
-                  argocd.argoproj.io/secret-type: cluster
-              values:
-                argoCDAgent: '{{ `{{ ternary "true" "false" (ne (index .metadata.labels "argocd-agent.argoproj-labs.io/agent-name") "") }}` }}'
   strategy:
     type: RollingSync
     rollingSync:
