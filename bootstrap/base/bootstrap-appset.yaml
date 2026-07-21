@@ -53,7 +53,7 @@ spec:
             - name: repoURL
               value: '{{ .values.repoURL }}'
       destination:
-        name: hub-prod-local
+        name: workload-prod-rhdp
         namespace: argocd
       syncPolicy:
         automated:
