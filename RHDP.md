@@ -17,6 +17,8 @@ metadata:
     baseDomain: 'cluster-9svs7.dyn.redhatworkshops.io'
     subdomain: 'apps.cluster-9svs7.dyn.redhatworkshops.io'
     targetRevision: 'rhdp'
+    clusterID: 05f48a7d-be3e-46b3-b82a-574494e3783c
+    infrastructureID: cluster-9svs7-lfrrf
   name: workload-prod-rhdp
   namespace: argocd
   labels:
