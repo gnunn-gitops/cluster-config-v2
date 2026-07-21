@@ -4,9 +4,7 @@ kind: Kustomization
 resources:
   - cluster-settings-cm.yaml
   - openshift-api-certificate.yaml
-  - openshift-wildcard-certificate.yaml
   - apiserver.yaml
-  - ingresscontroller.yaml
 
 # The Argo CD Application uses a kustomize patch to update the ConfigMap cluster-settings
 # with the correct values for this specific cluster retrieved from the cluster generator. We

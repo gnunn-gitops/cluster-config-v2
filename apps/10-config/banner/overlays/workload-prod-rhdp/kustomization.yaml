@@ -8,9 +8,9 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/text
-        value: hub-prod-local
+        value: workload-prod-rhdp
       - op: replace
         path: /spec/backgroundColor
-        value: "#3E8635"
+        value: "#0066CC"
     target:
       kind: ConsoleNotification

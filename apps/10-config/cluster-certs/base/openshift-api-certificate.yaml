@@ -8,7 +8,7 @@ metadata:
 spec:
   secretName: openshift-api-certificate
   issuerRef:
-    name: letsencrypt-prod
+    name: acme-bifrost-production-ddns
     kind: ClusterIssuer
   dnsNames:
   - api.${BASE_DOMAIN}

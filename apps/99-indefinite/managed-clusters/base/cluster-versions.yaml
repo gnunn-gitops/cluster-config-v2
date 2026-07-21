@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cluster-versions
-data:
-  lab: HEAD
-  dev: HEAD
-  stage: v1.3.0
-  prod: v1.3.0
