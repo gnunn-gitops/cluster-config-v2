@@ -10,10 +10,10 @@ components:
 - ../../components/health-ingress
 - ../../components/health-pvc
 - ../../components/health-subscription
-- ../../components/oidc-keycloak-ocplab
 
 resources:
 - ../../base
+- cluster-config-appproject.yaml
 
 patches:
   - patch: |
