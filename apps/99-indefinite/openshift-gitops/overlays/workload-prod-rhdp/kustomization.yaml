@@ -16,6 +16,7 @@ resources:
 - cluster-config-appproject.yaml
 
 patches:
+  - path: applicationset.yaml
   - patch: |
       - op: replace
         path: /spec/provider/kubernetes/remoteNamespace

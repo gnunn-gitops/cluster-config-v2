@@ -38,3 +38,5 @@ stringData:
 
 5. Apply the bootstrap ApplicationSet
    `oc apply -k ./bootstrap/base`
+
+6. Watch the magic happen (hopefully!)
