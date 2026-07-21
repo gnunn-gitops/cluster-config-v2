@@ -22,6 +22,7 @@ spec:
         values:
           # This is the repository passed to each Cluster ApplicationSet
           repoURL: https://github.com/gnunn-gitops/cluster-config-v2
+          targetRevision: '{{ ternary (.metadata.annotations.targetRevision) ("HEAD") (ne (index .metadata.annotations "targetRevision") nil) }}'
   ignoreApplicationDifferences:
     - jsonPointers:
         - /spec/syncPolicy/automated
@@ -41,8 +42,8 @@ spec:
       #       {{ toPrettyJson . }}
       project: bootstrap
       source:
-        repoURL: https://github.com/gnunn-gitops/cluster-config-v2
-        targetRevision: main
+        repoURL: '{{ .values.repoURL }}'
+        targetRevision: '{{ .values.targetRevision }}'
         path: clusters
         helm:
           parameters:
