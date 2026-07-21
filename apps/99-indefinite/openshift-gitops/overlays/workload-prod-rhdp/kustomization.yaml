@@ -14,6 +14,8 @@ components:
 resources:
 - ../../base
 - cluster-config-appproject.yaml
+- server-cluster-admin-role.yaml
+- application-controller-cluster-admin-role.yaml
 
 patches:
   - path: applicationset.yaml
