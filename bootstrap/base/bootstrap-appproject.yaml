@@ -9,7 +9,7 @@ spec:
     kind: '*'
   destinations:
   - namespace: '*'
-    name: hub-prod-local
+    name: workload-prod-rhdp
   sourceNamespaces:
   - argocd
   sourceRepos:
