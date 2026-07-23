@@ -1,0 +1,4 @@
+resources:
+- gitops-cluster-secret.yaml
+- placement.yaml
+- placementbinding.yaml
