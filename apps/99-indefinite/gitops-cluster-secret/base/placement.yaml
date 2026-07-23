@@ -4,5 +4,8 @@ metadata:
  name: global
  namespace: argocd2
 spec:
-  clusterSets:
-    - global
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+          - {key: name, operator: In, values: ["workload-prod-local"]}
