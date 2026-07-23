@@ -1,7 +1,7 @@
 apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
- name: global
- namespace: argocd2
+  name: global
+  namespace: argocd2
 spec:
- clusterSet: global
+  clusterSet: global
