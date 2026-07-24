@@ -35,7 +35,7 @@ patches:
           securityContext:
             allowPrivilegeEscalation: false
           volumeMounts:
-            - name: extensions
+            - name: rollout-extensions
               mountPath: /tmp/extensions/
       - op: add
         path: /spec/server/initContainers/-
@@ -48,7 +48,7 @@ patches:
           securityContext:
             allowPrivilegeEscalation: false
           volumeMounts:
-            - name: extensions
+            - name: rollout-extensions
               mountPath: /tmp/extensions/
       - op: add
         path: /spec/server/volumeMounts/-

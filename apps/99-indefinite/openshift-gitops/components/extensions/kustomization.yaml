@@ -7,15 +7,5 @@ patches:
         path: /spec/server/extraCommandArgs
         value:
           - "--enable-proxy-extension"
-      - op: add
-        path: /spec/server/volumes/-
-        value:
-            name: extensions
-            emptyDir: {}
-      - op: add
-        path: /spec/server/volumeMounts/-
-        value:
-          name: extensions
-          mountPath: /tmp/extensions/
     target:
       kind: ArgoCD
