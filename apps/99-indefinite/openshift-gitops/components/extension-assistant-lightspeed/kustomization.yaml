@@ -35,7 +35,7 @@ patches:
           securityContext:
             allowPrivilegeEscalation: false
           volumeMounts:
-            - name: rollout-extensions
+            - name: extensions
               mountPath: /tmp/extensions/
       - op: add
         path: /spec/server/initContainers/-
@@ -48,7 +48,7 @@ patches:
           securityContext:
             allowPrivilegeEscalation: false
           volumeMounts:
-            - name: rollout-extensions
+            - name: extensions
               mountPath: /tmp/extensions/
       - op: add
         path: /spec/server/volumeMounts/-
@@ -57,11 +57,11 @@ patches:
           name: config-service-cabundle
           subPath: service-ca.crt
       - op: add
-        path: /spec/server/volumes
+        path: /spec/server/volumes/-
         value:
-          - configMap:
-              name: config-service-cabundle
-              defaultMode: 420
+          configMap:
             name: config-service-cabundle
+            defaultMode: 420
+          name: config-service-cabundle
     target:
       kind: ArgoCD

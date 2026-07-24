@@ -16,7 +16,7 @@ patches:
             - name: EXTENSION_CHECKSUM_URL
               value: https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.34.0/gitops-promoter_0.34.0_checksums.txt
           volumeMounts:
-            - name: extensions
+            - name: rollout-extensions
               mountPath: /tmp/extensions/
           securityContext:
             runAsUser: 1000

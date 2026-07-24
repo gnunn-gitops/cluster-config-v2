@@ -8,9 +8,9 @@ patches:
         value:
           - "--enable-proxy-extension"
       - op: add
-        path: /spec/server/volumes
+        path: /spec/server/volumes/-
         value:
-          - name: extensions
+            name: extensions
             emptyDir: {}
     target:
       kind: ArgoCD
