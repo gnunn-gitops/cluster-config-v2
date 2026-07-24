@@ -1,0 +1,21 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/component: route
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: route
+    app.kubernetes.io/part-of: promoter
+  name: promoter-webhook-receiver
+  namespace: promoter-system
+spec:
+  port:
+    targetPort: 3333
+  to:
+    kind: Service
+    name: promoter-webhook-receiver
+    weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

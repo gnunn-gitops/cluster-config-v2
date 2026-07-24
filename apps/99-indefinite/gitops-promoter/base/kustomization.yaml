@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - https://raw.githubusercontent.com/argoproj-labs/gitops-promoter/refs/tags/v0.34.0/dist/install-with-dashboard-cert-manager.yaml
+  - promoter-webhook-route.yaml
