@@ -12,5 +12,10 @@ patches:
         value:
             name: extensions
             emptyDir: {}
+      - op: add
+        path: /spec/server/volumeMounts/-
+        value:
+          name: extensions
+          mountPath: /tmp/extensions/
     target:
       kind: ArgoCD
