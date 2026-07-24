@@ -7,7 +7,7 @@ patches:
         path: /spec/server/initContainers/-
         value:
           name: extension-gitops-promoter
-          image: quay.io/argoprojlabs/argocd-extension-installer:v0.0.9@sha256:d2b43c18ac1401f579f6d27878f45e253d1e3f30287471ae74e6a4315ceb0611
+          image: quay.io/argoprojlabs/quay.io/argoprojlabs/argocd-extension-installer:v0.0.8
           env:
             - name: EXTENSION_NAME
               value: gitops-promoter
