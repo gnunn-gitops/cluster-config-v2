@@ -2,10 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 
 resources:
-- openshift-service-ca.yaml
-- lightspeed-cluster-role-binding.yaml
-- lightspeed-token-secret.yaml
-- lightspeed-auth-secret.yaml
+  - openshift-service-ca.yaml
+  - lightspeed-cluster-role-binding.yaml
+  - lightspeed-token-secret.yaml
+  - lightspeed-auth-secret.yaml
 
 patches:
   - patch: |-
@@ -22,35 +22,34 @@ patches:
             - name: Authorization
               value: '$lightspeed.auth.header'
       - op: add
-        path: /spec/server/extraCommandArgs
-        value:
-          - "--enable-proxy-extension"
-      - op: add
         path: /spec/server/route/annotations/haproxy.router.openshift.io~1timeout
         value: "360s"
       - op: add
-        path: /spec/server/initContainers
+        path: /spec/server/initContainers/-
         value:
-          - env:
-              - name: EXTENSION_URL
-                value: "https://github.com/argoproj-labs/assistant-for-argocd/releases/download/v0.3.0/extension-assistant-0.3.0.tar"
-            image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.8"
-            name: extension-assistant
-            securityContext:
-              allowPrivilegeEscalation: false
-            volumeMounts:
-              - name: rollout-extensions
-                mountPath: /tmp/extensions/
-          - env:
-              - name: EXTENSION_URL
-                value: "https://github.com/gnunn-gitops/argocd-assistant-settings/releases/download/0.1-deepseek/assistant-lightspeed-settings-deepseek-0.1.tar"
-            image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.8"
-            name: extension-assistant-settings
-            securityContext:
-              allowPrivilegeEscalation: false
-            volumeMounts:
-              - name: rollout-extensions
-                mountPath: /tmp/extensions/
+          env:
+            - name: EXTENSION_URL
+              value: "https://github.com/argoproj-labs/assistant-for-argocd/releases/download/v0.3.0/extension-assistant-0.3.0.tar"
+          image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.8"
+          name: extension-assistant
+          securityContext:
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: rollout-extensions
+              mountPath: /tmp/extensions/
+      - op: add
+        path: /spec/server/initContainers/-
+        value:
+          env:
+            - name: EXTENSION_URL
+              value: "https://github.com/gnunn-gitops/argocd-assistant-settings/releases/download/0.1-deepseek/assistant-lightspeed-settings-deepseek-0.1.tar"
+          image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.8"
+          name: extension-assistant-settings
+          securityContext:
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: rollout-extensions
+              mountPath: /tmp/extensions/
       - op: add
         path: /spec/server/volumeMounts/-
         value:
@@ -64,7 +63,5 @@ patches:
               name: config-service-cabundle
               defaultMode: 420
             name: config-service-cabundle
-          - name: extensions
-            emptyDir: {}
     target:
       kind: ArgoCD
