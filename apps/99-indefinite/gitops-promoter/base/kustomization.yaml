@@ -1,6 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+labels:
+  - includeSelectors: false
+    includeTemplates: true
+    pairs:
+      app.openshift.io/runtime: golang
+
 resources:
   - https://raw.githubusercontent.com/argoproj-labs/gitops-promoter/refs/tags/v0.34.0/dist/install-with-dashboard-cert-manager.yaml
   - promoter-webhook-route.yaml
