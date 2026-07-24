@@ -1,0 +1,3 @@
+appName: gitops-promoter
+namespace: promoter-system
+targetRevision: HEAD
