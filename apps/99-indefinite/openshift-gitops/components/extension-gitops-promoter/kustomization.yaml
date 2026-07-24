@@ -19,7 +19,6 @@ patches:
             - name: rollout-extensions
               mountPath: /tmp/extensions/
           securityContext:
-            runAsUser: 1000
             allowPrivilegeEscalation: false
     target:
       kind: ArgoCD
