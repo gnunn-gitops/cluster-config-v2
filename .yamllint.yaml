@@ -11,3 +11,9 @@ rules:
   line-length: disable
   truthy:
     ignore: .github/workflows/
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
