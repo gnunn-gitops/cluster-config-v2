@@ -8,7 +8,7 @@ spec:
   extraConfig:
     exec.enabled: "true"
     resource.respectRBAC: "normal"
-    resource.ignoreResourceUpdatesEnabled: 'true'
+    resource.ignoreResourceUpdatesEnabled: "true"
   kustomizeBuildOptions: "--enable-helm --enable-alpha-plugins"
   server:
     autoscale:
@@ -32,7 +32,7 @@ spec:
       annotations: {}
       enabled: true
     service:
-      type: ''
+      type: ""
     volumes: []
     volumeMounts: []
   grafana:
@@ -75,7 +75,7 @@ spec:
       - --enable-progressive-syncs
     resources:
       limits:
-        cpu: '2'
+        cpu: "2"
         memory: 1Gi
       requests:
         cpu: 250m
@@ -86,7 +86,7 @@ spec:
       route:
         enabled: true
   rbac:
-    defaultPolicy: 'role:none'
+    defaultPolicy: "role:none"
     # Assistant included since it can be patched in via a component, only
     # used if an assistant extension is actually defined
     policy: |
@@ -94,13 +94,13 @@ spec:
       g, system:cluster-admins, role:admin
       g, cluster-admins, role:admin
       p, role:readonly, extensions, invoke, assistant, allow
-    scopes: '[groups]'
+    scopes: "[groups]"
   repo:
     initContainers: []
     sidecarContainers: []
     resources:
       limits:
-        cpu: '1'
+        cpu: "1"
         memory: 1Gi
       requests:
         cpu: 250m
@@ -137,10 +137,6 @@ spec:
       kinds:
       - Endpoints
       - EndpointSlice
-    - apiGroups:
-      - apiregistration.k8s.io
-      kinds:
-      - APIService
     - apiGroups:
       - coordination.k8s.io
       kinds:
@@ -197,7 +193,7 @@ spec:
   controller:
     resources:
       limits:
-        cpu: '2'
+        cpu: "2"
         memory: 2Gi
       requests:
         cpu: 250m
