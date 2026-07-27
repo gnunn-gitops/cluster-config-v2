@@ -9,3 +9,7 @@ spec:
     env:
       - name: ENABLE_WEBHOOK
         value: "true"
+      - name: ARGOCD_NAMESPACE
+        value: "argocd"
+      - name: IMAGE_UPDATER_WATCH_NAMESPACES
+        value: "*-argocd"
