@@ -77,7 +77,7 @@ spec:
   template:
     metadata:
       annotations:
-        argocd.argoproj.io/manifest-generate-paths: ".;../../base"
+        argocd.argoproj.io/manifest-generate-paths: ".;../../base;../../components"
       name: '{{ $clusterShortName }}-{{ `{{ .values.appName }}` }}'
       labels:
         argocd-agent: '{{ `{{ .values.argoCDAgent }}` }}'
