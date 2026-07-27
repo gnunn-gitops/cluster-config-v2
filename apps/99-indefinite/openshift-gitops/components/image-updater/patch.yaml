@@ -8,4 +8,4 @@ spec:
     enabled: true
     env:
       - name: ENABLE_WEBHOOK
-        value: true
+        value: "true"
