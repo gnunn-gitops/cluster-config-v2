@@ -26,6 +26,7 @@ components:
   - ../../components/extensions
   - ../../components/extension-assistant-lightspeed
   - ../../components/extension-gitops-promoter
+  - ../../components/image-updater
 
 resources:
   - ../../base
