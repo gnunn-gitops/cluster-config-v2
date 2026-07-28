@@ -20,6 +20,7 @@ components:
   - ../../components/health-rolloutmanager
   - ../../components/health-stackrox
   - ../../components/health-subscription
+  - ../../components/health-promotionstrategy
   - ../../components/policy-generator
   - ../../components/disable-cluster-roles
   - ../../components/global-appproject
