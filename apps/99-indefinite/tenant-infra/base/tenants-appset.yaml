@@ -16,19 +16,15 @@ spec:
         revision: main
         files:
           - path: "**/**/cluster-values.yaml"
-        # template:
-        #   metadata: {}
-        #   spec:
-        #     project: '{{index .path.segments 1}}'
-  # ignoreApplicationDifferences:
-  #   - jsonPointers:
-  #       - /spec/syncPolicy/automated
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy/automated
   template:
     metadata:
-      name: '{{index .path.segments 1}}-{{index .path.segments 0}}'
+      name: "{{index .path.segments 1}}-{{index .path.segments 0}}"
       labels:
-        cluster-name: '{{index .path.segments 1}}'
-        tenant: '{{index .path.segments 0}}'
+        cluster-name: "{{index .path.segments 1}}"
+        tenant: "{{index .path.segments 0}}"
         argocd-agent: "true"
     spec:
       # Comment out for debugging appset parameters
@@ -36,22 +32,21 @@ spec:
       #   - name: "parameters"
       #     value: |
       #       {{ toPrettyJson . }}
-      project: 'tenants-infra'
+      project: "tenants-infra"
       sources:
         - chart: tenant
           repoURL: https://gnunn-gitops.github.io/helm-charts
-          targetRevision: 2.3.0
+          targetRevision: 2.4.0
           helm:
             releaseName: sealed-secrets
             valueFiles:
-              - '$values/{{index .path.segments 0}}/values.yaml'
-              - '$values/{{index .path.segments 0}}/{{index .path.segments 1}}/cluster-values.yaml'
-        - repoURL: 'https://github.com/gnunn-gitops/tenants'
+              - "$values/{{index .path.segments 0}}/values.yaml"
+              - "$values/{{index .path.segments 0}}/{{index .path.segments 1}}/cluster-values.yaml"
+        - repoURL: "https://github.com/gnunn-gitops/tenants"
           targetRevision: main
           ref: values
       destination:
-        name: '{{index .path.segments 1}}'
-        # namespace: tenants-infra
+        name: "{{index .path.segments 1}}"
       syncPolicy:
         automated:
           selfHeal: true
