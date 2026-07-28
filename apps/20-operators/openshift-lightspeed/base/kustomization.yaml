@@ -4,9 +4,10 @@ kind: Kustomization
 namespace: openshift-lightspeed
 
 resources:
-- ns.yaml
-- networkpolicy.yaml
-- externalsecret.yaml
-- operator-group.yaml
-- subscription.yaml
-- olsconfig.yaml
+  - developers-cluster-role.yaml
+  - ns.yaml
+  - networkpolicy.yaml
+  - externalsecret.yaml
+  - operator-group.yaml
+  - subscription.yaml
+  - olsconfig.yaml
