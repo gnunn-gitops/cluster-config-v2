@@ -11,6 +11,7 @@ spec:
     declarativeConfiguration:
       secrets:
         - name: declarative-configurations
+        - name: declarative-configurations-petclinic
     exposure:
       loadBalancer:
         enabled: false
