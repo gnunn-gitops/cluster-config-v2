@@ -26,6 +26,9 @@ spec:
               - key: groups
                 value: cluster-admins
                 role: Admin
+              - key: groups
+                value: petclinic-admins
+                role: Petclinic
         namespace-admin-permission-set.yaml: |
           name: Namespace Administrator
           description: A user that is an administrator of one or namespaces across various clusters
@@ -77,6 +80,6 @@ spec:
             - resource: VulnerabilityManagementRequests
               access: READ_WRITE_ACCESS
   data:
-  - secretKey: keycloak_client_secret
-    remoteRef:
-      key: ACS_KEYCLOAK_CLIENT_SECRET
+    - secretKey: keycloak_client_secret
+      remoteRef:
+        key: ACS_KEYCLOAK_CLIENT_SECRET
