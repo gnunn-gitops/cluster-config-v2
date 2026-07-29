@@ -36,7 +36,7 @@ spec:
       sources:
         - chart: tenant
           repoURL: https://gnunn-gitops.github.io/helm-charts
-          targetRevision: 2.4.3
+          targetRevision: 2.4.4
           helm:
             releaseName: sealed-secrets
             valueFiles:
