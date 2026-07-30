@@ -43,6 +43,9 @@ spec:
                 appName: '{{ `{{ ternary (index . "appName") (index .path.segments 2) (hasKey . "appName") }}` }}'
                 grouping: '{{ `{{ index .path.segments 1 }}` }}'
                 destinationNamespace: '{{ `{{ ternary (index . "namespace") (index .path.segments 2) (hasKey . "namespace") }}` }}'
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy/automated
   strategy:
     type: RollingSync
     rollingSync:
