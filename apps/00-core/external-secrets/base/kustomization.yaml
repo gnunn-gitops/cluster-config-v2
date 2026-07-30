@@ -1,13 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-- namespace.yaml
+namespace: external-secrets-operator
 
-helmCharts:
-- name: external-secrets
-  version: v1.3.1
-  repo: https://charts.external-secrets.io
-  namespace: external-secrets
-  releaseName: external-secrets
-  valuesFile: values.yaml
+resources:
+  - namespace.yaml
+  - operator-group.yaml
+  - subscription.yaml
+  - external-secrets.yaml
