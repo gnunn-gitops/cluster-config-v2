@@ -1,0 +1,20 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: argocd-image-updater-webhook
+    app.kubernetes.io/part-of: argocd
+  name: argocd-image-updater-webhook
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: argocd-image-updater-webhook
+    weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

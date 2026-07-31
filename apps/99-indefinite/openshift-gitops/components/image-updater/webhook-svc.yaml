@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: argocd-image-updater-webhook
+    app.kubernetes.io/part-of: argocd
+  name: argocd-image-updater-webhook
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app.kubernetes.io/name: argocd-argocd-image-updater-controller
