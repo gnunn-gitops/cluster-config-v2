@@ -12,7 +12,7 @@ patches:
             - name: EXTENSION_NAME
               value: gitops-promoter
             - name: EXTENSION_URL
-              value: https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.34.0/gitops-promoter-argocd-extension.tar.gz
+              value: https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.35.0/gitops-promoter-argocd-extension.tar.gz
           volumeMounts:
             - name: rollout-extensions
               mountPath: /tmp/extensions/
