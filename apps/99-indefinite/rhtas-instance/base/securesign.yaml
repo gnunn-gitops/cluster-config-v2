@@ -13,9 +13,9 @@ metadata:
 spec:
   fulcio:
     certificate:
-      commonName: sso
+      commonName: tekton-builder
       organizationEmail: tekton-builder@rhdp.com
-      organizationName: ocplab.com
+      organizationName: sso.ocplab.com
     config:
       OIDCIssuers:
         - ClientID: tekton-builder
