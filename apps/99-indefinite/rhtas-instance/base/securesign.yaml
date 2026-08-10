@@ -13,15 +13,15 @@ metadata:
 spec:
   fulcio:
     certificate:
-      commonName: fulcio.hostname
-      organizationEmail: jdoe@redhat.com
-      organizationName: Red Hat
+      commonName: sso
+      organizationEmail: tekton-builder@rhdp.com
+      organizationName: ocplab.com
     config:
       OIDCIssuers:
-      - ClientID: tekton-builder
-        Issuer: https://sso.ocplab.com/realms/ocplab
-        IssuerURL: https://sso.ocplab.com/realms/ocplab
-        Type: email
+        - ClientID: tekton-builder
+          Issuer: https://sso.ocplab.com/realms/ocplab
+          IssuerURL: https://sso.ocplab.com/realms/ocplab
+          Type: email
     externalAccess:
       enabled: true
     monitoring:
@@ -51,7 +51,7 @@ spec:
     externalAccess:
       enabled: true
     keys:
-    - name: rekor.pub
-    - name: ctfe.pub
-    - name: fulcio_v1.crt.pem
+      - name: rekor.pub
+      - name: ctfe.pub
+      - name: fulcio_v1.crt.pem
     port: 80
