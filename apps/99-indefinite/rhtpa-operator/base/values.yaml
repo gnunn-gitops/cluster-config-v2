@@ -51,6 +51,7 @@ infrastructure:
 ingress:
   additionalAnnotations:
     haproxy.router.openshift.io/timeout: 5m
+    route.openshift.io/termination: "edge"
   className: openshift-default
 metrics:
   enabled: false
@@ -106,7 +107,7 @@ modules:
           disabled: true
           fetchRetries: 50
           keys:
-          - https://access.redhat.com/security/data/97f5eac4.txt#77E79ABE93673533ED09EBE2DCE3823597F5EAC4
+            - https://access.redhat.com/security/data/97f5eac4.txt#77E79ABE93673533ED09EBE2DCE3823597F5EAC4
           period: 1d
           source: https://access.redhat.com/security/data/sbom/beta/
   importer:
