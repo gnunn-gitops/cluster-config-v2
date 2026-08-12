@@ -52,7 +52,7 @@ spec:
             - resource: Detection
               access: READ_ACCESS
             - resource: Image
-              access: READ_ACCESS
+              access: READ_WRITE_ACCESS
             - resource: Integration
               access: NO_ACCESS
             - resource: K8sRole
