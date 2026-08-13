@@ -23,6 +23,13 @@ spec:
       replicas: 1
     receive:
       replicas: 1
+  capabilities:
+    platform:
+      metrics:
+        default:
+          enabled: true
+        ui:
+          enabled: true
   enableDownsampling: true
   imagePullPolicy: Always
   imagePullSecret: multiclusterhub-operator-pull-secret
