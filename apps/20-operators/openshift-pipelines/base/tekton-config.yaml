@@ -9,18 +9,18 @@ metadata:
 spec:
   addon:
     params:
-    - name: clusterTasks
-      value: "true"
-    - name: pipelineTemplates
-      value: "true"
-    - name: communityClusterTasks
-      value: "true"
-    - name: resolverTasks
-      value: 'true'
-    - name: resolverStepActions
-      value: 'true'
-    - name: communityResolverTasks
-      value: 'true'
+      - name: clusterTasks
+        value: "true"
+      - name: pipelineTemplates
+        value: "true"
+      - name: communityClusterTasks
+        value: "true"
+      - name: resolverTasks
+        value: "true"
+      - name: resolverStepActions
+        value: "true"
+      - name: communityResolverTasks
+        value: "true"
   chain:
     artifacts.taskrun.format: in-toto
     artifacts.taskrun.storage: tekton
@@ -37,11 +37,11 @@ spec:
     options:
       disabled: false
   params:
-  - name: createRbacResource
-    value: "true"
+    - name: createRbacResource
+      value: "true"
   pipeline:
     await-sidecar-readiness: true
-    coschedule: workspaces
+    coschedule: disabled
     default-service-account: pipeline
     disable-creds-init: false
     enable-api-fields: beta
@@ -69,8 +69,8 @@ spec:
     options:
       disabled: false
     params:
-    - name: enableMetrics
-      value: "true"
+      - name: enableMetrics
+        value: "true"
     performance:
       disable-ha: false
     require-git-ssh-secret-known-hosts: false
@@ -99,7 +99,8 @@ spec:
           default-max-keep-runs: "0"
           error-detection-from-container-logs: "true"
           error-detection-max-number-of-lines: "50"
-          error-detection-simple-regexp: ^(?P<filename>[^:]*):(?P<line>[0-9]+):(?P<column>[0-9]+):([
+          error-detection-simple-regexp:
+            ^(?P<filename>[^:]*):(?P<line>[0-9]+):(?P<column>[0-9]+):([
             ]*)?(?P<error>.*)
           error-log-snippet: "true"
           hub-catalog-name: tekton
@@ -118,7 +119,7 @@ spec:
     disabled: false
     keep: 100
     resources:
-    - pipelinerun
+      - pipelinerun
     schedule: 0 8 * * *
   targetNamespace: openshift-pipelines
   trigger:
