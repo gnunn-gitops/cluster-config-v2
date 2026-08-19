@@ -4,11 +4,11 @@ kind: Kustomization
 resources:
   - ../../base
 
-patches:
-  - patch: |
-      - op: add
-        path: /spec/template/spec/containers/0/args/-
-        value: --zap-log-level=9
-    target:
-      kind: Deployment
-      name: promoter-controller-manager
+# patches:
+#   - patch: |
+#       - op: add
+#         path: /spec/template/spec/containers/0/args/-
+#         value: --zap-log-level=9
+#     target:
+#       kind: Deployment
+#       name: promoter-controller-manager
