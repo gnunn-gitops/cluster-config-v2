@@ -4,13 +4,10 @@ kind: Kustomization
 namespace: noobaa
 
 resources:
-- ../../base
+  - ../../base
 
 patches:
   - patch: |
-      - op: add
-        path: /spec/pvPoolDefaultStorageClass
-        value: nfs-csi
       - op: add
         path: /spec/disableLoadBalancerService
         value: true
