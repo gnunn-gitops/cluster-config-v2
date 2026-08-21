@@ -10,7 +10,7 @@ spec:
     alertmanager:
       replicas: 1
     grafana:
-      replicas: 1
+      replicas: 0
     observatoriumAPI:
       replicas: 1
     query:
