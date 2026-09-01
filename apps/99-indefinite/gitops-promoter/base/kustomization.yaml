@@ -8,5 +8,5 @@ labels:
       app.openshift.io/runtime: golang
 
 resources:
-  - https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.36.0/install-with-dashboard-cert-manager.yaml
+  - https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.37.0/install-with-dashboard-cert-manager.yaml
   - promoter-webhook-route.yaml
