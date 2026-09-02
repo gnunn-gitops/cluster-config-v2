@@ -94,6 +94,7 @@ spec:
       g, system:cluster-admins, role:admin
       g, cluster-admins, role:admin
       p, role:readonly, extensions, invoke, assistant, allow
+      p, role:admin, exec, create, */*, allow
     scopes: "[groups]"
   repo:
     initContainers: []
