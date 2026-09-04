@@ -2,12 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../base
-- openshift-pipelines-namespace.yaml
-- oidc-token-refresh-sa.yaml
-# - signing-cert-external.yaml
-- oidc-info-secret.yaml
-- oidc-token-refresher-deploy.yaml
+  - ../../base
+  - openshift-pipelines-namespace.yaml
+  - oidc-token-refresh-sa.yaml
+  # - signing-cert-external.yaml
+  - oidc-info-secret.yaml
+  - oidc-token-refresher-deploy.yaml
 
 patches:
   - target:
@@ -18,19 +18,20 @@ patches:
         path: /spec/chain
         value:
           signers.x509.fulcio.enabled: true
-          artifacts.taskrun.storage: oci
-          artifacts.pipelinerun.storage: oci
-          artifacts.pipelinerun.format: in-toto
-          transparency.enabled: 'true'
+          artifacts.taskrun.storage: tekton
           artifacts.taskrun.format: in-toto
-          signers.x509.tuf.mirror.url: 'https://tuf-trusted-artifact-signer.apps.hub.ocplab.com'
-          artifacts.oci.signer: x509
-          signers.x509.fulcio.address: 'https://fulcio-server-trusted-artifact-signer.apps.hub.ocplab.com'
+          artifacts.taskrun.signer: x509
+          artifacts.pipelinerun.storage: tekton
+          artifacts.pipelinerun.format: in-toto
+          artifacts.oci.format: simplesigning
           artifacts.oci.storage: oci
+          artifacts.oci.signer: x509
+          transparency.enabled: 'true'
+          signers.x509.tuf.mirror.url: 'https://tuf-trusted-artifact-signer.apps.hub.ocplab.com'
+          signers.x509.fulcio.address: 'https://fulcio-server-trusted-artifact-signer.apps.hub.ocplab.com'
           signers.x509.fulcio.issuer: 'https://sso.ocplab.com/realms/ocplab'
           transparency.url: 'https://rekor-server-trusted-artifact-signer.apps.hub.ocplab.com'
           disabled: false
-          artifacts.oci.format: simplesigning
           options:
             deployments:
               tekton-chains-controller:
@@ -65,4 +66,3 @@ patches:
                 status: {}
             disabled: false
           signers.x509.identity.token.file: /var/run/sigstore/cosign/oidc-token
-          artifacts.taskrun.signer: x509
