@@ -38,4 +38,4 @@ rules:
     resources:
       - securitycontextconstraints
     resourceNames:
-      - pipeline-user-namespaces
+      - pipelines-scc-user-namespaces
