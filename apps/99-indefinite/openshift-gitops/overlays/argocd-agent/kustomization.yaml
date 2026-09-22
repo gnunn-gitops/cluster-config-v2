@@ -4,22 +4,23 @@ kind: Kustomization
 namespace: argocd
 
 components:
-- ../../components/agent-agent
-- ../../components/health-application
-- ../../components/health-build
-- ../../components/health-imagestream
-- ../../components/health-ingress
-- ../../components/health-multiclusterhub
-- ../../components/health-pvc
-- ../../components/health-policy
-- ../../components/health-rolloutmanager
-- ../../components/health-stackrox
-- ../../components/health-subscription
-- ../../components/policy-generator
-- ../../components/disable-cluster-roles
-- ../../components/global-appproject
+  - ../../components/agent-agent
+  - ../../components/health-application
+  - ../../components/health-build
+  - ../../components/health-imagestream
+  - ../../components/health-ingress
+  - ../../components/health-multiclusterhub
+  - ../../components/health-pvc
+  - ../../components/health-policy
+  - ../../components/health-rolloutmanager
+  - ../../components/health-stackrox
+  - ../../components/health-subscription
+  - ../../components/policy-generator
+  - ../../components/disable-cluster-roles
+  - ../../components/global-appproject
+  - ../../components/impersonation
 
 resources:
-- ../../base
-- application-controller-cluster-admin-role.yaml
-- argocd-agent-cluster-admin-role.yaml
+  - ../../base
+  - application-controller-cluster-admin-role.yaml
+  - argocd-agent-cluster-admin-role.yaml
