@@ -26,6 +26,7 @@ patches:
           artifacts.oci.format: simplesigning
           artifacts.oci.storage: oci
           artifacts.oci.signer: x509
+          storage.oci.encoding-format: sigstore-bundle
           transparency.enabled: 'true'
           signers.x509.tuf.mirror.url: 'https://tuf-trusted-artifact-signer.apps.hub.ocplab.com'
           signers.x509.fulcio.address: 'https://fulcio-server-trusted-artifact-signer.apps.hub.ocplab.com'
