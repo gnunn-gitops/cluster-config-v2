@@ -28,7 +28,7 @@ components:
   - ../../components/extension-assistant-lightspeed
   - ../../components/extension-gitops-promoter
   - ../../components/image-updater
-  - ../../components/impersonation
+  # - ../../components/impersonation
 
 resources:
   - ../../base

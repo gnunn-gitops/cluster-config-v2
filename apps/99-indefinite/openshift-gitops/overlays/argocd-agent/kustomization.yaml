@@ -18,7 +18,7 @@ components:
   - ../../components/policy-generator
   - ../../components/disable-cluster-roles
   - ../../components/global-appproject
-  - ../../components/impersonation
+  # - ../../components/impersonation
 
 resources:
   - ../../base
