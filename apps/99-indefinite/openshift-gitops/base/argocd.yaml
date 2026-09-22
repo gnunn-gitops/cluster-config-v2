@@ -9,6 +9,9 @@ spec:
     exec.enabled: "true"
     resource.respectRBAC: "normal"
     resource.ignoreResourceUpdatesEnabled: "true"
+    # Enable impersonation
+    application.sync.impersonation.enabled: "true"
+    application.sync.impersonation.enforced: "false"
   kustomizeBuildOptions: "--enable-helm --enable-alpha-plugins"
   server:
     autoscale:
