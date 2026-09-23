@@ -13,6 +13,7 @@ allowedCapabilities:
   - SETUID
   - SETGID
 priority: null
+readOnlyRootFilesystem: false
 fsGroup:
   type: MustRunAs
   ranges:
