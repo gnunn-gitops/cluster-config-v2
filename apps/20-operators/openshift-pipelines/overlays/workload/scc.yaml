@@ -2,11 +2,17 @@ apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   name: pipelines-scc-user-namespaces
-priority: null
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
 allowPrivilegeEscalation: true
+allowPrivilegedContainer: false
 allowedCapabilities:
   - SETUID
   - SETGID
+priority: null
 fsGroup:
   type: MustRunAs
   ranges:
