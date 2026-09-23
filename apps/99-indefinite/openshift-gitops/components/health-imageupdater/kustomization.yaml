@@ -52,5 +52,13 @@ patches:
               end
               if condition.type == "Ready" and condition.status == "False" then
                 hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+            end
+
+            hs.status = "Progressing"
+            hs.message = "Waiting for ImageUpdater to report a Ready condition"
+            return hs
     target:
       kind: ArgoCD
