@@ -58,10 +58,6 @@ spec:
       destination:
         name: hub-prod-local
         namespace: argocd
-      destinationServiceAccounts:
-        service: https://kubernetes.default.svc
-        namespace: argocd
-        defaultServiceAccount: application-controller
       syncPolicy:
         automated:
           enabled: true
