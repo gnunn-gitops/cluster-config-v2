@@ -6,17 +6,21 @@ metadata:
   name: tenants-infra
 spec:
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: "*"
+      kind: "*"
   destinations:
-  - namespace: '*'
-    name: '*'
+    - namespace: "*"
+      name: "*"
+  destinationServiceAccounts:
+    service: https://kubernetes.default.svc
+    namespace: argocd
+    defaultServiceAccount: application-controller
   sourceRepos:
-  - '*'
+    - "*"
   roles:
-  - name: cluster-admins
-    policies:
-    - p, proj:bootstrap:admin, applications, *, bootstrap/*, allow
-    groups:
-    - "cluster-admins"
-    - "system:cluster-admins"
+    - name: cluster-admins
+      policies:
+        - p, proj:bootstrap:admin, applications, *, bootstrap/*, allow
+      groups:
+        - "cluster-admins"
+        - "system:cluster-admins"

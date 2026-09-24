@@ -30,12 +30,12 @@ spec:
         - /spec/syncPolicy/automated
   template:
     metadata:
-      name: 'bootstrap-{{ .name }}'
+      name: "bootstrap-{{ .name }}"
       labels:
-        cluster-name: '{{ .name }}'
-        env: '{{ .metadata.labels.env }}'
-        region: '{{ .metadata.labels.region }}'
-        type: '{{ .metadata.labels.type }}'
+        cluster-name: "{{ .name }}"
+        env: "{{ .metadata.labels.env }}"
+        region: "{{ .metadata.labels.region }}"
+        type: "{{ .metadata.labels.type }}"
     spec:
       # Comment out for debugging appset parameters
       # info:
@@ -44,20 +44,24 @@ spec:
       #       {{ toPrettyJson . }}
       project: bootstrap
       source:
-        repoURL: '{{ .values.repoURL }}'
-        targetRevision: '{{ .values.targetRevision }}'
+        repoURL: "{{ .values.repoURL }}"
+        targetRevision: "{{ .values.targetRevision }}"
         path: clusters
         helm:
           parameters:
             - name: clusterName
-              value: '{{ .name }}'
+              value: "{{ .name }}"
             - name: targetRevision
-              value: '{{ .metadata.annotations.targetRevision }}'
+              value: "{{ .metadata.annotations.targetRevision }}"
             - name: repoURL
-              value: '{{ .values.repoURL }}'
+              value: "{{ .values.repoURL }}"
       destination:
         name: hub-prod-local
         namespace: argocd
+      destinationServiceAccounts:
+        service: https://kubernetes.default.svc
+        namespace: argocd
+        defaultServiceAccount: application-controller
       syncPolicy:
         automated:
           enabled: true
