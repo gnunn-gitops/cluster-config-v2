@@ -41,7 +41,6 @@ spec:
       value: "true"
   pipeline:
     await-sidecar-readiness: true
-    enable-kubernetes-sidecar: true
     coschedule: disabled
     default-service-account: pipeline
     disable-creds-init: false
