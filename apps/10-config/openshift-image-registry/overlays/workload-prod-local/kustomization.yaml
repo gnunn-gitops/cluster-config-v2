@@ -12,6 +12,6 @@ patches:
           empryDir: {}
       - op: replace
         path: /spec/replicas
-        value: "0"
+        value: 0
     target:
       kind: Config
