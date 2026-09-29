@@ -3,15 +3,3 @@ kind: Kustomization
 
 resources:
   - ../../base
-
-patches:
-  - patch: |
-      - op: replace
-        path: /spec/storage
-        value:
-          empryDir: {}
-      - op: replace
-        path: /spec/replicas
-        value: 0
-    target:
-      kind: Config
