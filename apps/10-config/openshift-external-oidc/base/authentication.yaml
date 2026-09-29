@@ -1,8 +1,8 @@
 apiVersion: config.openshift.io/v1
 kind: Authentication
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-options: Validate=false,ServerSideApply=true
+  # annotations:
+  #   argocd.argoproj.io/sync-options: Validate=false,ServerSideApply=true
   name: cluster
 spec:
   type: OIDC
@@ -38,4 +38,3 @@ spec:
             - email
             - groups
             - profile
-  webhookTokenAuthenticator: {}
