@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: openshift-config
 
 resources:
-- console-secret.yaml
-- authentication.yaml
+  - console-secret.yaml
+  - authentication.yaml
+  - cluster-admins-binding.yaml
