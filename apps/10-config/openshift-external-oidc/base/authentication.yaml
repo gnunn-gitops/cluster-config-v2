@@ -7,34 +7,35 @@ metadata:
 spec:
   type: OIDC
   oidcProviders:
-  - claimMappings:
-      groups:
-        claim: groups
-      uid:
-        claim: "sub"
-      username:
-        prefixPolicy: NoPrefix
-        claim: name
-    issuer:
-      audiences:
-      - openshift
-      - oc-cli
-      issuerURL: https://sso.ocplab.com/realms/ocplab
-    name: 'keycloak-oidc-server'
-    oidcClients:
-    - clientID: oc-cli
-      componentName: cli
-      componentNamespace: openshift-console
-      extraScopes:
-        - email
-        - groups
-        - profile
-    - clientID: openshift
-      clientSecret:
-        name: console-secret
-      componentName: console
-      componentNamespace: openshift-console
-      extraScopes:
-        - email
-        - groups
-        - profile
+    - claimMappings:
+        groups:
+          claim: groups
+        uid:
+          claim: "sub"
+        username:
+          prefixPolicy: NoPrefix
+          claim: name
+      issuer:
+        audiences:
+          - openshift
+          - oc-cli
+        issuerURL: https://sso.ocplab.com/realms/ocplab
+      name: "keycloak-oidc-server"
+      oidcClients:
+        - clientID: oc-cli
+          componentName: cli
+          componentNamespace: openshift-console
+          extraScopes:
+            - email
+            - groups
+            - profile
+        - clientID: openshift
+          clientSecret:
+            name: console-secret
+          componentName: console
+          componentNamespace: openshift-console
+          extraScopes:
+            - email
+            - groups
+            - profile
+  webhookTokenAuthenticator: {}
