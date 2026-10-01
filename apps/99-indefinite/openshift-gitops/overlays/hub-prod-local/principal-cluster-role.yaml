@@ -1,0 +1,52 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-agent-principal
+rules:
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+      - applicationsets
+      - applicationsets/finalizers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - appprojects
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applicationsets/status
+    verbs:
+      - get
+      - patch
+      - update
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argocd-agent-principal
+subjects:
+  - kind: ServiceAccount
+    name: argocd-agent-principal
+    namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-agent-principal
