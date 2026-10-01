@@ -6,17 +6,17 @@ metadata:
 spec:
   config:
     env:
-    - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
-      value: argocd, argocd-agent, openshift-gitops
-    # - name: CONTROLLER_CLUSTER_ROLE
-    #   value: gitops-controller
-    # - name: SERVER_CLUSTER_ROLE
-    #   value: gitops-server
-    - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
-      value: "true"
-    - name: CLUSTER_SCOPED_ARGO_ROLLOUTS_NAMESPACES
-      value: "rollout-manager"
-  channel: gitops-1.21
+      - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
+        value: argocd, argocd-agent, openshift-gitops
+      # - name: CONTROLLER_CLUSTER_ROLE
+      #   value: gitops-controller
+      # - name: SERVER_CLUSTER_ROLE
+      #   value: gitops-server
+      - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
+        value: "true"
+      - name: CLUSTER_SCOPED_ARGO_ROLLOUTS_NAMESPACES
+        value: "rollout-manager"
+  channel: gitops-1.22
   installPlanApproval: Automatic
   name: openshift-gitops-operator
   source: redhat-operators
