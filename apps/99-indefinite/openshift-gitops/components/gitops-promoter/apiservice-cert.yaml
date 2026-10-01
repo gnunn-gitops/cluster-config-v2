@@ -1,10 +1,11 @@
+# Example of using cert-manager with promoter
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   labels:
     app.kubernetes.io/component: dashboard-apiserver
     app.kubernetes.io/part-of: promoter
-  name: promoter-apiserver-serving-cert
+  name: argocd-promoter-apiserver-tls
 spec:
   dnsNames:
     - promoter-apiserver.promoter-system.svc
@@ -13,7 +14,7 @@ spec:
     group: cert-manager.io
     kind: Issuer
     name: promoter-apiserver-selfsigned
-  secretName: promoter-apiserver-serving-cert
+  secretName: argocd-promoter-apiserver-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
