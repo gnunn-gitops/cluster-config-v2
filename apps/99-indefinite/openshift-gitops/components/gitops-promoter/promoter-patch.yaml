@@ -5,6 +5,12 @@ metadata:
   namespace: argocd
 spec:
   promoter:
+    apiserver:
+      enabled: true
+      tls:
+        caSecretKey: tls.key
+        caSecretName: argocd-promoter-apiserver-tls
+        certSecretName: argocd-promoter-apiserver-tls
     argoCDUIExtensionEnabled: true
     enabled: true
     webhook:
