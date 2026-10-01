@@ -16,7 +16,7 @@ rules:
   - apiGroups:
       - "argocd-image-updater.argoproj.io"
     resources:
-      - imageupdaters
+      - "*"
     verbs:
       - get
       - list
