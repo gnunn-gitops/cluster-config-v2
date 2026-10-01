@@ -4,8 +4,9 @@ kind: Kustomization
 namespace: openshift-gitops-operator
 
 resources:
-- namespace.yaml
-- operatorgroup.yaml
-- subscription.yaml
-# - gitops-controller-rbac.yaml
-# - gitops-server-rbac.yaml
+  - namespace.yaml
+  - operatorgroup.yaml
+  - subscription.yaml
+  # - gitops-controller-rbac.yaml
+  # - gitops-server-rbac.yaml
+  - promoter-cluster-role.yaml

@@ -16,6 +16,8 @@ spec:
         value: "true"
       - name: CLUSTER_SCOPED_ARGO_ROLLOUTS_NAMESPACES
         value: "rollout-manager"
+      - name: PROMOTER_CONTROLLER_CLUSTER_ROLE
+        value: "gitops-promoter-manager-role"
   channel: gitops-1.22
   installPlanApproval: Automatic
   name: openshift-gitops-operator
