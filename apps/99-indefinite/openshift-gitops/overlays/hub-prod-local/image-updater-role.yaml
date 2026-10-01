@@ -14,15 +14,12 @@ rules:
       - update
       - watch
   - apiGroups:
-      - "argocd-image-updater.argoproj.io"
+      - argocd-image-updater.argoproj.io
     resources:
-      - "*"
+      - imageupdaters
+      - imageupdaters/finalizers
     verbs:
-      - get
-      - list
-      - patch
-      - update
-      - watch
+      - "*"
   - apiGroups:
       - ""
     resources:
