@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.kubernetes.io/component: dashboard-apiserver
+    app.kubernetes.io/part-of: promoter
+  name: promoter-apiserver-serving-cert
+spec:
+  dnsNames:
+    - promoter-apiserver.promoter-system.svc
+    - promoter-apiserver.promoter-system.svc.cluster.local
+  issuerRef:
+    group: cert-manager.io
+    kind: Issuer
+    name: promoter-apiserver-selfsigned
+  secretName: promoter-apiserver-serving-cert
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    app.kubernetes.io/component: dashboard-apiserver
+    app.kubernetes.io/part-of: promoter
+  name: promoter-apiserver-selfsigned
+spec:
+  selfSigned: {}

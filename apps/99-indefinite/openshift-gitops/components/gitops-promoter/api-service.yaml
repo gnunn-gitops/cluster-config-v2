@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    argocd.argoproj.io/compare-options: ServerSideDiff=true
+    argocd.argoproj.io/sync-options: ServerSideApply=true
+    service.beta.openshift.io/serving-cert-secret-name: argocd-promoter-apiserver-tls
+  labels:
+    app.kubernetes.io/component: promoter-apiserver
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: argocd-promoter-apiserver
+    app.kubernetes.io/part-of: promoter
+  name: argocd-promoter-apiserver
+  namespace: argocd
+spec:
+  clusterIP: 172.30.124.142
+  clusterIPs:
+    - 172.30.124.142
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: https
+      port: 443
+      targetPort: https
+  selector:
+    app.kubernetes.io/component: promoter-apiserver
