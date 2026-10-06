@@ -49,6 +49,9 @@ spec:
       syncPolicy:
         automated:
           selfHeal: true
+  # Todo: Drive argocd-agent off of a label rather then hard coding hub-prod-local. There is an
+  #       an issue when using cluster generator in matrix the cluster secret metadata labels
+  #       and annotations do not get included as parameters for some reason.
   templatePatch: |
     {{- $clusterParts := split "-" (index .path.segments 1) }}
     {{- $clusterType := $clusterParts._0 }}
