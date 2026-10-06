@@ -11,7 +11,7 @@ spec:
         caSecretKey: tls.key
         caSecretName: argocd-promoter-apiserver-tls
         certSecretName: argocd-promoter-apiserver-tls
-    argoCDUIExtensionEnabled: false
+    argoCDUIExtensionEnabled: true
     enabled: true
     webhook:
       enabled: true
