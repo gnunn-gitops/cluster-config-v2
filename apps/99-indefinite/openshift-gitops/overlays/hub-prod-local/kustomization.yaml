@@ -25,7 +25,7 @@ components:
   - ../../components/policy-generator
   - ../../components/disable-cluster-roles
   - ../../components/global-appproject
-  - ../../components/extensions
+  # - ../../components/extensions
   # - ../../components/extension-assistant-lightspeed
   # - ../../components/extension-gitops-promoter
   # - ../../components/image-updater
