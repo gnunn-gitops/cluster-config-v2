@@ -6,4 +6,4 @@ metadata:
 spec:
   extraConfig:
     application.sync.impersonation.enabled: "true"
-    application.sync.impersonation.enforced: "false"
+    application.sync.impersonation.enforced: "true"
