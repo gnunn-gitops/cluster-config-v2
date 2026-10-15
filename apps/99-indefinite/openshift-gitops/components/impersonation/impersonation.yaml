@@ -5,5 +5,12 @@ metadata:
   namespace: argocd
 spec:
   extraConfig:
-    application.sync.impersonation.enabled: "true"
-    application.sync.impersonation.enforced: "true"
+    application.sync.impersonation.enabled: "false"
+    # To enable this with the Agent need the Agent to support this in
+    # a similar way to the argocd-server. This means with the Agent the
+    # resource proxy will use the Agent SA rather then the ServiceAccount
+    # in AppProject.
+    # See:
+    # https://github.com/argoproj-labs/argocd-agent/issues/1152
+    # https://github.com/argoproj-labs/argocd-agent/issues/1136
+    application.sync.impersonation.enforced: "false"
