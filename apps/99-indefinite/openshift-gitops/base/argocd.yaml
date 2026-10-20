@@ -9,6 +9,20 @@ spec:
     exec.enabled: "true"
     resource.respectRBAC: "normal"
     resource.ignoreResourceUpdatesEnabled: "true"
+    # Baseline: don't re-reconcile on periodic /status rewrites. Health is still
+    # recomputed, so an app refreshes when a resource's health actually flips.
+    resource.customizations.ignoreResourceUpdates.all: |
+      jsonPointers:
+        - /status
+    # ACM governance rewrites Policy compliance status constantly (both the root
+    # policy and the per-cluster replicated copies). Policy cannot go in
+    # resourceExclusions because acm-policies deploys Policy objects from Git.
+    resource.customizations.ignoreResourceUpdates.policy.open-cluster-management.io_Policy: |
+      jsonPointers:
+        - /status
+    # Safe to relax polling because a GitHub webhook posts to argocd-server.
+    timeout.reconciliation: 600s
+    timeout.reconciliation.jitter: 120s
   kustomizeBuildOptions: "--enable-helm --enable-alpha-plugins"
   server:
     autoscale:
