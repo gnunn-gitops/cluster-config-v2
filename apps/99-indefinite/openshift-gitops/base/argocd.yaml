@@ -17,7 +17,8 @@ spec:
     # ACM governance rewrites Policy compliance status constantly (both the root
     # policy and the per-cluster replicated copies). Policy cannot go in
     # resourceExclusions because acm-policies deploys Policy objects from Git.
-    resource.customizations.ignoreResourceUpdates.policy.open-cluster-management.io_Policy: |
+    resource.customizations.ignoreResourceUpdates.policy.open-cluster-management.io_Policy:
+      |
       jsonPointers:
         - /status
     # Safe to relax polling because a GitHub webhook posts to argocd-server.
@@ -109,6 +110,8 @@ spec:
       g, cluster-admins, role:admin
       p, role:readonly, extensions, invoke, assistant, allow
       p, role:admin, exec, create, */*, allow
+      p, role:developers, clusters, get, allow
+      g, developers, role:developers
     scopes: "[groups]"
   repo:
     initContainers: []
