@@ -110,7 +110,7 @@ spec:
       g, cluster-admins, role:admin
       p, role:readonly, extensions, invoke, assistant, allow
       p, role:admin, exec, create, */*, allow
-      p, role:developers, clusters, get, allow
+      p, role:developers, clusters, get, *, allow
       g, developers, role:developers
     scopes: "[groups]"
   repo:
