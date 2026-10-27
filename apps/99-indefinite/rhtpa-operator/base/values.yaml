@@ -44,7 +44,6 @@ database:
         name: postgresql
         key: database-password
 image:
-  fullName: registry.redhat.io/rhtpa/rhtpa-trustification-service-rhel9@sha256:ed67a8b0d4fc3fd5ce4dffcebc534290e97df6a99c55c4830bb150fc4d0f4825
   pullPolicy: IfNotPresent
 infrastructure:
   port: 9010
