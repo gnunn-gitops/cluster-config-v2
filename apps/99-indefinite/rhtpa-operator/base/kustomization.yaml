@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: trusted-profile-analyzer
 
 helmCharts:
-- name: redhat-trusted-profile-analyzer
-  version: 1.2.6
-  repo: https://charts.openshift.io
-  namespace: trusted-profile-analyzer
-  releaseName: trusted-profile-analyzer
-  valuesFile: values.yaml
+  - name: redhat-trusted-profile-analyzer
+    version: 3.1.1
+    repo: https://charts.openshift.io
+    namespace: trusted-profile-analyzer
+    releaseName: trusted-profile-analyzer
+    valuesFile: values.yaml
