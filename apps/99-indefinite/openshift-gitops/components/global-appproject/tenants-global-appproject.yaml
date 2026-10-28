@@ -5,6 +5,59 @@ metadata:
 spec:
   description: Global Configuration
   clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: "*"
+    - group: "apps"
+      kind: "*"
+    - group: "autoscaling"
+      kind: HorizontalPodAutoscaler
+    - group: "batch"
+      kind: "*"
+    - group: "networking.k8s.io"
+      kind: "*"
+    - group: "policy"
+      kind: PodDisruptionBudget
+    - group: "rbac.authorization.k8s.io"
+      kind: "*"
+    - group: "snapshot.storage.k8s.io"
+      kind: "*"
+    # ---------- OpenShift ----------
+    - group: "build.openshift.io"
+      kind: "*"
+    - group: "image.openshift.io"
+      kind: "*"
+    - group: "route.openshift.io"
+      kind: Route
+    # ---------- Operator-supplied CRDs ----------
+    # cert-manager.io
+    - group: "cert-manager.io"
+      kind: Certificate
+    - group: "cert-manager.io"
+      kind: CertificateRequest
+    - group: "cert-manager.io"
+      kind: Issuer
+    # argocd-image-updater.argoproj.io
+    - group: "argocd-image-updater.argoproj.io"
+      kind: ImageUpdater
+    # argoproj.io
+    - group: "argoproj.io"
+      kind: "*"
+    # external-secrets.io
+    - group: "external-secrets.io"
+      kind: "*"
+    # generators.external-secrets.io
+    - group: "generators.external-secrets.io"
+      kind: "*"
+    # promoter.argoproj.io
+    - group: "promoter.argoproj.io"
+      kind: "*"
+    # tekton.dev
+    - group: "tekton.dev"
+      kind: "*"
+    # triggers.tekton.dev
+    - group: "triggers.tekton.dev"
+      kind: "*"
   namespaceResourceBlacklist:
     - group: ""
       kind: Namespace
