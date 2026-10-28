@@ -8,67 +8,60 @@ spec:
   namespaceResourceWhitelist:
     - group: ""
       kind: "*"
-    - group: "apps"
+    - group: apps
       kind: "*"
-    - group: "autoscaling"
+    - group: autoscaling
       kind: HorizontalPodAutoscaler
-    - group: "batch"
+    - group: batch
       kind: "*"
-    - group: "networking.k8s.io"
+    - group: networking.k8s.io
       kind: "*"
-    - group: "policy"
+    - group: policy
       kind: PodDisruptionBudget
-    - group: "rbac.authorization.k8s.io"
+    - group: rbac.authorization.k8s.io
       kind: "*"
-    - group: "snapshot.storage.k8s.io"
+    - group: snapshot.storage.k8s.io
       kind: "*"
     # ---------- OpenShift ----------
-    - group: "build.openshift.io"
+    - group: build.openshift.io
       kind: "*"
-    - group: "image.openshift.io"
+    - group: image.openshift.io
       kind: "*"
-    - group: "route.openshift.io"
+    - group: route.openshift.io
       kind: Route
     # ---------- Operator-supplied CRDs ----------
-    # cert-manager.io
-    - group: "cert-manager.io"
+    # Cert Manager
+    - group: cert-manager.io
       kind: Certificate
-    - group: "cert-manager.io"
+    - group: cert-manager.io
       kind: CertificateRequest
-    - group: "cert-manager.io"
+    - group: cert-manager.io
       kind: Issuer
-    # argocd-image-updater.argoproj.io
-    - group: "argocd-image-updater.argoproj.io"
+    # Core Argo CD
+    - group: argoproj.io
+      kind: "*"
+    # Argo CD Image Updater
+    - group: argocd-image-updater.argoproj.io
       kind: ImageUpdater
-    # argoproj.io
-    - group: "argoproj.io"
+    # External Secrets
+    - group: external-secrets.io
       kind: "*"
-    # external-secrets.io
-    - group: "external-secrets.io"
+    - group: generators.external-secrets.io
       kind: "*"
-    # generators.external-secrets.io
-    - group: "generators.external-secrets.io"
+    # GitOps Promoter
+    - group: promoter.argoproj.io
       kind: "*"
-    # promoter.argoproj.io
-    - group: "promoter.argoproj.io"
+    # Openshift Pipelines
+    - group: tekton.dev
       kind: "*"
-    # tekton.dev
-    - group: "tekton.dev"
-      kind: "*"
-    # triggers.tekton.dev
-    - group: "triggers.tekton.dev"
+    - group: triggers.tekton.dev
       kind: "*"
   namespaceResourceBlacklist:
-    - group: ""
-      kind: Namespace
     - group: ""
       kind: ResourceQuota
     - group: ""
       kind: LimitRange
-    - group: "argoproj.io"
-      kind: AppProject
-    - group: "argoproj.io"
-      kind: RolloutManager
+    # ---------- OpenShift ----------
     - group: operators.coreos.com
       kind: "*"
     - group: operator.openshift.io
@@ -81,3 +74,9 @@ spec:
       kind: "*"
     - group: compliance.openshift.io
       kind: "*"
+    # ---------- Argo CD ----------
+    - group: argoproj.io
+      kind: AppProject
+    # ---------- OpenShift GitOps ----------
+    - group: argoproj.io
+      kind: RolloutManager
