@@ -14,7 +14,7 @@ patches:
             - name: EXTENSION_URL
               value: https://github.com/argoproj-labs/gitops-promoter/releases/download/v0.46.0/gitops-promoter-argocd-extension.tar.gz
           volumeMounts:
-            - name: rollout-extensions
+            - name: argo-cd-operator-ui-extensions
               mountPath: /tmp/extensions/
           securityContext:
             allowPrivilegeEscalation: false
