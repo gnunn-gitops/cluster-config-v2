@@ -51,6 +51,8 @@ spec:
     # GitOps Promoter
     - group: promoter.argoproj.io
       kind: "*"
+    - group: view.promoter.argoproj.io
+      kind: "*"
     # Openshift Pipelines
     - group: tekton.dev
       kind: "*"
