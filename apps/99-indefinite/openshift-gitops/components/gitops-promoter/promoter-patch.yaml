@@ -6,12 +6,12 @@ metadata:
 spec:
   promoter:
     apiserver:
-      enabled: false
+      enabled: true
       tls:
         caSecretKey: tls.key
         caSecretName: argocd-promoter-apiserver-tls
         certSecretName: argocd-promoter-apiserver-tls
-    argoCDUIExtensionEnabled: false
-    enabled: false
+    argoCDUIExtensionEnabled: true
+    enabled: true
     webhook:
-      enabled: false
+      enabled: true
