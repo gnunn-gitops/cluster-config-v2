@@ -10,7 +10,46 @@ spec:
       version: 3.4.0
     storage:
       files:
+      # [connection]
+      # ethernet.wake-on-lan=magic
       - contents:
           source: data:text/plain;charset=utf-8;base64,W2Nvbm5lY3Rpb25dCmV0aGVybmV0Lndha2Utb24tbGFuPW1hZ2ljCg==
         mode: 420
         path: /etc/NetworkManager/conf.d/99-wol.conf
+      # The NetworkManager default above is not honoured for the interface that
+      # configure-ovs.sh enslaves to br-ex, so the node's real uplink still comes
+      # up with wake-on-lan disabled. This script sets the flag with ethtool on
+      # every physical NIC that supports magic packets. Decoded contents:
+      #
+      #   #!/usr/bin/env bash
+      #   set -uo pipefail
+      #
+      #   for path in /sys/class/net/*; do
+      #     dev="${path##*/}"
+      #     [[ -e "${path}/device" ]] || continue
+      #     if ethtool "${dev}" 2>/dev/null | grep -q '^[[:space:]]*Supports Wake-on:.*g'; then
+      #       echo "Enabling Wake-on-LAN (magic packet) on ${dev}"
+      #       ethtool -s "${dev}" wol g || echo "Failed to set Wake-on-LAN on ${dev}" >&2
+      #     fi
+      #   done
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,IyEvdXNyL2Jpbi9lbnYgYmFzaAojIEVuYWJsZSBXYWtlLW9uLUxBTiAobWFnaWMgcGFja2V0KSBvbiBldmVyeSBwaHlzaWNhbCBldGhlcm5ldCBpbnRlcmZhY2UgdGhhdAojIGFkdmVydGlzZXMgc3VwcG9ydCBmb3IgaXQuCiMKIyBUaGUgTmV0d29ya01hbmFnZXIgZ2xvYmFsIGRlZmF1bHQgaW4gL2V0Yy9OZXR3b3JrTWFuYWdlci9jb25mLmQvOTktd29sLmNvbmYgaXMKIyBub3QgaG9ub3VyZWQgZm9yIHRoZSBpbnRlcmZhY2UgdGhhdCBjb25maWd1cmUtb3ZzLnNoIGVuc2xhdmVzIHRvIGJyLWV4LCBzbyB0aGUKIyBub2RlJ3MgcmVhbCB1cGxpbmsgY29tZXMgdXAgd2l0aCBXb0wgZGlzYWJsZWQuIFNldHRpbmcgaXQgd2l0aCBldGh0b29sIHdyaXRlcwojIHRoZSBmbGFnIGludG8gdGhlIE5JQywgd2hpY2ggaXMgd2hhdCBzdXJ2aXZlcyBhIHNodXRkb3duLgpzZXQgLXVvIHBpcGVmYWlsCgpmb3IgcGF0aCBpbiAvc3lzL2NsYXNzL25ldC8qOyBkbwogIGRldj0iJHtwYXRoIyMqL30iCiAgIyBPbmx5IHJlYWwgaGFyZHdhcmUgZGV2aWNlczogc2tpcHMgbG8sIGJyLWV4LCBvdnMtc3lzdGVtLCBvdm4tazhzLW1wMCwgdmV0aHMuCiAgW1sgLWUgIiR7cGF0aH0vZGV2aWNlIiBdXSB8fCBjb250aW51ZQogIGlmIGV0aHRvb2wgIiR7ZGV2fSIgMj4vZGV2L251bGwgfCBncmVwIC1xICdeW1s6c3BhY2U6XV0qU3VwcG9ydHMgV2FrZS1vbjouKmcnOyB0aGVuCiAgICBlY2hvICJFbmFibGluZyBXYWtlLW9uLUxBTiAobWFnaWMgcGFja2V0KSBvbiAke2Rldn0iCiAgICBldGh0b29sIC1zICIke2Rldn0iIHdvbCBnIHx8IGVjaG8gIkZhaWxlZCB0byBzZXQgV2FrZS1vbi1MQU4gb24gJHtkZXZ9IiA+JjIKICBmaQpkb25lCg==
+        mode: 493
+        path: /usr/local/bin/enable-wake-on-lan.sh
+    systemd:
+      units:
+      - name: enable-wake-on-lan.service
+        enabled: true
+        contents: |
+          [Unit]
+          Description=Enable Wake-on-LAN (magic packet) on physical network interfaces
+          Wants=network-online.target
+          After=network-online.target nodeip-configuration.service ovs-configuration.service
+
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/usr/local/bin/enable-wake-on-lan.sh
+
+          [Install]
+          WantedBy=multi-user.target
