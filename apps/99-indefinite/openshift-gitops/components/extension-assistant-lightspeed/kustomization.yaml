@@ -30,7 +30,7 @@ patches:
           env:
             - name: EXTENSION_URL
               value: "https://github.com/argoproj-labs/assistant-for-argocd/releases/download/v0.3.0/extension-assistant-0.3.0.tar"
-          image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.8"
+          image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.9"
           name: extension-assistant
           securityContext:
             allowPrivilegeEscalation: false
@@ -43,7 +43,7 @@ patches:
           env:
             - name: EXTENSION_URL
               value: "https://github.com/gnunn-gitops/argocd-assistant-settings/releases/download/0.1-deepseek/assistant-lightspeed-settings-deepseek-0.1.tar"
-          image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.8"
+          image: "quay.io/argoprojlabs/argocd-extension-installer:v0.0.9"
           name: extension-assistant-settings
           securityContext:
             allowPrivilegeEscalation: false
