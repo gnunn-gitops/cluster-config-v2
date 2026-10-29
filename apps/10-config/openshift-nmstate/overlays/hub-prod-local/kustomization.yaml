@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: openshift-nmstate
 
 resources:
-- ../../base
-- node-network-configuration-policy.yaml
+  - ../../base
+  - node-network-configuration-policy.yaml

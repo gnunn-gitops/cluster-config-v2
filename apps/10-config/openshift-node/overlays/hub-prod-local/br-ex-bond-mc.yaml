@@ -1,0 +1,109 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    # hub-server is an SNO node and lives in the master pool, the worker pool has
+    # no machines, so a worker-rolled MachineConfig would never be applied.
+    machineconfiguration.openshift.io/role: master
+  name: 10-br-ex-bond
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+      # Bonds enp4s0 (2.5GbE) and enp0s31f6 (1GbE) into bond0 in active-backup
+      # mode and makes bond0 the uplink of the OVN-Kubernetes br-ex bridge.
+      #
+      # br-ex cannot be re-pointed with a NodeNetworkConfigurationPolicy, Red Hat
+      # does not support changing br-ex or its underlying interfaces from an NNCP
+      # post-install. The supported path is this file: nmstate-configuration.service
+      # reads /etc/nmstate/openshift/{<short-hostname>,cluster}.yml, tears down the
+      # configure-ovs.sh version of br-ex, and hands the config to nmstate.service,
+      # all before ovs-configuration.service runs.
+      #
+      # bond0 and br-ex pin enp4s0's MAC (02:76:C6:00:9E:BE) so the router keeps
+      # handing out 192.168.1.5, both across this cutover and across a failover to
+      # enp0s31f6. Decoded contents:
+      #
+      #   interfaces:
+      #     - name: enp4s0
+      #       type: ethernet
+      #       state: up
+      #       mtu: 1500
+      #       ipv4:
+      #         enabled: false
+      #       ipv6:
+      #         enabled: false
+      #
+      #     - name: enp0s31f6
+      #       type: ethernet
+      #       state: up
+      #       mtu: 1500
+      #       ipv4:
+      #         enabled: false
+      #       ipv6:
+      #         enabled: false
+      #
+      #     # primary=enp4s0 keeps the faster 2.5GbE link active whenever it has
+      #     # carrier, falling back to the 1GbE link only while enp4s0 is down.
+      #     - name: bond0
+      #       type: bond
+      #       state: up
+      #       mtu: 1500
+      #       mac-address: 02:76:C6:00:9E:BE
+      #       ipv4:
+      #         enabled: false
+      #       ipv6:
+      #         enabled: false
+      #       link-aggregation:
+      #         mode: active-backup
+      #         options:
+      #           miimon: 100
+      #           primary: enp4s0
+      #         port:
+      #           - enp4s0
+      #           - enp0s31f6
+      #
+      #     # allow-extra-patch-ports lets OVN-Kubernetes keep its own patch port
+      #     # to br-int without nmstate pruning it on re-apply.
+      #     - name: br-ex
+      #       type: ovs-bridge
+      #       state: up
+      #       ovs-db:
+      #         other_config:
+      #           hwaddr: 02:76:C6:00:9E:BE
+      #       ipv4:
+      #         enabled: false
+      #       ipv6:
+      #         enabled: false
+      #       bridge:
+      #         allow-extra-patch-ports: true
+      #         options:
+      #           stp:
+      #             enabled: false
+      #           mcast-snooping-enable: false
+      #         port:
+      #           - name: br-ex
+      #           - name: bond0
+      #
+      #     - name: br-ex
+      #       type: ovs-interface
+      #       state: up
+      #       mtu: 1500
+      #       mac-address: 02:76:C6:00:9E:BE
+      #       ipv4:
+      #         enabled: true
+      #         dhcp: true
+      #         auto-dns: true
+      #         auto-route-metric: 48
+      #       ipv6:
+      #         enabled: true
+      #         dhcp: true
+      #         autoconf: true
+      #         auto-route-metric: 48
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,IyBIb3N0IG5ldHdvcmsgY29uZmlndXJhdGlvbiBmb3IgaHViLXNlcnZlciwgYXBwbGllZCBieSBubXN0YXRlLWNvbmZpZ3VyYXRpb24uc2VydmljZQojIGJlZm9yZSBvdnMtY29uZmlndXJhdGlvbi5zZXJ2aWNlIChjb25maWd1cmUtb3ZzLnNoKSBydW5zLgojCiMgZW5wNHMwICgyLjVHYkUpIGFuZCBlbnAwczMxZjYgKDFHYkUpIGFyZSBib25kZWQgYXMgYm9uZDAgaW4gYWN0aXZlLWJhY2t1cCBtb2RlLAojIGFuZCBib25kMCBpcyB0aGUgdXBsaW5rIHBvcnQgb2YgdGhlIE9WTi1LdWJlcm5ldGVzIGJyLWV4IGJyaWRnZS4KIwojIGJvbmQwIGFuZCBici1leCBwaW4gdGhlIE1BQyBvZiBlbnA0czAgKDAyOjc2OkM2OjAwOjlFOkJFKSBzbyB0aGUgREhDUCBsZWFzZSBmb3IKIyAxOTIuMTY4LjEuNSBpcyBwcmVzZXJ2ZWQgYWNyb3NzIHRoZSBjdXRvdmVyIGFuZCBhY3Jvc3MgYSBmYWlsb3ZlciB0byBlbnAwczMxZjYuCmludGVyZmFjZXM6CiAgLSBuYW1lOiBlbnA0czAKICAgIHR5cGU6IGV0aGVybmV0CiAgICBzdGF0ZTogdXAKICAgIG10dTogMTUwMAogICAgaXB2NDoKICAgICAgZW5hYmxlZDogZmFsc2UKICAgIGlwdjY6CiAgICAgIGVuYWJsZWQ6IGZhbHNlCgogIC0gbmFtZTogZW5wMHMzMWY2CiAgICB0eXBlOiBldGhlcm5ldAogICAgc3RhdGU6IHVwCiAgICBtdHU6IDE1MDAKICAgIGlwdjQ6CiAgICAgIGVuYWJsZWQ6IGZhbHNlCiAgICBpcHY2OgogICAgICBlbmFibGVkOiBmYWxzZQoKICAjIHByaW1hcnk9ZW5wNHMwIGtlZXBzIHRoZSBmYXN0ZXIgMi41R2JFIGxpbmsgYWN0aXZlIHdoZW5ldmVyIGl0IGhhcyBjYXJyaWVyLAogICMgZmFsbGluZyBiYWNrIHRvIHRoZSAxR2JFIGxpbmsgb25seSB3aGlsZSBlbnA0czAgaXMgZG93bi4KICAtIG5hbWU6IGJvbmQwCiAgICB0eXBlOiBib25kCiAgICBzdGF0ZTogdXAKICAgIG10dTogMTUwMAogICAgbWFjLWFkZHJlc3M6IDAyOjc2OkM2OjAwOjlFOkJFCiAgICBpcHY0OgogICAgICBlbmFibGVkOiBmYWxzZQogICAgaXB2NjoKICAgICAgZW5hYmxlZDogZmFsc2UKICAgIGxpbmstYWdncmVnYXRpb246CiAgICAgIG1vZGU6IGFjdGl2ZS1iYWNrdXAKICAgICAgb3B0aW9uczoKICAgICAgICBtaWltb246IDEwMAogICAgICAgIHByaW1hcnk6IGVucDRzMAogICAgICBwb3J0OgogICAgICAgIC0gZW5wNHMwCiAgICAgICAgLSBlbnAwczMxZjYKCiAgIyBhbGxvdy1leHRyYS1wYXRjaC1wb3J0cyBsZXRzIE9WTi1LdWJlcm5ldGVzIGtlZXAgaXRzIG93biBwYXRjaCBwb3J0IHRvIGJyLWludAogICMgd2l0aG91dCBubXN0YXRlIHBydW5pbmcgaXQgb24gcmUtYXBwbHkuCiAgLSBuYW1lOiBici1leAogICAgdHlwZTogb3ZzLWJyaWRnZQogICAgc3RhdGU6IHVwCiAgICBvdnMtZGI6CiAgICAgIG90aGVyX2NvbmZpZzoKICAgICAgICBod2FkZHI6IDAyOjc2OkM2OjAwOjlFOkJFCiAgICBpcHY0OgogICAgICBlbmFibGVkOiBmYWxzZQogICAgaXB2NjoKICAgICAgZW5hYmxlZDogZmFsc2UKICAgIGJyaWRnZToKICAgICAgYWxsb3ctZXh0cmEtcGF0Y2gtcG9ydHM6IHRydWUKICAgICAgb3B0aW9uczoKICAgICAgICBzdHA6CiAgICAgICAgICBlbmFibGVkOiBmYWxzZQogICAgICAgIG1jYXN0LXNub29waW5nLWVuYWJsZTogZmFsc2UKICAgICAgcG9ydDoKICAgICAgICAtIG5hbWU6IGJyLWV4CiAgICAgICAgLSBuYW1lOiBib25kMAoKICAtIG5hbWU6IGJyLWV4CiAgICB0eXBlOiBvdnMtaW50ZXJmYWNlCiAgICBzdGF0ZTogdXAKICAgIG10dTogMTUwMAogICAgbWFjLWFkZHJlc3M6IDAyOjc2OkM2OjAwOjlFOkJFCiAgICBpcHY0OgogICAgICBlbmFibGVkOiB0cnVlCiAgICAgIGRoY3A6IHRydWUKICAgICAgYXV0by1kbnM6IHRydWUKICAgICAgYXV0by1yb3V0ZS1tZXRyaWM6IDQ4CiAgICBpcHY2OgogICAgICBlbmFibGVkOiB0cnVlCiAgICAgIGRoY3A6IHRydWUKICAgICAgYXV0b2NvbmY6IHRydWUKICAgICAgYXV0by1yb3V0ZS1tZXRyaWM6IDQ4Cg==
+        mode: 420
+        overwrite: true
+        path: /etc/nmstate/openshift/cluster.yml
