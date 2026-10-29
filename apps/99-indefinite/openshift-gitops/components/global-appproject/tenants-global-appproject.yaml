@@ -61,12 +61,12 @@ spec:
       kind: ResourceQuota
     - group: ""
       kind: LimitRange
+    - group: storage.k8s.io
+      kind: "*"
     # ---------- OpenShift ----------
     - group: operators.coreos.com
       kind: "*"
     - group: operator.openshift.io
-      kind: "*"
-    - group: storage.k8s.io
       kind: "*"
     - group: machine.openshift.io
       kind: "*"
