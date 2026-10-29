@@ -55,6 +55,7 @@ ingress:
 metrics:
   enabled: false
 migrateDatabase:
+  enabled: false
   username:
     valueFrom:
       secretKeyRef:
@@ -126,7 +127,7 @@ modules:
     workingDirectory:
       size: 32Gi
   migrateDatabase:
-    enabled: true
+    enabled: false
     image: {}
   server:
     enabled: true
