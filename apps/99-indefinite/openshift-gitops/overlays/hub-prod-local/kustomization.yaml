@@ -30,7 +30,7 @@ components:
   - ../../components/image-updater
   - ../../components/impersonation
   # - ../../components/gitops-promoter
-  - ../../components/extension-gitops-promoter
+  # - ../../components/extension-gitops-promoter
 
 resources:
   - ../../base
