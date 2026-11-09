@@ -20,6 +20,9 @@ spec:
     defaultProvider: red_hat_openshift_ai
     logLevel: INFO
     deployment:
+      alertsAdapter:
+        configMapRef:
+          name: alerts-adapter-config
       rhokp:
         resources:
           requests:

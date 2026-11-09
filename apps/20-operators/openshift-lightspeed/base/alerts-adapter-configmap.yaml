@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alerts-adapter-config
+  namespace: openshift-lightspeed
+data:
+  config.yaml: |
+    filtering:
+      allowedReceivers:
+      - critical
+    tools:
+      skills:
+        - image: quay.io/openshiftanalytics/agentic-skills:latest
+          paths:
+            - /skills/cluster-troubleshoot/investigate-alert
