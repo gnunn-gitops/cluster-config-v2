@@ -6,14 +6,15 @@ namespace: openshift-lightspeed
 resources:
   - developers-cluster-role.yaml
   - ns.yaml
-  - alerts-adapter-configmap.yaml
   - networkpolicy.yaml
   - externalsecret.yaml
   - operator-group.yaml
   - subscription.yaml
   - olsconfig.yaml
 # Enable lightspeed-agent
+  - alerts-adapter-configmap.yaml
   - agentic-operator-escalation-rbac.yaml
   - lightspeed-agent-rbac.yaml
   - llmprovider.yaml
   - default-agent.yaml
+  - smart-agent.yaml
