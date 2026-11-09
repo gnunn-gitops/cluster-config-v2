@@ -1,0 +1,32 @@
+# Workaround: ClusterRole/nmstate-handler (owned by the NMState CR, so it cannot
+# be patched directly - the nmstate-operator reverts it) grants no 'pods' rule,
+# but pkg/node.NodesRunningNmstate lists pods at cluster scope when rolling
+# enactment status up into the NNCP's conditions. Without this the policy
+# conditions stay Unknown and Argo CD reports the NNCP as permanently
+# Progressing ("Waiting for policy to be applied") even though the enactment
+# reports Available/SuccessfullyConfigured.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: nmstate-handler-pods-reader
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: nmstate-handler-pods-reader
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nmstate-handler-pods-reader
+subjects:
+  - kind: ServiceAccount
+    name: nmstate-handler
+    namespace: openshift-nmstate

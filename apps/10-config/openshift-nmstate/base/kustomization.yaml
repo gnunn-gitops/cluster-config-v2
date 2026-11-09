@@ -8,3 +8,4 @@ resources:
 - operatorgroup.yaml
 - subscription.yaml
 - nmstate.yaml
+- handler-pods-clusterrole.yaml
