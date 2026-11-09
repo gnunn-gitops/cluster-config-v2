@@ -37,8 +37,6 @@ spec:
     pvc:
       retain: true
       size: 5Gi
-    rekorSearchUI:
-      enabled: true
     signer:
       kms: secret
   trillian:
