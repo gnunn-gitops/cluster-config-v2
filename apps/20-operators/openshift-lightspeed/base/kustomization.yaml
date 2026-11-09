@@ -11,3 +11,8 @@ resources:
   - operator-group.yaml
   - subscription.yaml
   - olsconfig.yaml
+# Enable lightspeed-agent
+  - agentic-operator-escalation-rbac.yaml
+  - lightspeed-agent-rbac.yaml
+  - llmprovider.yaml
+  - default-agent.yaml

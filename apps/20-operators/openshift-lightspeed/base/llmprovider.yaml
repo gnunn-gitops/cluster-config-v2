@@ -1,0 +1,10 @@
+apiVersion: agentic.openshift.io/v1alpha1
+kind: LLMProvider
+metadata:
+  name: openai
+spec:
+  type: OpenAI
+  openAI:
+    credentialsSecret:
+      name: agent-credentials
+    url: https://maas-rhdp.apps.maas.redhatworkshops.io/v1
