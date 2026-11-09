@@ -42,7 +42,7 @@ spec:
       requests:
         cpu: 125m
         memory: 128Mi
-    enableRolloutsUI: true
+    #enableRolloutsUI: true
     route:
       annotations: {}
       enabled: true
