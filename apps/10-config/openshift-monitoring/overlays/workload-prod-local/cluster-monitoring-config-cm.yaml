@@ -19,19 +19,6 @@ data:
         systemd: {}
         tcpstat: {}
     prometheusK8s:
-      additionalAlertmanagerConfigs:
-      - apiVersion: v2
-        bearerToken:
-          key: token
-          name: observability-alertmanager-accessor-1800df5d06d84eeabef
-        scheme: https
-        staticConfigs:
-        - alertmanager-open-cluster-management-observability.apps.hub.ocplab.com
-        tlsConfig:
-          ca:
-            key: service-ca.crt
-            name: hub-alertmanager-router-ca-1800df5d06d84eeabef
-          insecureSkipVerify: false
       externalLabels:
         cluster_name: workload-prod-local
         managed_cluster: fef08928-3f49-4dcb-8a70-ea2da63dcd2b
