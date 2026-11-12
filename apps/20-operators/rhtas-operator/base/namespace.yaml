@@ -3,4 +3,6 @@ kind: Namespace
 metadata:
   annotations:
     openshift.io/display-name: Red Hat Trusted Artifact Signer
+  labels:
+    openshift.io/cluster-monitoring: "true"
   name: rhtas-operator
