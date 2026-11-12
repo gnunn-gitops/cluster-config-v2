@@ -3,5 +3,3 @@ kind: Kustomization
 
 resources:
   - ../chains
-  # User Namespaces to get Test Containers working
-  - scc.yaml
