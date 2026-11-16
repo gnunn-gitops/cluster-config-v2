@@ -13,3 +13,10 @@ spec:
         value: "argocd"
       - name: IMAGE_UPDATER_WATCH_NAMESPACES
         value: "argocd,petclinic-argocd"
+      - name: DISABLE_TLS
+        value: "true"
+      - name: QUAY_WEBHOOK_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: argocd-image-updater-secret
+            key: webhook.quay-secret

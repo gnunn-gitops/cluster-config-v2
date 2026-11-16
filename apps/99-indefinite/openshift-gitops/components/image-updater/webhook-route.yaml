@@ -9,12 +9,12 @@ metadata:
   name: argocd-image-updater-webhook
 spec:
   port:
-    targetPort: 8082
+    targetPort: 8080
   to:
     kind: Service
     name: argocd-image-updater-webhook
     weight: 100
   tls:
-    termination: reencrypt
+    termination: edge
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None
