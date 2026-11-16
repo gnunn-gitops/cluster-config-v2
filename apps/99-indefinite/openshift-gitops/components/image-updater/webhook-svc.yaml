@@ -9,6 +9,6 @@ metadata:
   name: argocd-image-updater-webhook
 spec:
   ports:
-    - port: 8080
+    - port: 8082
   selector:
     app.kubernetes.io/name: argocd-argocd-image-updater-controller
