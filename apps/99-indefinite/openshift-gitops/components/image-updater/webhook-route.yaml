@@ -9,7 +9,7 @@ metadata:
   name: argocd-image-updater-webhook
 spec:
   port:
-    targetPort: 8080
+    targetPort: 8082
   to:
     kind: Service
     name: argocd-image-updater-webhook
