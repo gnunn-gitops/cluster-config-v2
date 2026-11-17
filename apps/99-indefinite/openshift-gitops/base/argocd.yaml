@@ -146,10 +146,6 @@ spec:
       - ComplianceCheckResult
       - ComplianceRemediation
     - apiGroups:
-      - policy.open-cluster-management.io
-      kinds:
-      - ConfigurationPolicy
-    - apiGroups:
       - ""
       - discovery.k8s.io
       kinds:
