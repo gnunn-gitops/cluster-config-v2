@@ -7,6 +7,7 @@ policyDefaults:
   namespace: acm-policies
   remediationAction: enforce
   generatePolicyPlacement: false
+  copyPolicyMetadata: false
 policies:
   - name: gitops-subscription
     manifests:

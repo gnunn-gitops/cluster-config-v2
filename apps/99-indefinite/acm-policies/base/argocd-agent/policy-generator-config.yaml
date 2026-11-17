@@ -9,6 +9,7 @@ policyDefaults:
   remediationAction: enforce
   complianceType: "mustonlyhave"
   recreateOption: IfRequired
+  copyPolicyMetadata: false
 policies:
   - name: argocd-agent
     description: Argo CD Agent

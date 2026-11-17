@@ -10,6 +10,7 @@ policyDefaults:
   consolidateManifests: false
   namespace: acm-policies
   remediationAction: enforce
+  copyPolicyMetadata: false
 policies:
   - name: argocd-agent-registration
     description: Register Argo CD Agents on Control Plane
