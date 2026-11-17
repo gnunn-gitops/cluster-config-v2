@@ -11,6 +11,7 @@ components:
   - ../../components/disable-cluster-roles
   - ../../components/policy-generator
   - ../../components/health-application
+  - ../../components/health-argocd
   - ../../components/health-build
   - ../../components/health-imagestream
   - ../../components/health-imageupdater
