@@ -12,7 +12,7 @@ spec:
       - name: ARGOCD_NAMESPACE
         value: "argocd"
       - name: IMAGE_UPDATER_WATCH_NAMESPACES
-        value: "argocd,*-argocd"
+        value: "argocd,petclinic-argocd"
       # - name: DISABLE_TLS
       #   value: "true"
       - name: QUAY_WEBHOOK_SECRET
