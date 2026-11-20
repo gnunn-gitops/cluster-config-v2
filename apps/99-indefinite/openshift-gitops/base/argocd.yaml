@@ -3,6 +3,7 @@ kind: ArgoCD
 metadata:
   name: argocd
 spec:
+  disableAdmin: true
   resourceHealthChecks: []
   resourceActions: []
   extraConfig:
