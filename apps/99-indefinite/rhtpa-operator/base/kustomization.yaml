@@ -5,7 +5,7 @@ namespace: trusted-profile-analyzer
 
 helmCharts:
   - name: redhat-trusted-profile-analyzer
-    version: 3.1.1
+    version: 3.1.2
     repo: https://charts.openshift.io
     namespace: trusted-profile-analyzer
     releaseName: trusted-profile-analyzer
