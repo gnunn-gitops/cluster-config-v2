@@ -32,6 +32,8 @@ components:
   - ../../components/impersonation
   # - ../../components/gitops-promoter
   - ../../components/extension-gitops-promoter
+  - ../../components/source-hydrator
+
 
 resources:
   - ../../base
