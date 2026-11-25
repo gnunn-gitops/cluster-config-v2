@@ -12,7 +12,7 @@ spec:
       limits:
         cpu: 500m
         memory: 512Mi
-  channel: stable-v1.2
+  channel: stable-v1.3
   installPlanApproval: Automatic
   name: openshift-external-secrets-operator
   source: redhat-operators
